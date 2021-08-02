@@ -1,0 +1,40 @@
+{
+    "compilerOptions": {
+        /* Visit https://aka.ms/tsconfig.json to read more about this file */
+        "target": "esnext",
+        "module": "esnext",
+        "strictNullChecks": false,
+        "strict": true,
+        "resolveJsonModule": true,
+        "jsx": "preserve",
+        "noImplicitAny": false,
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "outDir": "build",
+        "removeComments": true,
+        "rootDir": "src",
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": false,
+        "baseUrl": ".",
+        "typeRoots": ["./node_modules/@types", "./typings"],
+        "types": ["webpack-env", "node", "jquery"],
+        "paths": {
+            "*": ["*", "./typings/*"],
+            "@/*": ["src/*"],
+            "$root/*": ["*"],
+            "@project/*": ["src/template/base-project/*"]
+        },
+        "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    },
+    "exclude": ["node_modules"],
+    "include": [
+        "**/*.js",
+        "**/*.d.ts",
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "tests/**/*.ts",
+        "tests/**/*.tsx"
+    ]
+}

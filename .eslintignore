@@ -1,0 +1,6 @@
+**/dist/**
+**/dll/**
+**/lib/**
+**/node_modules/**
+**/*.min.js
+**/*.min.ts
