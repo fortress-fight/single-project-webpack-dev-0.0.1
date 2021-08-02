@@ -33,6 +33,12 @@
 2.  eslint
 3.  stylelint
 
+参考：
+
+-   [ESlint、Prettier、Babel、Typescript与 VSCode 配置](https://www.notion.so/ESlint-Prettier-Babel-Typescript-VSCode-4489e4f1629b467fbae44bbbef16712e)
+
+-   [Stylelint、SASS、VSCode](https://www.notion.so/Stylelint-SASS-VSCode-6003e3a5f5d345b9bd39a0f6553a8d32)
+
 ### Style
 
 1.  postcss
