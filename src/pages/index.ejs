@@ -6,14 +6,59 @@
  * @LastEditors: F-Stone
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><%= process.env.PROJECT_NAME %></title>
+        <link rel="icon" href="<%= IMG_PATH + 'logo-icon.png' %>" />
+        <title>好看智能名片</title>
     </head>
     <body>
-        --- <%= testData %> ---
+        <div
+            id="site-page"
+            class="site-page"
+            data-type="page-index"
+            date-page-name="index-page"
+        >
+            <%- require("./components/header.ejs")({IMG_PATH}) %>
+            <div class="module module-propaganda">
+                <div class="module-body">
+                    <div class="wrapper-propaganda_text">
+                        <div class="inner-wrapper">
+                            <div class="title">
+                                <span class="text">好看智能名片</span>
+                            </div>
+                            <div class="project-serve flex flex-y-c">
+                                <div class="item-serve">
+                                    <span class="text">品牌宣传</span>
+                                </div>
+                                <div class="divide"></div>
+                                <div class="item-serve">
+                                    <span class="text">营销推广</span>
+                                </div>
+                                <div class="divide"></div>
+                                <div class="item-serve">
+                                    <span class="text">精准获客</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper-propaganda_intro">
+                        <div class="inner-wrapper">
+                            <img src="<%= IMG_PATH + "propaganda-intro.png" %> "
+                            alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer_layer--fixed">
+            <div class="wrapper-limit_width">
+                <div class="btn-open_QR flex flex-x-c-y-c">
+                    <i class="ic iconfont icon-code"></i>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

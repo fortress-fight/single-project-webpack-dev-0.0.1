@@ -1,3 +1,113 @@
+/*
+ * @Description: 公共样式文件
+ * @Author: F-Stone
+ * @Date: 2021-08-03 13:43:56
+ * @LastEditTime: 2021-08-03 18:21:42
+ * @LastEditors: F-Stone
+ */
+
+/* ---------------------------------- */
+/*                reset               */
+/* ---------------------------------- */
 body {
-    background: rgb(0 0 0);
+    font-family: Arial, '微软雅黑';
+    font-size: 14px;
+    line-height: 1.32;
+
+    color: rgb(0 0 0);
+}
+.ic {
+    font-size: inherit;
+}
+/* ---------------------------------- */
+/*                size                */
+/* ---------------------------------- */
+.wrapper-limit_width {
+
+    @include limit-wrapper;
+}
+
+/* ---------------------------------- */
+/*             components             */
+/* ---------------------------------- */
+.btn-open_project_QR {
+    font-size: 16px;
+    line-height: 50px;
+
+    overflow: hidden;
+
+    
+    border-radius: 25px;
+    &>.state-pos_left {
+        padding: 0  24px;
+
+        color: rgb(255 255 255);
+        background-color: $main-color;
+        .ic {
+            font-size: 18px;
+
+            margin-right: 20px;
+        }
+    }
+    &>.state-pos_right {
+        padding: 0  24px;
+
+        color: $font-color;
+        background-color: $black-level-9;
+        .ic {
+            font-size: 18px;
+
+            margin-left: 20px;
+
+            color: $main-color;
+        }
+    }
+}
+
+/* ---------------------------------- */
+/*             底部微信二维码          */
+/* ---------------------------------- */
+.footer_layer--fixed {
+    position: fixed;
+    bottom: 0;
+
+    width: 100%;
+    .wrapper-limit_width {
+        position: relative;
+    }
+    .btn-open_QR {
+
+        @include circle(60px);
+        font-size: 20px;
+
+        position: absolute;
+        right: 0;
+        bottom: 10.46vh;
+
+        cursor: pointer;
+        transition: 0.26s ease;
+
+        color: rgb(255 255 255);
+        background-color: $main-color;
+        &:hover {
+            background-color: lighten($color: $main-color, $amount: 3);
+        }
+    }
+}
+
+/* ---------------------------------- */
+/*                站点头部            */
+/* ---------------------------------- */
+.site-head {    
+    position: fixed;
+    z-index: 999;
+
+    width: 100%;
+    height: 156px;
+    .site-logo {
+        height: 40px;
+        img {
+            height: 100%;
+        }
+    }
 }

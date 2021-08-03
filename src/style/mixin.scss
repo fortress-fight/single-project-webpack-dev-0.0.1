@@ -1,0 +1,198 @@
+/* ---------------------------------- */
+/*           修改默认样式              */
+/* ---------------------------------- */
+
+@mixin scroll-bar($size: 5px, $bg: #101012, $color) {
+    ::-webkit-scrollbar-track-piece,
+    ::-webkit-scrollbar,
+    ::-webkit-scrollbar-thumb {
+        width: $size;
+    }
+    ::-webkit-scrollbar-track-piece {
+        background-color: $bg;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: $color;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: lighten($color: $color, $amount: 2);
+    }
+
+}
+
+/* ---------------------------------- */
+/*                尺寸                */
+/* ---------------------------------- */
+
+@mixin limit-wrapper ($width, $max) {
+    width: width;
+    max-width: $max;
+}
+
+
+/* ---------------------------------- */
+/*                 形状               */
+/* ---------------------------------- */
+
+@mixin circle($size) {
+    width: $size;
+    height: $size;
+
+    border-radius: 50%;
+}
+
+/* ---------------------------------- */
+/*                 位置               */
+/* ---------------------------------- */
+
+@mixin move-center() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate3d(-50%, -50%, 0);
+}
+
+/* ---------------------------------- */
+/*                清浮动              */
+/* ---------------------------------- */
+
+@mixin clear-fix {
+    &::after {
+        display: block;
+        clear: both;
+
+        content: '';
+    }
+
+}
+
+@mixin ellipse($line: 1, $lineHeight: 1) {
+
+    @if ($line == 1) {
+        overflow: hidden;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    @else {
+        display: box;
+        overflow: hidden;
+
+        height: $line * $lineHeight;
+
+        text-overflow: ellipsis;
+
+        -webkit-line-clamp: $line;
+        box-orient: vertical;
+    }
+
+}
+
+/* ---------------------------------- */
+/*                布局                */
+/* ---------------------------------- */
+
+@mixin ab-cover {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+@mixin group($size, $marginX, $marginY, $innerClass) {
+
+    @include clear-fix();
+
+    overflow: hidden;
+
+    margin-right: -$marginX;
+    margin-bottom: -$marginY;
+    .#{$innerClass} {
+
+        @include row-size($size, $marginX, $marginY);
+    }
+}
+
+@mixin row-size($size, $marginX, $marginY) {
+    float: left;
+
+    width: calc(100% / #{$size} - #{$marginX});
+    margin-right: $marginX;
+    margin-bottom: $marginY;
+    &:nth-child(#{$size}n + 1) {
+        clear: left;
+    }
+}
+
+@mixin image-placeholder($width, $height) {
+    position: relative;
+
+    width: $width;
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+    }
+    &::after {
+        display: block;
+
+        padding-top: percent($height, $width);
+
+        content: '';
+    }
+}
+
+@mixin flex($pos-x: none, $pos-y: none, $dir: x, $type: normal) {
+
+    @if ($type == inline) {
+        display: inline-flex;
+    }
+
+    @else {
+        display: flex;
+    }
+
+    @if $dir == 'y' {
+        flex-direction: column;
+    }
+
+    @if $pos-x == 'c' {
+        justify-content: center;
+    }
+
+    @if $pos-x == 'b' {
+        justify-content: flex-end;
+    }
+
+    @if $pos-x == 'sb' {
+        justify-content: space-between;
+    }
+
+    @if $pos-y == 't' {
+        align-items: flex-start;
+    }
+
+    @if $pos-y == 'c' {
+        align-items: center;
+    }
+
+    @if $pos-y == 'b' {
+        align-items: flex-end;
+    }
+
+}
+
+/* ---------------------------------- */
+/*                size                */
+/* ---------------------------------- */
+
+@mixin limit-wrapper {
+    width: $max-limit-width;
+    max-width: 94%;
+    margin: 0 auto;
+}

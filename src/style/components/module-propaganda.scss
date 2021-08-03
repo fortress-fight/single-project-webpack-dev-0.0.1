@@ -1,0 +1,43 @@
+.module-propaganda {
+    padding-top: 25.462962962963vh;
+}
+.wrapper-propaganda_text {
+    margin-bottom: 8.05555555555556vh;
+
+    text-align: center;
+    white-space: nowrap;
+    .inner-wrapper {
+        display: inline-block;
+    }
+    .title {
+        font-size: 100px;
+        font-weight: 600;
+        line-height: 1.72em;
+    }
+    .project-serve {
+        font-size: 15px;
+        line-height: 2.2em;
+
+        width: 84.5%;
+        margin: 0 auto;
+    }
+    .item-serve {
+        padding: 0 22px;
+    }
+    .divide {
+        flex: 1 1 auto;
+
+        width: 100px;
+        height: 1px;
+
+        background-color: $black-level-6;
+    }
+}
+.wrapper-propaganda_intro {
+    text-align: center;
+    .inner-wrapper {
+        display: inline-block;
+
+        width: 73%;
+    }
+}
