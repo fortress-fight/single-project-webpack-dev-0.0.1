@@ -1,0 +1,63 @@
+/*
+ * @Description: 文档板块介绍
+ * @Author: F-Stone
+ * @Date: Wed Aug 04 2021 17:19:52
+ * @LastEditTime: Wed Aug 04 2021 17:20:14
+ * @LastEditors: F-Stone
+ */
+.module-doc {
+    &>.wrapper-limit_width {
+        position: relative;
+        z-index: 10;
+    }
+    .wrapper-limit_width {
+        &>.state-pos_left,
+        &>.state-pos_right {
+            flex: 0 0 auto;
+
+            width: 50%;
+        }
+        &>.state-pos_left {
+            padding-top: 289px;
+        }
+        &>.state-pos_right {
+            padding-top: 426px;
+        }
+    }
+    .intro-img {
+        position: relative;
+
+        width: 466px;
+        &::after {
+
+            @include circle(844px);
+            position: absolute;
+
+            content: '';
+        }
+        img {
+            width: 100%;
+        }
+    }
+    .list-intro {
+        transform: translateX(-102px);
+    }
+    .item-intro {
+        .title {
+            font-size: 60px;
+            font-weight: 600;
+            line-height: 96px;
+
+            margin-bottom: 31px;
+        }
+        .desc {
+            font-size: 16px;
+            line-height: 36px;
+
+            width: 410px;
+            margin-bottom: 40px;
+
+            color: $desc-color;
+        }
+    }
+}
