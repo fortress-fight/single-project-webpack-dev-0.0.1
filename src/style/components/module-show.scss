@@ -1,0 +1,100 @@
+/*
+ * @Description: 功能介绍--show
+ * @Author: F-Stone
+ * @Date: Wed Aug 04 2021 15:39:50
+ * @LastEditTime: Wed Aug 04 2021 15:40:07
+ * @LastEditors: F-Stone
+ */
+.module-show {
+    padding-top: 144px;
+    padding-bottom: 223px;
+
+    background-color: rgb(255 255 255);
+    .module-header {
+        margin-bottom: 179px;
+
+        text-align: center;
+    }
+    .module-title {
+        font-size: 60px;
+        line-height: 88px;
+
+        margin-bottom: 15px;
+    }
+    .module-subtitle {
+        font-size: 16px;
+        line-height: 32px;
+
+        margin-bottom: 43px;
+
+        color: $desc-color;
+    }
+    .box-desc {
+        font-size: 16px;
+
+        width: 560px;
+        height: 80px;
+
+        border-radius: 40px;
+        box-shadow: 0 40px 80px 0 rgb(0 0 0 / 0.1);
+        &>.state-pos_left {
+            padding: 0 42px 0 52px;
+        }
+        &>.state-pos_right {
+            padding: 0  52px 0 42px;
+        }
+        .ic {
+            font-size: 30px;
+
+            margin-right: 20px;
+        }
+        .divide {
+            flex: 1 1 auto;
+
+            width: 10px;
+            height: 1px;
+
+            background-color: rgb(224 224 224);
+        }
+    }
+    .module-body {
+        text-align: center;
+        .group-col {
+            position: relative;
+            z-index: 10;
+
+            width: 302px;
+            min-width: 0;
+            &:nth-child(1),
+            &:nth-child(4) {
+                margin-right: 47px;
+            }
+            &:nth-child(3) {
+                z-index: 0;
+
+                width: 322px;
+                margin: 0 70px;
+                .item-intro {
+                    overflow: hidden;
+
+                    border-radius: 21px;
+                    box-shadow: 0 50px 100px 0 rgb(0 2 85 / 0.3);
+                }
+            }
+            img {
+                width: 100%;
+            }
+        }
+        .item-intro {
+            overflow: hidden;
+
+            margin-bottom: 42px;
+
+            border-radius: 7px;
+            box-shadow: 0 10px 20px 0 rgb(0 0 0 / 0.1);
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

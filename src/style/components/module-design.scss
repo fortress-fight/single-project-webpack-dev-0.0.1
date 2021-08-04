@@ -12,6 +12,10 @@
     padding-bottom: 226px;
 
     background-color: rgb(24 41 25);
+    &>.wrapper-limit_width {
+        position: relative;
+        z-index: 10;
+    }
     .wrapper-bg {
     
         @include ab-cover;
@@ -20,29 +24,33 @@
         padding-top: 197px;
         padding-bottom: 226px;
     }
-    .bg-body {
-        overflow: hidden;
-
-        width: 100%;
-        height: 100%;
+    .bg-body,
+    .module-body {
         &>.state-pos_left,
         &>.state-pos_right {
             width: 50%;
         }
         &>.state-pos_left {
-            margin-right: 115px;
+            padding-right: 125px;
         }
         &>.state-pos_right {
-            margin-left: 87px;
-            padding-top: 86px;
+            padding-top: 116px;
+            padding-left: 87px;
         }
+        .box-preview_layout {
+            width: 322px;
+        }
+    }
+    .bg-body {
+        overflow: hidden;
+
+        width: 100%;
+        height: 100%;
         .layer--preview {
             padding-top: 81px;
         }
         .box-preview_layout {
             position: relative;
-
-            width: 322px;
         }
         .list-card--left {
             position: absolute;
@@ -54,10 +62,6 @@
             top: 0;
             left: calc(100% + 40px);
         }
-    }
-    &>.wrapper-limit_width {
-        position: relative;
-        z-index: 10;
     }
     .item-card {
         flex: 0 0 auto;
@@ -73,21 +77,9 @@
     }
     .module-body {
         color: rgb(255 255 255);
-        &>.state-pos_left,
-        &>.state-pos_right {
-            width: 50%;
-        }
-        &>.state-pos_left {
-            margin-right: 115px;
-        }
-        &>.state-pos_right {
-            margin-left: 87px;
-            padding-top: 86px;
-        }
         .box-preview_layout {
             overflow: hidden;
     
-            width: 322px;
     
             border: 6px solid rgb(255 255 255);
             border-radius: 26px;
