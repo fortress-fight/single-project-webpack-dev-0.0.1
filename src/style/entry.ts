@@ -29,4 +29,5 @@ import "./components/module-show.scss";
 import "./components/module-contact.scss";
 import "./components/module-intro.scss";
 import "./components/module-doc.scss";
+import "./components/module-statistic.scss";
 import "./components/page-index.scss";

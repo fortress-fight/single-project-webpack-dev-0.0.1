@@ -124,3 +124,28 @@ p {
         }
     }
 }
+
+/* ---------------------------------- */
+/*               模块头部              */
+/* ---------------------------------- */
+.module {
+    .module-header {
+        text-align: center;
+    }
+    .module-title {
+        font-size: 60px;
+        font-weight: 600;
+        line-height: 88px;
+
+        margin-bottom: 13px;
+    }
+    .module-subtitle {
+        font-size: 16px;
+        line-height: 36px;
+
+        width: 568px;
+        margin: 0 auto;
+
+        color: $desc-color;
+    }
+}
