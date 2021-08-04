@@ -196,3 +196,9 @@
     max-width: 94%;
     margin: 0 auto;
 }
+
+@mixin limit-wrapper-min {
+    width: $min-limit-width;
+    max-width: 94%;
+    margin: 0 auto;
+}

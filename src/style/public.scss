@@ -14,7 +14,16 @@ body {
     font-size: 14px;
     line-height: 1.32;
 
+    user-select: none;
+
     color: rgb(0 0 0);
+}
+h1,
+h2,
+h3,
+h4,
+p {
+    margin: 0;
 }
 .ic {
     font-size: inherit;
@@ -25,6 +34,10 @@ body {
 .wrapper-limit_width {
 
     @include limit-wrapper;
+}
+.wrapper-limit_width--min {
+
+    @include limit-wrapper-min;
 }
 
 /* ---------------------------------- */

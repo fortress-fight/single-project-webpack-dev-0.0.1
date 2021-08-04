@@ -19,7 +19,7 @@
 .flex-x-c {
     justify-content: center;
 }
-.flex-x-c-y-c {
+.flex-c-c {
     align-items: center;
     justify-content: center;
 }
@@ -73,4 +73,5 @@
     .grid-col-#{$num} {
         grid-template-columns: repeat($num, 1fr);
     }
+
 }
