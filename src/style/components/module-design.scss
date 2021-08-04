@@ -1,0 +1,129 @@
+/*
+ * @Description: 名片风格切换介绍
+ * @Author: F-Stone
+ * @Date: 2021-08-04 13:57:46
+ * @LastEditTime: 2021-08-04 13:57:51
+ * @LastEditors: F-Stone
+ */
+.module-design {
+    position: relative;
+
+    padding-top: 197px;
+    padding-bottom: 226px;
+
+    background-color: rgb(24 41 25);
+    .wrapper-bg {
+    
+        @include ab-cover;
+        z-index: 20;
+
+        padding-top: 197px;
+        padding-bottom: 226px;
+    }
+    .bg-body {
+        overflow: hidden;
+
+        width: 100%;
+        height: 100%;
+        &>.state-pos_left,
+        &>.state-pos_right {
+            width: 50%;
+        }
+        &>.state-pos_left {
+            margin-right: 115px;
+        }
+        &>.state-pos_right {
+            margin-left: 87px;
+            padding-top: 86px;
+        }
+        .layer--preview {
+            padding-top: 81px;
+        }
+        .box-preview_layout {
+            position: relative;
+
+            width: 322px;
+        }
+        .list-card--left {
+            position: absolute;
+            top: 0;
+            right: calc(100% + 40px);
+        }
+        .list-card--right {
+            position: absolute;
+            top: 0;
+            left: calc(100% + 40px);
+        }
+    }
+    &>.wrapper-limit_width {
+        position: relative;
+        z-index: 10;
+    }
+    .item-card {
+        flex: 0 0 auto;
+
+        width: 254px;
+        margin-right: 40px;
+        &:last-child {
+            margin-right: 0;
+        }
+        img {
+            width: 100%;
+        }
+    }
+    .module-body {
+        color: rgb(255 255 255);
+        &>.state-pos_left,
+        &>.state-pos_right {
+            width: 50%;
+        }
+        &>.state-pos_left {
+            margin-right: 115px;
+        }
+        &>.state-pos_right {
+            margin-left: 87px;
+            padding-top: 86px;
+        }
+        .box-preview_layout {
+            overflow: hidden;
+    
+            width: 322px;
+    
+            border: 6px solid rgb(255 255 255);
+            border-radius: 26px;
+            img {
+                width: 100%;
+            }
+        }
+    }
+    .item-intro {
+        margin-bottom: 164px;
+        &:last-child {
+            margin: 0;
+        }
+        .title {
+            font-size: 140px;
+            font-weight: 600;
+            line-height: 1;
+        }
+        .unit {
+            font-size: 35px;
+            line-height: 1.7;
+
+            margin-left: 7px;
+        }
+        .subtitle {
+            font-size: 52px;
+            font-weight: 600;
+            line-height: 84px;
+        }
+        .desc {
+            font-size: 16px;
+            line-height: 28px;
+
+            width: 350px;
+
+            color: rgb(255 255 255/0.5);
+        }
+    }
+}

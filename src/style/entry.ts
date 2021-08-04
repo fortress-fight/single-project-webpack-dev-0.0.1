@@ -24,5 +24,6 @@ import "./public.scss";
 /*                组件样式             */
 /* ---------------------------------- */
 import "./components/module-propaganda.scss";
+import "./components/module-design.scss";
 import "./components/module-contact.scss";
 import "./components/page-index.scss";
