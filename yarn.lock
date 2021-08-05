@@ -4297,6 +4297,11 @@ growly@^1.3.0:
   resolved "https://registry.npm.taobao.org/growly/download/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
 
+gsap@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.nlark.com/gsap/download/gsap-3.7.1.tgz#1c5857f4fbcbd3f5ca0b513ef7abf828fbaa20a8"
+  integrity sha1-HFhX9PvL0/XKC1E+96v4KPuqIKg=
+
 gzip-size@^6.0.0:
   version "6.0.0"
   resolved "https://registry.npm.taobao.org/gzip-size/download/gzip-size-6.0.0.tgz?cache=0&sync_timestamp=1605523260680&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fgzip-size%2Fdownload%2Fgzip-size-6.0.0.tgz#065367fd50c239c0671cbcbad5be3e2eeb10e462"
