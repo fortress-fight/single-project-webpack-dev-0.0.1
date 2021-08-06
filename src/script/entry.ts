@@ -5,6 +5,14 @@
  * @LastEditTime: 2021-08-02 18:26:12
  * @LastEditors: F-Stone
  */
+/* ---------------------------------- */
+/*            register lib            */
+/* ---------------------------------- */
+import "@/lib/gsap.plugin";
+
+/* ---------------------------------- */
+/*            page manages            */
+/* ---------------------------------- */
 import SiteManage from "./components/site-manage";
 import IndexPage from "./components/page-index";
 $(() => {

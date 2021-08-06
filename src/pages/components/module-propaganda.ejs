@@ -8,7 +8,7 @@
 <div class="module module-propaganda">
     <div class="module-body">
         <div class="wrapper-propaganda_text">
-            <div class="box-text_effect is-enter-center v-enter">
+            <div class="box-text_effect">
                 <div class="effect-container inner-wrapper">
                     <div class="effect-line-1 title">
                         <span class="text">好看智能名片</span>
@@ -31,7 +31,33 @@
         </div>
         <div class="wrapper-propaganda_intro">
             <div class="inner-wrapper">
-                <img src="<%= IMG_PATH + "propaganda-intro.png" %> " alt="">
+                <div class="layer-main_phone">
+                    <img class="fake-main-phone" src="<%= IMG_PATH +
+                    "fake-main-phone.png" %>" alt=""> <img class="main-phone"
+                    src="<%= IMG_PATH + "main-phone.png" %>" alt="">
+                    <div class="wrapper-slider">
+                        <div class="inner-slider flex">
+                            <div class="slider-item">
+                                <img src="<%= IMG_PATH + "main-phone-img-0.png"
+                                %>" alt="">
+                            </div>
+                            <div class="slider-item">
+                                <img src="<%= IMG_PATH + "main-phone-img-1.png"
+                                %>" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layer-hand-back">
+                    <img class="hand-back" src="<%= IMG_PATH +"hand-back.png"
+                    %>" alt="">
+                </div>
+                <div class="layer-hand-front">
+                    <img class="hand-front" src="<%= IMG_PATH +"hand-front.png"
+                    %>" alt="">
+                </div>
+                <img class="propaganda-intro" src="<%= IMG_PATH +
+                "propaganda-intro.png" %>" alt="">
             </div>
         </div>
     </div>
