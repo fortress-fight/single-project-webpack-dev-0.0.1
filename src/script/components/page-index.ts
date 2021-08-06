@@ -162,10 +162,13 @@ function getMainPhoneEnter() {
 }
 export default class IndexPage extends SiteManage {
     disableTask = ["initScrollNav"];
-    otherTask = ["propagandaModule"];
-    propagandaModule(): void {
+    otherTask = ["propagandaModule", "designModule"];
+    private _propagandaModuleEnter() {
         const animate = getLineEnter();
         const animateEnterEnd = getLineEnterEnd();
+        animateEnterEnd.eventCallback("onComplete", () => {
+            this.beginScrollInit();
+        });
         const mainPhoneEnter = getMainPhoneEnter();
         animate.add(animateEnterEnd, ">");
         animate.add(mainPhoneEnter, "-=0.2");
@@ -195,5 +198,48 @@ export default class IndexPage extends SiteManage {
                 });
             });
         }, 100);
+    }
+    private _propagandaModuleScroll() {
+        const animate = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".module-propaganda .wrapper-propaganda_intro",
+                onUpdate: getCurrentSection,
+                start: "top 20%",
+                scrub: 1,
+                toggleActions: "restart pause reverse pause",
+                pin: ".module-propaganda .wrapper-propaganda_intro",
+            },
+        });
+        animate.fromTo(
+            ".wrapper-propaganda_intro .inner-slider",
+            { x: 0 },
+            {
+                x: "-100%",
+            }
+        );
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        function getCurrentSection({ progress, direction, isActive }) {
+            // console.log("isActive:", isActive);
+            // console.log("direction:", direction);
+            // console.log("progress:", progress);
+        }
+    }
+    beginScrollInit(): void {
+        this._propagandaModuleScroll();
+        this.designModule();
+    }
+    propagandaModule(): void {
+        this._propagandaModuleEnter();
+    }
+    designModule(): void {
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: ".module-design .module-inner_box",
+                pinType: "transform",
+                start: "top top",
+                end: "+=3000",
+                pin: ".module-design .module-inner_box",
+            },
+        });
     }
 }

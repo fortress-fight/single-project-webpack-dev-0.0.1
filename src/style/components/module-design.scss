@@ -12,16 +12,19 @@
     padding-bottom: 226px;
 
     background-color: rgb(24 41 25);
-    &>.wrapper-limit_width {
+    .module-inner_box {
         position: relative;
-        z-index: 10;
+        &>.wrapper-limit_width {
+            position: relative;
+            z-index: 10;
+        }
     }
     .wrapper-bg {
     
         @include ab-cover;
         z-index: 20;
 
-        padding-top: 197px;
+        // padding-top: 197px;
         padding-bottom: 226px;
     }
     .bg-body,

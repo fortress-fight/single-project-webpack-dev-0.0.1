@@ -42,10 +42,20 @@
         position: relative;
 
         display: inline-block;
+        overflow: hidden;
 
         width: 73%;
+        
+        vertical-align: top;
         img {
             width: 100%;
+        }
+        &::after {
+            display: block;
+
+            padding-top: 63.75%;
+
+            content: '';
         }
     }
     .layer-main_phone {
@@ -117,12 +127,20 @@
     .layer-hand-back {
         z-index: 0;
     }
+    .layer-hand-right {
+        position: absolute;
+        z-index: 30;
+        top: 59%;
+        right: 20.25%;
+        
+        width: 31.0625%;
+    }
     .layer-hand-front {
         z-index: 20;
         .hand-front {
             position: absolute;
             z-index: 20;
-            top: 9.5%;
+            top: 11.7%;
             left: 58.27%;
 
             width: 8.5625%;
