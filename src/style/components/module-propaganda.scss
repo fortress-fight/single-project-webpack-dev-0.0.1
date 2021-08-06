@@ -44,3 +44,79 @@
         }
     }
 }
+
+/* ---------------------------------- */
+/*           box-text_effect          */
+/* ---------------------------------- */
+.box-text_effect {
+    display: block;
+
+    height: 100%;
+
+    transition: transform 0.5s ease-out;
+
+    perspective: 1000px;
+    &.v-enter {
+        .effect-line-1,
+        .effect-line-2 {
+            transform: translateY(50vh) rotateY(-70deg);
+
+            opacity: 0;
+        }
+        &.is-enter-center {
+            transform: translateY(50vh) rotateY(-70deg);
+
+            opacity: 0;
+        }
+    }
+    &.v-leave-to {
+        .effect-container {
+            transition: transform 1s ease-in 0.1s;
+            transform: rotateY(20deg) translateX(-10px) translateZ(200px);
+        }
+        .effect-line-1 {
+            transition: transform 1s ease-in, opacity 0.9s ease-out;
+        }
+        .effect-line-2 {
+            transition: transform 1s ease-in 0.1s, opacity 0.9s ease-out 0.1s;
+        }
+        .effect-line-1,
+        .effect-line-2 {
+            transform: translateY(-60vh) translateY(-100%) rotateY(90deg);
+            transform-origin: center center;
+        
+            opacity: 0;
+        }
+    }
+    .effect-line-1 {
+        transition: transform 2s cubic-bezier(0.23, 1, 0.32, 1), opacity 1.5s ease-out;
+        transform: translateY(0) translateY(0) translateX(0) rotateY(0);
+        transform-origin: center center;
+        letter-spacing: -4px;
+
+        opacity: 1;
+    }
+    .effect-line-2 {
+        transition: transform 2s cubic-bezier(0.23, 1, 0.32, 1) 0.1s, opacity 1.5s ease-out 0.08s;
+        transform: translateY(0) translateY(0) translateX(0) rotateY(0);
+        transform-origin: center center;
+    
+        opacity: 1;
+    }
+    .effect-container {
+        transition: transform 0.5s ease-out;
+        // transform: translateZ(200px);
+
+        perspective: 1000px;
+    }
+}
+
+@supports (-moz-appearance:none) {
+    .box-text_effect {
+        transform-style: preserve-3d;
+    }
+    .box-text_effect * {
+        transform-style: inherit;
+    }
+
+}

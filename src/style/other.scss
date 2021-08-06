@@ -1,0 +1,18 @@
+/*
+ * @Description: 作为最终样式，用于覆盖之前的样式
+ * @Author: F-Stone
+ * @Date: 2021-08-05 14:19:58
+ * @LastEditTime: 2021-08-05 14:21:44
+ * @LastEditors: F-Stone
+ */
+body {
+    overflow: hidden;
+
+    height: 100vh;
+}
+.site-logo,
+.btn-open_QR,
+.btn-open_project_QR,
+.wrapper-propaganda_intro {
+    opacity: 0;
+}

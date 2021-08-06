@@ -31,3 +31,13 @@ import "./components/module-intro.scss";
 import "./components/module-doc.scss";
 import "./components/module-statistic.scss";
 import "./components/page-index.scss";
+
+/* ---------------------------------- */
+/*             适配相关样式            */
+/* ---------------------------------- */
+import "./media.scss";
+
+/* ---------------------------------- */
+/*                其它样式            */
+/* ---------------------------------- */
+import "./other.scss";
