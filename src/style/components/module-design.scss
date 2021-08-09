@@ -16,16 +16,21 @@
         position: relative;
         &>.wrapper-limit_width {
             position: relative;
-            z-index: 10;
         }
     }
     .wrapper-bg {
     
-        @include ab-cover;
+        // @include ab-cover;
+        position: absolute;
         z-index: 20;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
 
         // padding-top: 197px;
-        padding-bottom: 226px;
+        // padding-bottom: 226px;
     }
     .bg-body,
     .module-body {
@@ -41,7 +46,9 @@
             padding-left: 87px;
         }
         .box-preview_layout {
-            width: 322px;
+
+            @include image-placeholder(322px, 697px)
+        ;
         }
     }
     .bg-body {
@@ -49,21 +56,124 @@
 
         width: 100%;
         height: 100%;
-        .layer--preview {
-            padding-top: 81px;
+        &>.state-pos_left,
+        &>.state-pos_right {
+            width: 50%;
+        }
+        img {
+            width: 100%;
         }
         .box-preview_layout {
-            position: relative;
+
+            @include image-placeholder(322px, 697px)
+        ;
+            .box-img {
+                overflow: hidden;
+
+                border: 6px solid rgb(255 255 255);
+                border-radius: 26px;
+                background: rgb(255 255 255);
+            }
         }
-        .list-card--left {
-            position: absolute;
-            top: 0;
-            right: calc(100% + 40px);
-        }
+        .list-card--left,
         .list-card--right {
             position: absolute;
+            // top: 81px;
+            top: 79px;
+            
+            overflow: hidden;
+        }
+        .list-card--left {
+            right: 100%;
+
+            padding-right: 40px;
+            .list-card-box {
+                transform: translateX(882px);
+            }
+        }
+        .list-card--right {
+            left: 100%;
+
+            padding-left: 40px;
+        }
+    }
+    .box-phone {
+        position: relative;
+        .phone-head {
+
+            @include image-placeholder(1125px, 218px);
+            position: absolute;
+            z-index: 10;
+
+            width: 100%;
+        }
+        .phone-card {
+            position: relative;
+
+            padding-top: percent(270px, 1125px);
+        }
+        .phone-footer {
+            padding-top: percent(769px, 1125px);
+            img {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+
+                display: none;
+
+                width: 100%;
+                &:first-child {
+                    display: block;
+                }
+            }
+        }
+        .card-box {
+            position: relative;
+            z-index: 20;
+
+            overflow: hidden;
+
+            width: percent(930px, 1125px);
+            margin: 0 auto;
+
+            border-radius: 8px;
+            box-shadow: 0 17px 34px 0 rgb(31 54 29 / 0.68);
+        }
+        .card-cover {
+            
+            @include ab-cover;
+        }
+        .card-box-inner {
+            display: flex;
+
+            width: 100%;
+        }
+        .card-item {
+
+            @include image-placeholder(256px, 385px);
+            position: relative;
+
+            flex: 0 0 auto;
+
+            width: 100%;
+        }
+        .card-bg {
+            position: absolute;
             top: 0;
-            left: calc(100% + 40px);
+            left: 0;
+
+            width: 100%;
+            padding-top: percent(1344px, 1125px);
+
+            background-color: rgb(14 18 11);
+        }
+        &[data-theme='lighter'] {
+            .deep-head {
+                opacity: 1;
+            }
+            .lighter-head {
+                opacity: 0;
+            }
         }
     }
     .item-card {
@@ -82,10 +192,10 @@
         color: rgb(255 255 255);
         .box-preview_layout {
             overflow: hidden;
-    
-    
+
             border: 6px solid rgb(255 255 255);
             border-radius: 26px;
+            box-shadow: 0 50px 100px 0 rgb(0 2 85 / 0.3);
             img {
                 width: 100%;
             }
@@ -95,6 +205,8 @@
         margin-bottom: 164px;
         &:last-child {
             margin: 0;
+
+            opacity: 0;
         }
         .title {
             font-size: 140px;

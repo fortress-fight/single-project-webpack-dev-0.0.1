@@ -7,6 +7,7 @@
  */
 
 import SiteManage from "./site-manage";
+import { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
 import { gsap } from "gsap";
 
 function getLineEnter() {
@@ -167,7 +168,7 @@ export default class IndexPage extends SiteManage {
         const animate = getLineEnter();
         const animateEnterEnd = getLineEnterEnd();
         animateEnterEnd.eventCallback("onComplete", () => {
-            this.beginScrollInit();
+            ScrollTrigger.refresh();
         });
         const mainPhoneEnter = getMainPhoneEnter();
         animate.add(animateEnterEnd, ">");
@@ -200,21 +201,20 @@ export default class IndexPage extends SiteManage {
         }, 100);
     }
     private _propagandaModuleScroll() {
-        const animate = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".module-propaganda .wrapper-propaganda_intro",
-                onUpdate: getCurrentSection,
-                start: "top 20%",
-                scrub: 1,
-                toggleActions: "restart pause reverse pause",
-                pin: ".module-propaganda .wrapper-propaganda_intro",
-            },
-        });
+        const animate = gsap.timeline();
         animate.fromTo(
             ".wrapper-propaganda_intro .inner-slider",
             { x: 0 },
             {
                 x: "-100%",
+                scrollTrigger: {
+                    trigger: ".module-propaganda .wrapper-propaganda_intro",
+                    onUpdate: getCurrentSection,
+                    start: "bottom bottom",
+                    scrub: 1,
+                    toggleActions: "restart pause reverse pause",
+                    pin: ".module-propaganda .wrapper-propaganda_intro",
+                },
             }
         );
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -223,22 +223,235 @@ export default class IndexPage extends SiteManage {
             // console.log("direction:", direction);
             // console.log("progress:", progress);
         }
-    }
-    beginScrollInit(): void {
-        this._propagandaModuleScroll();
         this.designModule();
+        return animate;
     }
     propagandaModule(): void {
+        if (!$(".module-propaganda")[0]) return;
         this._propagandaModuleEnter();
+        // this._propagandaModuleScroll();
+    }
+    private _getCardAnimate(cardIndex) {
+        let param = {
+            cardIndex: cardIndex,
+            footerImg: 0,
+            cardX: "-100%",
+            designBg: "#202167",
+            cardBg: "#2f4461",
+            cardShadow: "0px 17px 33px 0px rgba(20, 33, 93, 0.68)",
+        };
+        switch (cardIndex) {
+            case 2:
+                param = {
+                    cardIndex: cardIndex,
+                    footerImg: 1,
+                    cardX: "-200%",
+                    designBg: "#370000",
+                    cardBg: "#420001",
+                    cardShadow: "0px 17px 33px 0px rgba(39, 3, 3, 0.68)",
+                };
+                break;
+
+            case 3:
+                param = {
+                    cardIndex: cardIndex,
+                    footerImg: 2,
+                    cardX: "-300%",
+                    designBg: "#33a47b",
+                    cardBg: "#d9e3e7",
+                    cardShadow: "0px 17px 33px 0px rgba(15, 160, 109, 0.68)",
+                };
+                break;
+
+            default:
+                break;
+        }
+        const cardAnimate = gsap.timeline({
+            paused: true,
+            defaults: {
+                duration: 0.65,
+            },
+            onReverseComplete() {
+                $(".phone-footer img").eq(param.footerImg).siblings().hide();
+                $(".phone-footer img").eq(param.footerImg).show();
+            },
+            onStart() {
+                $(".phone-footer img")
+                    .eq(param.footerImg + 1)
+                    .siblings()
+                    .hide();
+                $(".phone-footer img")
+                    .eq(param.footerImg + 1)
+                    .show();
+            },
+        });
+        cardAnimate.to(".phone-card .card-box-inner", {
+            x: param.cardX,
+        });
+        cardAnimate.to(
+            ".module-design",
+            {
+                backgroundColor: param.designBg,
+            },
+            0
+        );
+        cardAnimate.to(
+            ".module-design .card-bg",
+            {
+                backgroundColor: param.cardBg,
+            },
+            0
+        );
+        cardAnimate.to(
+            ".module-design .card-box",
+            {
+                boxShadow: param.cardShadow,
+            },
+            0
+        );
+        cardAnimate.to(
+            ".module-design .list-card--right .item-card",
+            {
+                x: () => {
+                    return (
+                        -param.cardIndex *
+                        $(".module-design .list-card--right .item-card")
+                            .eq(0)
+                            .outerWidth(true)
+                    );
+                },
+            },
+            0
+        );
+        cardAnimate.to(
+            ".module-design .list-card--left .item-card",
+            {
+                x: () => {
+                    return (
+                        -param.cardIndex *
+                        $(".module-design .list-card--right .item-card")
+                            .eq(0)
+                            .outerWidth(true)
+                    );
+                },
+            },
+            0
+        );
+        if (cardIndex == 3) {
+            cardAnimate.to(
+                ".deep-head",
+                {
+                    opacity: 0,
+                },
+                0
+            );
+            cardAnimate.to(
+                ".lighter-head",
+                {
+                    opacity: 1,
+                },
+                0
+            );
+        }
+        return cardAnimate;
+    }
+    private _getOneCardAnimate() {
+        return this._getCardAnimate(1);
+    }
+    private _getTwoCardAnimate() {
+        return this._getCardAnimate(2);
+    }
+    private _getThreeCardAnimate() {
+        return this._getCardAnimate(3);
+    }
+    private _designModuleScrollUpdate() {
+        const infoAnimate = gsap.timeline({ paused: true });
+        infoAnimate
+            .fromTo(
+                ".module-design .list-intro",
+                { y: 0 },
+                {
+                    y: () => {
+                        return (
+                            -1 *
+                            $(
+                                ".module-design .item-intro:first-child"
+                            ).outerHeight(true)
+                        );
+                    },
+                }
+            )
+            .fromTo(
+                ".module-design .item-intro:last-child",
+                { opacity: 0 },
+                { opacity: 1 },
+                0
+            );
+        function getCurrentSection({ progress, direction, isActive }) {
+            let pro = 0;
+            if (progress > 0.99) {
+                pro = 1;
+            } else if (progress < 0.01) {
+                pro = 0;
+            } else {
+                pro = progress;
+            }
+            infoPos(pro, isActive);
+            cardMove(pro, isActive, direction);
+        }
+        function infoPos(progress, isActive) {
+            if (isActive) {
+                infoAnimate.progress((progress - 0.6) / 0.4);
+            }
+        }
+        const oneCardAnimate = this._getOneCardAnimate();
+        const twoCardAnimate = this._getTwoCardAnimate();
+        const threeCardAnimate = this._getThreeCardAnimate();
+        function cardMove(progress, isActive, direction) {
+            if (!isActive) return;
+            let animate;
+            switch (direction) {
+                case -1:
+                    if (progress <= 1 && progress > 0.8) {
+                        animate = threeCardAnimate;
+                    }
+                    if (progress <= 0.6 && progress > 0.4) {
+                        animate = twoCardAnimate;
+                    }
+                    if (progress <= 0.2) {
+                        animate = oneCardAnimate;
+                    }
+                    break;
+
+                case 1:
+                    if (progress >= 0 && progress < 0.2) {
+                        animate = oneCardAnimate;
+                    }
+                    if (progress >= 0.4 && progress < 0.6) {
+                        animate = twoCardAnimate;
+                    }
+                    if (progress >= 0.8) {
+                        animate = threeCardAnimate;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            animate && (direction == -1 ? animate.reverse() : animate.play());
+        }
+        return getCurrentSection;
     }
     designModule(): void {
         gsap.timeline({
             scrollTrigger: {
                 trigger: ".module-design .module-inner_box",
-                pinType: "transform",
-                start: "top top",
-                end: "+=3000",
-                pin: ".module-design .module-inner_box",
+                scrub: true,
+                start: "bottom bottom",
+                end: "+=300%",
+                pin: true,
+                onUpdate: this._designModuleScrollUpdate(),
             },
         });
     }
