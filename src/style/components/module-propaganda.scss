@@ -72,21 +72,9 @@
         opacity: 0;
 
         will-change: transform, opacity;
-        .main-phone {
-            display: none;
-        }
-        .fake-main-phone {
-            display: block;
-        }
         &.state-ready {
             .wrapper-slider {
                 display: block;
-            }
-            .main-phone {
-                display: block;
-            }
-            .fake-main-phone {
-                display: none;
             }
         }
         .wrapper-slider {
