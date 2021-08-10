@@ -8,7 +8,6 @@
 
 import SiteManage from "@/util/site-manage-0.1.0";
 
-import imagesLoaded from "imagesloaded";
 import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
 
@@ -48,12 +47,6 @@ export default class UemoCardSite extends SiteManage {
             pinType: scrollContainer.style.transform ? "transform" : "fixed",
         });
 
-        const imgLoad = imagesLoaded(scrollContainer);
-
-        imgLoad.on("progress", () => {
-            locoScroll.update();
-        });
-
         this.vsScroll = locoScroll;
     }
     initScrollNav(): void {
@@ -66,9 +59,8 @@ export default class UemoCardSite extends SiteManage {
                 oldSize != "normal" && $dom.attr("data-size", "normal");
             }
         }
-        setNavState($navDom, window.scrollY);
-        $(window).on("scroll", () => {
-            setNavState($navDom, window.scrollY);
+        this.vsScroll.on("scroll", (args) => {
+            setNavState($navDom, args.delta.y);
         });
     }
 }

@@ -130,50 +130,38 @@ function getLineEnterEnd() {
     );
     return animate;
 }
-function getMainPhoneEnter() {
-    const animate = gsap.timeline();
-    const mainPhone = $(".layer-main_phone");
-    const mainHand = $(".layer-hand-back, .layer-hand-front");
-    animate.fromTo(
-        mainHand,
-        {
-            y: "10vh",
-            opacity: 0,
-        },
-        {
-            y: "0vh",
-            opacity: 1,
-            ease: "Power2.easeOut",
-        }
-    );
-    animate.fromTo(
-        mainPhone,
-        {
-            scale: 1.3,
-            opacity: 0,
-        },
-        {
-            scale: 1,
-            opacity: 1,
-            ease: "Power2.easeOut",
-        },
-        0
-    );
-    return animate;
-}
 export default class IndexPage extends SiteManage {
     disableTask = ["initScrollNav"];
     otherTask = ["propagandaModule", "designModule"];
+    private _getMainPhoneEnter() {
+        const animate = gsap.timeline();
+        // const mainPhone = $(".layer-main_phone");
+        const mainHand = $(".layer-hand-back");
+        animate.fromTo(
+            mainHand,
+            {
+                y: "10vh",
+                opacity: 0,
+            },
+            {
+                y: "0vh",
+                opacity: 1,
+                ease: "Power2.easeOut",
+            }
+        );
+        return animate;
+    }
     private _propagandaModuleEnter() {
         const animate = getLineEnter();
         const animateEnterEnd = getLineEnterEnd();
         animateEnterEnd.eventCallback("onComplete", () => {
             ScrollTrigger.update();
             ScrollTrigger.refresh();
+            this.vsScroll.update();
         });
-        const mainPhoneEnter = getMainPhoneEnter();
+        const mainPhoneEnter = this._getMainPhoneEnter();
         animate.add(animateEnterEnd, ">");
-        animate.add(mainPhoneEnter, "-=0.2");
+        animate.add(mainPhoneEnter, "-=0.3");
 
         const enterDom = $(".site-head");
         setTimeout(() => {
@@ -188,7 +176,6 @@ export default class IndexPage extends SiteManage {
                         duration: 0.4,
                         stagger: 1,
                         onStart() {
-                            window.scrollTo(0, 0);
                             animate.play();
                         },
                         onComplete: () => {
