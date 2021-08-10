@@ -255,79 +255,129 @@ export default class IndexPage extends SiteManage {
         }
         return param;
     }
+    private _getCardOtherAnimate() {
+        let otherAnimate = gsap.timeline();
+        return function (param, cardIndex) {
+            let oldIndex = $(".phone-footer img.state-active").index();
+            oldIndex = oldIndex == -1 ? 0 : oldIndex;
+            const newIndex = param.footerImg;
+            otherAnimate.kill();
+            gsap.killTweensOf($(".phone-footer img"));
+            otherAnimate = gsap.timeline();
+            otherAnimate
+                .to(".deep-head", {
+                    opacity: cardIndex == 3 ? 0 : 1,
+                })
+                .to(
+                    ".lighter-head",
+                    {
+                        opacity: cardIndex == 3 ? 1 : 0,
+                    },
+                    0
+                );
+
+            if (
+                (newIndex == 3 && oldIndex != 3) ||
+                (oldIndex == 3 && newIndex != 3)
+            ) {
+                $(".phone-footer img").eq(newIndex).addClass("state-active");
+                $(".phone-footer img").eq(oldIndex).removeClass("state-active");
+                otherAnimate.to(
+                    $(".phone-footer img").eq(newIndex).siblings(),
+                    {
+                        y: 30,
+                        opacity: 0,
+                    },
+                    0
+                );
+                otherAnimate.to($(".phone-footer img").eq(newIndex), {
+                    startAt: { y: 30 },
+                    opacity: 1,
+                    y: 0,
+                });
+            } else if (oldIndex != newIndex) {
+                $(".phone-footer img").eq(newIndex).addClass("state-active");
+                $(".phone-footer img").eq(oldIndex).removeClass("state-active");
+                otherAnimate.to(
+                    $(".phone-footer img").eq(newIndex).siblings(),
+                    { y: 0, opacity: 0, duration: 0 },
+                    0
+                );
+                otherAnimate.to(
+                    $(".phone-footer img").eq(newIndex),
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0,
+                    },
+                    0
+                );
+            }
+            return otherAnimate;
+        };
+    }
+    private _getCardInfoAnimate() {
+        let infoAnimate = gsap.timeline();
+        let oldIndex = 0;
+        const operDom = $(".module-design .list-intro .item-intro");
+        return function (param, cardIndex) {
+            if (oldIndex == cardIndex) return;
+            oldIndex = cardIndex;
+            // const animateDom = operDom.eq(0).find(".text");
+            infoAnimate.kill();
+            infoAnimate.killTweensOf();
+            infoAnimate = gsap.timeline({
+                defaults: {
+                    duration: 0.8,
+                    ease: "better-elastic",
+                },
+            });
+            operDom.each((i, dom) => {
+                const textDoms = $(dom).find(".text").toArray();
+                infoAnimate.to(
+                    [...textDoms].reverse(),
+                    {
+                        y: "100%",
+                        stagger: 0.1,
+                    },
+                    0
+                );
+                infoAnimate.to(
+                    [...textDoms],
+                    {
+                        y: "0%",
+                        onStart() {
+                            if (i == cardIndex) {
+                                operDom.not(dom).hide();
+                                $(dom).show();
+                            }
+                        },
+                        stagger: 0.1,
+                    },
+                    0.8 + 0.1 * (textDoms.length - 1)
+                );
+            });
+        };
+    }
+    private _otherAnimate;
+    private _infoAnimate;
     private _getCardAnimate(cardIndex) {
         const param = this._getCardAnimateParam(cardIndex);
-        let footerAnimate = gsap.timeline();
+        if (!this._otherAnimate) {
+            this._otherAnimate = this._getCardOtherAnimate();
+        }
+        if (!this._infoAnimate) {
+            this._infoAnimate = this._getCardInfoAnimate();
+        }
         const cardAnimate = gsap.timeline({
             paused: true,
             defaults: {
                 ease: "power2.out",
                 duration: 1.2,
             },
-            onStart() {
-                let oldIndex = $(".phone-footer img.state-active").index();
-                oldIndex = oldIndex == -1 ? 0 : oldIndex;
-                const newIndex = param.footerImg;
-                footerAnimate.kill();
-                gsap.killTweensOf($(".phone-footer img"));
-                footerAnimate = gsap.timeline();
-                footerAnimate
-                    .to(".deep-head", {
-                        opacity: cardIndex == 3 ? 0 : 1,
-                    })
-                    .to(
-                        ".lighter-head",
-                        {
-                            opacity: cardIndex == 3 ? 1 : 0,
-                        },
-                        0
-                    );
-
-                if (
-                    (newIndex == 3 && oldIndex != 3) ||
-                    (oldIndex == 3 && newIndex != 3)
-                ) {
-                    $(".phone-footer img")
-                        .eq(newIndex)
-                        .addClass("state-active");
-                    $(".phone-footer img")
-                        .eq(oldIndex)
-                        .removeClass("state-active");
-                    footerAnimate.to(
-                        $(".phone-footer img").eq(newIndex).siblings(),
-                        {
-                            y: 30,
-                            opacity: 0,
-                        },
-                        0
-                    );
-                    footerAnimate.to($(".phone-footer img").eq(newIndex), {
-                        startAt: { y: 30 },
-                        opacity: 1,
-                        y: 0,
-                    });
-                } else if (oldIndex != newIndex) {
-                    $(".phone-footer img")
-                        .eq(newIndex)
-                        .addClass("state-active");
-                    $(".phone-footer img")
-                        .eq(oldIndex)
-                        .removeClass("state-active");
-                    footerAnimate.to(
-                        $(".phone-footer img").eq(newIndex).siblings(),
-                        { y: 0, opacity: 0, duration: 0 },
-                        0
-                    );
-                    footerAnimate.to(
-                        $(".phone-footer img").eq(newIndex),
-                        {
-                            y: 0,
-                            opacity: 1,
-                            duration: 0,
-                        },
-                        0
-                    );
-                }
+            onStart: () => {
+                this._otherAnimate(param, cardIndex);
+                this._infoAnimate(param, cardIndex);
             },
         });
         cardAnimate.to(".phone-card .card-box-inner", {
@@ -381,7 +431,7 @@ export default class IndexPage extends SiteManage {
         );
         return cardAnimate;
     }
-    private _designModuleScrollUpdate() {
+    private _getCardInfoAnimateAbandoned() {
         const infoAnimate = gsap.timeline({ paused: true });
         infoAnimate
             .fromTo(
@@ -404,6 +454,9 @@ export default class IndexPage extends SiteManage {
                 { opacity: 1 },
                 0
             );
+        return infoAnimate;
+    }
+    private _designModuleScrollUpdate() {
         function getCurrentSection({ progress, direction, isActive }) {
             let pro = 0;
             if (progress > 0.99) {
@@ -413,13 +466,14 @@ export default class IndexPage extends SiteManage {
             } else {
                 pro = progress;
             }
-            infoPos(pro, isActive);
+            // infoPos(pro, isActive);
             cardMove(pro, isActive, direction);
         }
-        function infoPos(progress, isActive) {
-            if (!isActive) return;
-            infoAnimate.progress((progress - 0.6) / 0.4);
-        }
+        // const infoAnimate = this._getCardInfoAnimate();
+        // function infoPos(progress, isActive) {
+        //     if (!isActive) return;
+        //     infoAnimate.progress((progress - 0.6) / 0.4);
+        // }
         const animateGroup = {
             oneCardAnimate: () => this._getCardAnimate(0),
             reOneCardAnimate: () => this._getCardAnimate(0),
@@ -482,9 +536,9 @@ export default class IndexPage extends SiteManage {
     designModule(): void {
         gsap.timeline({
             scrollTrigger: {
-                trigger: ".module-design .module-inner_box",
+                trigger: ".module-design",
                 scrub: true,
-                start: "bottom bottom",
+                start: "top top",
                 end: "+=300%",
                 pin: true,
                 onUpdate: this._designModuleScrollUpdate(),

@@ -16,6 +16,7 @@
         position: relative;
         &>.wrapper-limit_width {
             position: relative;
+            z-index: 100;
         }
     }
     .wrapper-bg {
@@ -207,11 +208,22 @@
         }
     }
     .item-intro {
-        margin-bottom: 164px;
-        &:last-child {
-            margin: 0;
+        display: none;
 
-            opacity: 0;
+        margin-bottom: 164px;
+        &>* {
+            overflow: hidden;
+        }
+        &:first-child {
+            display: block;
+        }
+        &:last-child {
+            .title {
+                padding-bottom: 12px;
+            }
+        }
+        .text {
+            display: inline-block;
         }
         .title {
             font-size: 140px;
