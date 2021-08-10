@@ -132,7 +132,7 @@ function getLineEnterEnd() {
 }
 export default class IndexPage extends SiteManage {
     disableTask = ["initScrollNav"];
-    otherTask = ["propagandaModule", "designModule"];
+    otherTask = ["propagandaModule", "designModule", "contactModule"];
     private _getMainPhoneEnter() {
         const animate = gsap.timeline();
         // const mainPhone = $(".layer-main_phone");
@@ -186,9 +186,25 @@ export default class IndexPage extends SiteManage {
             });
         }, 100);
     }
+    private _propagandaModuleScroll() {
+        const textWrapper = $(".wrapper-propaganda_text");
+        const IntroWrapper = $(".wrapper-propaganda_intro");
+
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: ".module-propaganda",
+                scroller: "[data-scroll-container]",
+                start: "top top",
+                scrub: true,
+            },
+        })
+            .to(textWrapper, { y: "30vh", opacity: 0 }, 0)
+            .to(IntroWrapper, { y: "20vh" }, 0);
+    }
     propagandaModule(): void {
         if (!$(".module-propaganda")[0]) return;
         this._propagandaModuleEnter();
+        this._propagandaModuleScroll();
     }
 
     private _getCardAnimateParam(cardIndex) {
@@ -532,6 +548,37 @@ export default class IndexPage extends SiteManage {
                 pin: true,
                 onUpdate: this._designModuleScrollUpdate(),
             },
+        });
+    }
+    contactModule(): void {
+        if (!$(".module-contact").length) return;
+        const animate = gsap
+            .timeline({
+                scrollTrigger: {
+                    trigger: ".module-contact",
+                    scroller: "[data-scroll-container]",
+                    scrub: true,
+                    start: "top bottom",
+                    end: "bottom bottom",
+                },
+            })
+            .fromTo(
+                ".module-contact > .wrapper-limit_width--min",
+                { y: "-20vh" },
+                { y: "0vh" }
+            );
+        $(".module-contact .layer-circle img").each((i, dom) => {
+            animate.fromTo(
+                dom,
+                {
+                    y: () => {
+                        return $(dom).data("speed") * 3 * i + "vh";
+                    },
+                    ease: "power1.none",
+                },
+                { y: "0vh" },
+                0
+            );
         });
     }
 }
