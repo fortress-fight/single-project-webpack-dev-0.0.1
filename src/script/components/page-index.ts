@@ -534,9 +534,11 @@ export default class IndexPage extends SiteManage {
         return getCurrentSection;
     }
     designModule(): void {
+        if (!$(".module-design").length) return;
         gsap.timeline({
             scrollTrigger: {
                 trigger: ".module-design",
+                scroller: "[data-scroll-container]",
                 scrub: true,
                 start: "top top",
                 end: "+=300%",

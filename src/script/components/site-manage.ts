@@ -8,9 +8,46 @@
 
 import SiteManage from "@/util/site-manage-0.1.0";
 
+import LocomotiveScroll from "locomotive-scroll";
+import "locomotive-scroll/dist/locomotive-scroll.css";
+
+import { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
+
 export default class UemoCardSite extends SiteManage {
     name = "uemo-card";
+    vsScroll = null;
+    readonly preTask = ["initVsScroll"];
     readonly defaultTask = ["initScrollNav"];
+    initVsScroll(): void {
+        const scrollContainer = $("[data-scroll-container]")[0];
+        const locoScroll = new LocomotiveScroll({
+            el: scrollContainer,
+            smooth: true,
+            speed: true,
+            lerp: 0.075,
+            offset: ["-100%", "-100%"],
+        });
+
+        locoScroll.on("scroll", ScrollTrigger.update);
+
+        ScrollTrigger.scrollerProxy("[data-scroll-container]", {
+            scrollTop: (value) => {
+                return arguments.length
+                    ? locoScroll.scrollTo(value, 0, 0)
+                    : locoScroll.scroll.instance.scroll.y;
+            },
+            getBoundingClientRect() {
+                return {
+                    top: 0,
+                    left: 0,
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                };
+            },
+            pinType: scrollContainer.style.transform ? "transform" : "fixed",
+        });
+        this.vsScroll = locoScroll;
+    }
     initScrollNav(): void {
         const $navDom = $("#site-head");
         function setNavState($dom, scrollY, condition = 20) {
