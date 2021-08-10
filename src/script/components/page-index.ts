@@ -203,20 +203,35 @@ export default class IndexPage extends SiteManage {
         if (!$(".module-propaganda")[0]) return;
         this._propagandaModuleEnter();
     }
-    private _getCardAnimate(cardIndex) {
-        let param = {
-            cardIndex: cardIndex,
-            footerImg: 0,
-            cardX: "-100%",
-            designBg: "#202167",
-            cardBg: "#2f4461",
-            cardShadow: "0px 17px 33px 0px rgba(20, 33, 93, 0.68)",
-        };
+
+    private _getCardAnimateParam(cardIndex) {
+        let param;
         switch (cardIndex) {
-            case 2:
+            case 0:
+                param = {
+                    cardIndex: cardIndex,
+                    footerImg: 0,
+                    cardX: "0",
+                    designBg: "#182919",
+                    cardBg: "#0e120b",
+                    cardShadow: "0px 17px 33px 0px rgb(31, 54, 29, 0.68) ",
+                };
+                break;
+            case 1:
                 param = {
                     cardIndex: cardIndex,
                     footerImg: 1,
+                    cardX: "-100%",
+                    designBg: "#202167",
+                    cardBg: "#2f4461",
+                    cardShadow: "0px 17px 33px 0px rgba(20, 33, 93, 0.68)",
+                };
+                break;
+
+            case 2:
+                param = {
+                    cardIndex: cardIndex,
+                    footerImg: 2,
                     cardX: "-200%",
                     designBg: "#370000",
                     cardBg: "#420001",
@@ -227,7 +242,7 @@ export default class IndexPage extends SiteManage {
             case 3:
                 param = {
                     cardIndex: cardIndex,
-                    footerImg: 2,
+                    footerImg: 3,
                     cardX: "-300%",
                     designBg: "#33a47b",
                     cardBg: "#d9e3e7",
@@ -238,36 +253,90 @@ export default class IndexPage extends SiteManage {
             default:
                 break;
         }
+        return param;
+    }
+    private _getCardAnimate(cardIndex) {
+        const param = this._getCardAnimateParam(cardIndex);
+        let footerAnimate = gsap.timeline();
         const cardAnimate = gsap.timeline({
             paused: true,
             defaults: {
                 ease: "power2.out",
                 duration: 1.2,
             },
-            onReverseComplete() {
-                $(".phone-footer img").eq(param.footerImg).siblings().hide();
-                $(".phone-footer img").eq(param.footerImg).show();
-            },
             onStart() {
-                $(".phone-footer img")
-                    .eq(param.footerImg + 1)
-                    .siblings()
-                    .hide();
-                $(".phone-footer img")
-                    .eq(param.footerImg + 1)
-                    .show();
+                let oldIndex = $(".phone-footer img.state-active").index();
+                oldIndex = oldIndex == -1 ? 0 : oldIndex;
+                const newIndex = param.footerImg;
+                footerAnimate.kill();
+                gsap.killTweensOf($(".phone-footer img"));
+                footerAnimate = gsap.timeline();
+                footerAnimate
+                    .to(".deep-head", {
+                        opacity: cardIndex == 3 ? 0 : 1,
+                    })
+                    .to(
+                        ".lighter-head",
+                        {
+                            opacity: cardIndex == 3 ? 1 : 0,
+                        },
+                        0
+                    );
+
+                if (
+                    (newIndex == 3 && oldIndex != 3) ||
+                    (oldIndex == 3 && newIndex != 3)
+                ) {
+                    $(".phone-footer img")
+                        .eq(newIndex)
+                        .addClass("state-active");
+                    $(".phone-footer img")
+                        .eq(oldIndex)
+                        .removeClass("state-active");
+                    footerAnimate.to(
+                        $(".phone-footer img").eq(newIndex).siblings(),
+                        {
+                            y: 30,
+                            opacity: 0,
+                        },
+                        0
+                    );
+                    footerAnimate.to($(".phone-footer img").eq(newIndex), {
+                        startAt: { y: 30 },
+                        opacity: 1,
+                        y: 0,
+                    });
+                } else if (oldIndex != newIndex) {
+                    $(".phone-footer img")
+                        .eq(newIndex)
+                        .addClass("state-active");
+                    $(".phone-footer img")
+                        .eq(oldIndex)
+                        .removeClass("state-active");
+                    footerAnimate.to(
+                        $(".phone-footer img").eq(newIndex).siblings(),
+                        { y: 0, opacity: 0, duration: 0 },
+                        0
+                    );
+                    footerAnimate.to(
+                        $(".phone-footer img").eq(newIndex),
+                        {
+                            y: 0,
+                            opacity: 1,
+                            duration: 0,
+                        },
+                        0
+                    );
+                }
             },
         });
         cardAnimate.to(".phone-card .card-box-inner", {
             x: param.cardX,
         });
-        cardAnimate.to(
-            ".module-design",
-            {
-                backgroundColor: param.designBg,
-            },
-            0
-        );
+        cardAnimate.to(".module-design", {
+            backgroundColor: param.designBg,
+            duration: 0.66,
+        });
         cardAnimate.to(
             ".module-design .card-bg",
             {
@@ -276,7 +345,7 @@ export default class IndexPage extends SiteManage {
             0
         );
         cardAnimate.to(
-            ".module-design .card-box",
+            ".module-design .img-wrapper",
             {
                 boxShadow: param.cardShadow,
             },
@@ -310,22 +379,6 @@ export default class IndexPage extends SiteManage {
             },
             0
         );
-        if (cardIndex == 3) {
-            cardAnimate.to(
-                ".deep-head",
-                {
-                    opacity: 0,
-                },
-                0
-            );
-            cardAnimate.to(
-                ".lighter-head",
-                {
-                    opacity: 1,
-                },
-                0
-            );
-        }
         return cardAnimate;
     }
     private _designModuleScrollUpdate() {
@@ -367,56 +420,62 @@ export default class IndexPage extends SiteManage {
             if (!isActive) return;
             infoAnimate.progress((progress - 0.6) / 0.4);
         }
-        const oneCardAnimate = this._getCardAnimate(1);
-        const twoCardAnimate = this._getCardAnimate(2);
-        const threeCardAnimate = this._getCardAnimate(3);
+        const animateGroup = {
+            oneCardAnimate: () => this._getCardAnimate(0),
+            reOneCardAnimate: () => this._getCardAnimate(0),
+            twoCardAnimate: () => this._getCardAnimate(1),
+            reTwoCardAnimate: () => this._getCardAnimate(1),
+            threeCardAnimate: () => this._getCardAnimate(2),
+            reThreeCardAnimate: () => this._getCardAnimate(2),
+            fourCardAnimate: () => this._getCardAnimate(3),
+            reFourCardAnimate: () => this._getCardAnimate(3),
+        };
+        let oldAnimateName;
+        let oldAnimate;
         function cardMove(progress, isActive, direction) {
             if (!isActive) return;
-            let animate;
+            let animateName;
             switch (direction) {
                 case -1:
-                    if (progress <= 1 && progress > 0.8) {
-                        animate = threeCardAnimate;
+                    if (progress >= 0 && progress < 0.25) {
+                        animateName = "reOneCardAnimate";
                     }
-                    if (progress <= 0.6 && progress > 0.4) {
-                        animate = twoCardAnimate;
+                    if (progress >= 0.25 && progress < 0.5) {
+                        animateName = "reTwoCardAnimate";
                     }
-                    if (progress <= 0.2) {
-                        animate = oneCardAnimate;
+                    if (progress >= 0.5 && progress < 0.75) {
+                        animateName = "reThreeCardAnimate";
+                    }
+                    if (progress >= 0.75 && progress <= 1) {
+                        animateName = "reFourCardAnimate";
                     }
                     break;
 
                 case 1:
-                    if (progress >= 0 && progress < 0.2) {
-                        animate = oneCardAnimate;
+                    if (progress >= 0 && progress < 0.25) {
+                        animateName = "oneCardAnimate";
                     }
-                    if (progress >= 0.4 && progress < 0.6) {
-                        animate = twoCardAnimate;
+                    if (progress >= 0.25 && progress < 0.5) {
+                        animateName = "twoCardAnimate";
                     }
-                    if (progress >= 0.8) {
-                        animate = threeCardAnimate;
+                    if (progress >= 0.5 && progress < 0.75) {
+                        animateName = "threeCardAnimate";
+                    }
+                    if (progress >= 0.75 && progress <= 1) {
+                        animateName = "fourCardAnimate";
                     }
                     break;
 
                 default:
                     break;
             }
-
-            animate &&
-                (direction == -1
-                    ? gsap.to(animate, {
-                          time: 0,
-                          ease: "power2.out",
-                          duration: 1.2,
-                          overwrite: true,
-                      })
-                    : animate.play());
-            // gsap.to(animate, {
-            //       time: 1.2,
-            //       ease: "power2.out",
-            //       duration: 1.2,
-            //       overwrite: true,
-            //   }));
+            if (animateName && oldAnimateName != animateName) {
+                oldAnimateName = animateName;
+                oldAnimate && oldAnimate.kill();
+                const animate = animateGroup[animateName]();
+                oldAnimate = animate;
+                animate.play();
+            }
         }
         return getCurrentSection;
     }
