@@ -7,11 +7,11 @@
  */
 .module-show {
     padding-top: 144px;
-    padding-bottom: 223px;
+    padding-bottom: 123px;
 
     background-color: rgb(255 255 255);
     .module-header {
-        margin-bottom: 179px;
+        margin-bottom: 79px;
     }
     .module-subtitle {
         margin-bottom: 41px;
@@ -45,7 +45,13 @@
         }
     }
     .module-body {
+        padding-top: 100px;
+        padding-bottom: 100px;
+
         text-align: center;
+        &>.container {
+            min-height: 100vh;
+        }
         .group-col {
             position: relative;
             z-index: 10;
@@ -83,5 +89,9 @@
                 margin-bottom: 0;
             }
         }
+    }
+    .main-phone {
+
+        @include image-placeholder(322px, 681px);
     }
 }

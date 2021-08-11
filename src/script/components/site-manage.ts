@@ -31,9 +31,12 @@ export default class UemoCardSite extends SiteManage {
 
         locoScroll.on("scroll", ScrollTrigger.update);
 
+        ScrollTrigger.defaults({
+            scroller: scrollContainer,
+        });
         ScrollTrigger.scrollerProxy("[data-scroll-container]", {
-            scrollTop: (value) => {
-                return arguments.length
+            scrollTop(value) {
+                return value
                     ? locoScroll.scrollTo(value, 0, 0)
                     : locoScroll.scroll.instance.scroll.y;
             },
@@ -47,7 +50,7 @@ export default class UemoCardSite extends SiteManage {
             },
             pinType: scrollContainer.style.transform ? "transform" : "fixed",
         });
-
+        ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
         const imgLoad = imagesLoaded(scrollContainer);
 
         imgLoad.on("progress", () => {

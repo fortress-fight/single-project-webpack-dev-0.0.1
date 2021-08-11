@@ -132,7 +132,12 @@ function getLineEnterEnd() {
 }
 export default class IndexPage extends SiteManage {
     disableTask = ["initScrollNav"];
-    otherTask = ["propagandaModule", "designModule", "contactModule"];
+    otherTask = [
+        "propagandaModule",
+        "designModule",
+        "contactModule",
+        "showModule",
+    ];
     private _getMainPhoneEnter() {
         const animate = gsap.timeline();
         // const mainPhone = $(".layer-main_phone");
@@ -193,7 +198,6 @@ export default class IndexPage extends SiteManage {
         gsap.timeline({
             scrollTrigger: {
                 trigger: ".module-propaganda",
-                scroller: "[data-scroll-container]",
                 start: "top top",
                 scrub: true,
             },
@@ -434,31 +438,6 @@ export default class IndexPage extends SiteManage {
         );
         return cardAnimate;
     }
-    private _getCardInfoAnimateAbandoned() {
-        const infoAnimate = gsap.timeline({ paused: true });
-        infoAnimate
-            .fromTo(
-                ".module-design .list-intro",
-                { y: 0 },
-                {
-                    y: () => {
-                        return (
-                            -1 *
-                            $(
-                                ".module-design .item-intro:first-child"
-                            ).outerHeight(true)
-                        );
-                    },
-                }
-            )
-            .fromTo(
-                ".module-design .item-intro:last-child",
-                { opacity: 0 },
-                { opacity: 1 },
-                0
-            );
-        return infoAnimate;
-    }
     private _designModuleScrollUpdate() {
         function getCurrentSection({ progress, direction, isActive }) {
             let pro = 0;
@@ -541,7 +520,6 @@ export default class IndexPage extends SiteManage {
         gsap.timeline({
             scrollTrigger: {
                 trigger: ".module-design",
-                scroller: "[data-scroll-container]",
                 scrub: true,
                 start: "top top",
                 end: "+=300%",
@@ -550,29 +528,84 @@ export default class IndexPage extends SiteManage {
             },
         });
     }
+    showModule(): void {
+        // paused: true,
+        const hideAnimate = gsap.timeline({
+            defaults: {
+                ease: "better-elastic",
+            },
+        });
+        const infoItem = $(
+            ".module-show .module-body .item-intro:not(.main-phone)"
+        ).toArray();
+        hideAnimate.to([...infoItem], {
+            scale: 0.4,
+            duration: 0.6,
+            opacity: 0,
+            stagger: {
+                grid: [4, 2],
+                from: "end",
+                ease: "better-elastic",
+                amount: 0.2,
+            },
+        });
+        const showModuleScroll = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".module-show .module-body",
+                start: "center center",
+                end: "+=300%",
+                scrub: true,
+                pin: true,
+                snap: {
+                    snapTo: 1,
+                    duration: 0.3,
+                    delay: 0.1,
+                    ease: "power1.inOut",
+                },
+                // "labelsDirectional",
+                // onEnter() {
+                //     // console.log("running");
+                //     hideAnimate.play();
+                // },
+            },
+        });
+        showModuleScroll.addLabel("start").add(hideAnimate).addLabel("end");
+    }
     contactModule(): void {
         if (!$(".module-contact").length) return;
-        const animate = gsap
-            .timeline({
-                scrollTrigger: {
-                    trigger: ".module-contact",
-                    scroller: "[data-scroll-container]",
-                    scrub: true,
-                    start: "top bottom",
-                    end: "bottom bottom",
-                },
-            })
-            .fromTo(
-                ".module-contact > .wrapper-limit_width--min",
-                { y: "-20vh" },
-                { y: "0vh" }
-            );
+        const animate = gsap.timeline({
+            defaults: {
+                ease: "Power0.easeNone",
+            },
+            scrollTrigger: {
+                trigger: ".module-contact",
+                scrub: true,
+                start: "top bottom",
+                end: "bottom bottom",
+                onUpdate: updateContactModule,
+            },
+        });
+
+        function updateContactModule({ progress }) {
+            gsap.set($(".module-contact > .wrapper-limit_width--min"), {
+                y: -(1 - progress) * 100 + "%",
+            });
+        }
+        animate.fromTo(
+            ".module-contact > .wrapper-limit_width--min",
+            {
+                top: () =>
+                    $(".module-contact > .wrapper-limit_width--min").height() *
+                    0.3,
+            },
+            { top: "0vh" }
+        );
         $(".module-contact .layer-circle img").each((i, dom) => {
             animate.fromTo(
                 dom,
                 {
                     y: () => {
-                        return $(dom).data("speed") * 3 * i + "vh";
+                        return $(dom).data("speed") * 6 + "vh";
                     },
                     ease: "power1.none",
                 },
