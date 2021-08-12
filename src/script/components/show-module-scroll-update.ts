@@ -144,16 +144,15 @@ function getInfoAnimate() {
     const operDom = $(".module-show .intro-item ");
     return function (stepIndex) {
         const currentIndex = stepIndex;
-        console.log("stepIndex:", stepIndex);
         if (oldIndex == currentIndex) return;
         oldIndex = currentIndex;
-        infoAnimate.kill();
+        // infoAnimate.kill();
         infoAnimate.killTweensOf();
         infoAnimate = gsap.timeline({
             overwrite: true,
             smoothChildTiming: true,
             defaults: {
-                duration: 0.8,
+                duration: 0.6,
                 ease: "better-elastic",
             },
         });
@@ -185,7 +184,7 @@ function getInfoAnimate() {
                         from: "start",
                     },
                 },
-                0.8 + 0.1 * (textDoms.length - 1)
+                0.6 + 0.1 * (textDoms.length - 1)
             );
         });
     };
@@ -316,7 +315,14 @@ function getMainPhoneAnimate() {
         }
     );
 }
+// function getWebScroll() {
+//     const animate = gsap.timeline();
+//     animate.to({})
+//     return animate;
+// }
 export default function showModuleScrollUpdate(): TYPE_SCROLL_UPDATE {
+    const web = $(".box-m_web img:nth-child(2)");
+    const mWeb = $(".wrapper-uemo_web img:nth-child(2)");
     function getCurrentSection({ progress, direction, isActive }) {
         let pro = 0;
         if (progress > 0.99) {
@@ -346,16 +352,33 @@ export default function showModuleScrollUpdate(): TYPE_SCROLL_UPDATE {
         let animateName;
         let animate;
         animateGroup.mainPhoneAnimate.progress(progress / 0.2);
+        const webScrollProgress = gsap.utils.clamp(
+            0,
+            1,
+            gsap.utils.normalize(0.4, 0.6, progress)
+        );
+        if (oldAnimate) {
+            console.log(!oldAnimate.paused);
+            gsap.to(web, {
+                y: -200 * webScrollProgress,
+            });
+            gsap.to(mWeb, {
+                y: -300 * webScrollProgress,
+            });
+        }
         switch (direction) {
             case -1:
-                if (progress >= 0.2 && progress < 0.4) {
+                if (progress >= 0 && progress < 0.2) {
                     animateName = "reStepOneAnimate";
                 }
-                if (progress >= 0.4 && progress < 0.6) {
+                if (progress >= 0.2 && progress < 0.4) {
                     animateName = "reStepTwoAnimate";
                 }
-                if (progress >= 0.6 && progress < 0.8) {
+                if (progress >= 0.4 && progress < 0.6) {
                     animateName = "reStepThreeAnimate";
+                }
+                if (progress >= 0.6 && progress <= 0.8) {
+                    animateName = "reStepFourAnimate";
                 }
                 if (progress >= 0.8 && progress <= 1) {
                     animateName = "reStepFourAnimate";
