@@ -11,8 +11,6 @@ import type { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
 
 type TYPE_SCROLL_UPDATE = ScrollTrigger.Callback;
 
-let otherAnimate;
-let infoAnimate;
 function getCardAnimateParam(cardIndex) {
     let param;
     switch (cardIndex) {
@@ -168,6 +166,9 @@ function getCardInfoAnimate() {
         });
     };
 }
+
+let otherAnimate;
+let infoAnimate;
 function getCardAnimate(cardIndex) {
     const param = getCardAnimateParam(cardIndex);
     if (!otherAnimate) {

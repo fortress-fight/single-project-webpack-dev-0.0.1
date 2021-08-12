@@ -9,23 +9,198 @@ type TYPE_SCROLL_UPDATE = ScrollTrigger.Callback;
 
 import { gsap } from "gsap";
 
-function getHideAnimate() {
-    const hideAnimate = gsap.timeline({
-        paused: true,
-        defaults: {
-            ease: "better-elastic",
-        },
-    });
+interface TYPE_ANIMATE_PARAM_PRO {
+    target: JQuery<HTMLElement>;
+    param: { [param: string]: string | number };
+}
+function getAnimateParam(): {
+    [param: number]: {
+        infoItem: TYPE_ANIMATE_PARAM_PRO;
+        bg: TYPE_ANIMATE_PARAM_PRO;
+        uemoWeb: TYPE_ANIMATE_PARAM_PRO;
+        phoneWrapper: TYPE_ANIMATE_PARAM_PRO;
+        backCard: TYPE_ANIMATE_PARAM_PRO;
+    };
+} {
     const infoItem = $(
         ".module-show .module-body .item-intro:not(.intro-phone)"
-    ).toArray();
+    );
     const bg = $(".module-show .wrapper-sec-area .state-pos_right");
     const uemoWeb = $(".module-show .wrapper-sec-area .uemo-web");
-    const textDom = $(".module-show .intro-item .inner-row");
-    hideAnimate.to(infoItem, {
-        scale: 0.4,
+    const phoneWrapper = $(
+        ".module-show .wrapper-main_phone_imgs, .module-show .main-phone-2"
+    );
+    const backCard = $(".module-show .main-phone-back-card");
+    return {
+        0: {
+            infoItem: {
+                target: infoItem,
+                param: { scale: 1, opacity: 1 },
+            },
+            bg: { target: bg, param: { width: 0 } },
+            uemoWeb: { target: uemoWeb, param: { y: "10vh", opacity: 0 } },
+            phoneWrapper: {
+                target: phoneWrapper,
+                param: { x: "0%" },
+            },
+            backCard: {
+                target: backCard,
+                param: { opacity: "0" },
+            },
+        },
+        1: {
+            infoItem: {
+                target: infoItem,
+                param: { scale: 0.4, opacity: 0 },
+            },
+            bg: {
+                target: bg,
+                param: { width: "50%" },
+            },
+            uemoWeb: {
+                target: uemoWeb,
+                param: { y: "0", opacity: 1 },
+            },
+            phoneWrapper: {
+                target: phoneWrapper,
+                param: { x: "0%" },
+            },
+            backCard: {
+                target: backCard,
+                param: { opacity: "0" },
+            },
+        },
+        2: {
+            infoItem: {
+                target: infoItem,
+                param: { scale: 0.4, opacity: 0 },
+            },
+            bg: {
+                target: bg,
+                param: { width: "50%" },
+            },
+            uemoWeb: {
+                target: uemoWeb,
+                param: { y: "0", opacity: 1 },
+            },
+            phoneWrapper: {
+                target: phoneWrapper,
+                param: { x: "-100%" },
+            },
+            backCard: {
+                target: backCard,
+                param: { opacity: "0.7" },
+            },
+        },
+        3: {
+            infoItem: {
+                target: infoItem,
+                param: { scale: 0.4, opacity: 0 },
+            },
+            bg: {
+                target: bg,
+                param: { width: "50%" },
+            },
+            uemoWeb: {
+                target: uemoWeb,
+                param: { y: "0", opacity: 1 },
+            },
+            phoneWrapper: {
+                target: phoneWrapper,
+                param: { x: "0%" },
+            },
+            backCard: {
+                target: backCard,
+                param: { opacity: "0.7" },
+            },
+        },
+        4: {
+            infoItem: {
+                target: infoItem,
+                param: { scale: 0.4, opacity: 0 },
+            },
+            bg: {
+                target: bg,
+                param: { width: "50%" },
+            },
+            uemoWeb: {
+                target: uemoWeb,
+                param: { y: "0", opacity: 1 },
+            },
+            phoneWrapper: {
+                target: phoneWrapper,
+                param: { x: "0%" },
+            },
+            backCard: {
+                target: backCard,
+                param: { opacity: "0.7" },
+            },
+        },
+    };
+}
+function getInfoAnimate() {
+    let infoAnimate = gsap.timeline();
+    let oldIndex = -1;
+    const operDom = $(".module-show .intro-item ");
+    return function (stepIndex) {
+        const currentIndex = stepIndex;
+        console.log("stepIndex:", stepIndex);
+        if (oldIndex == currentIndex) return;
+        oldIndex = currentIndex;
+        infoAnimate.kill();
+        infoAnimate.killTweensOf();
+        infoAnimate = gsap.timeline({
+            overwrite: true,
+            smoothChildTiming: true,
+            defaults: {
+                duration: 0.8,
+                ease: "better-elastic",
+            },
+        });
+        operDom.each((i, dom) => {
+            const textDoms = $(dom).find(".inner-row").toArray();
+            infoAnimate.to(
+                textDoms,
+                {
+                    y: "100%",
+                    stagger: {
+                        amount: 0.1,
+                        from: "end",
+                    },
+                },
+                0
+            );
+            infoAnimate.to(
+                textDoms,
+                {
+                    y: "0%",
+                    onStart() {
+                        if (i == currentIndex) {
+                            operDom.not(dom).hide();
+                            $(dom).show();
+                        }
+                    },
+                    stagger: {
+                        amount: 0.1,
+                        from: "start",
+                    },
+                },
+                0.8 + 0.1 * (textDoms.length - 1)
+            );
+        });
+    };
+}
+
+let infoAnimate;
+let initAnimate = false;
+let animateParam: ReturnType<typeof getAnimateParam>;
+function setForward(stepIndex, animate) {
+    const { infoItem, bg, uemoWeb, phoneWrapper, backCard } =
+        animateParam[stepIndex];
+
+    animate.to(infoItem.target, {
+        ...infoItem.param,
         duration: 0.6,
-        opacity: 0,
         stagger: {
             grid: [4, 2],
             from: "end",
@@ -33,74 +208,74 @@ function getHideAnimate() {
             amount: 0.2,
         },
     });
-    hideAnimate.to(
-        bg,
+    animate.to(
+        bg.target,
         {
-            width: "50%",
+            ...bg.param,
             duration: 0.6,
+            onStart() {
+                infoAnimate(stepIndex);
+            },
         },
         "-=0.2"
     );
-    hideAnimate.to(uemoWeb, {
-        y: 0,
+    animate.to(uemoWeb.target, {
+        ...uemoWeb.param,
         duration: 1,
-        opacity: 1,
     });
-    hideAnimate.to(
-        textDom,
+    animate.to(
+        phoneWrapper.target,
         {
-            y: 0,
-            duration: 0.8,
-            stagger: {
-                amount: 0.1,
-                from: "start",
-            },
-        },
-        "-=0.7"
-    );
-    return hideAnimate;
-}
-function getReHideAnimate() {
-    const hideAnimate = gsap.timeline({
-        paused: true,
-        defaults: {
-            ease: "better-elastic",
-        },
-    });
-    const infoItem = $(
-        ".module-show .module-body .item-intro:not(.main-phone)"
-    ).toArray();
-    const bg = $(".module-show .wrapper-sec-area .state-pos_right");
-    const uemoWeb = $(".module-show .wrapper-sec-area .uemo-web");
-    const textDom = $(".module-show .intro-item .inner-row");
-
-    hideAnimate.to(textDom, {
-        y: "100%",
-        duration: 0.8,
-        stagger: {
-            amount: 0.1,
-            from: "end",
-        },
-    });
-    hideAnimate.to(
-        uemoWeb,
-        {
-            y: "10vh",
+            ...phoneWrapper.param,
             duration: 1,
-            opacity: 0,
         },
-        0.3
+        "-=1"
     );
-    hideAnimate.to(bg, {
-        width: "0",
+    animate.to(
+        backCard.target,
+        {
+            ...backCard.param,
+            duration: 0.6,
+        },
+        "-=1"
+    );
+}
+function setBack(stepIndex, animate) {
+    const { infoItem, bg, uemoWeb, phoneWrapper, backCard } =
+        animateParam[stepIndex];
+
+    animate.to(backCard.target, {
+        ...backCard.param,
         duration: 0.6,
     });
-    hideAnimate.to(
-        infoItem,
+    animate.to(
+        phoneWrapper.target,
         {
-            scale: 1,
+            ...phoneWrapper.param,
+            duration: 1,
+        },
+        "-=1"
+    );
+    animate.to(
+        uemoWeb.target,
+        {
+            ...uemoWeb.param,
+            duration: 1,
+        },
+        "-=1"
+    );
+    animate.to(bg.target, {
+        ...bg.param,
+        duration: 0.6,
+        onStart() {
+            infoAnimate(stepIndex);
+        },
+    });
+    animate.to(
+        infoItem.target,
+        {
+            ...infoItem.param,
             duration: 0.6,
-            opacity: 1,
             stagger: {
                 grid: [4, 2],
                 ease: "better-elastic",
@@ -109,14 +284,30 @@ function getReHideAnimate() {
         },
         "-=0.2"
     );
-    return hideAnimate;
 }
-export default function showModuleScrollUpdate(): TYPE_SCROLL_UPDATE {
-    const animateGroup = {
-        hideAnimate: () => getHideAnimate(),
-        reHideAnimate: () => getReHideAnimate(),
-    };
-    const mainPhoneAnimate = gsap.fromTo(
+function getAnimate(stepIndex, direction) {
+    if (!initAnimate) {
+        animateParam = getAnimateParam();
+        infoAnimate = getInfoAnimate();
+        initAnimate = true;
+    }
+    const animate = gsap.timeline({
+        paused: true,
+        overwrite: true,
+        smoothChildTiming: true,
+        defaults: {
+            ease: "better-elastic",
+        },
+    });
+    if (direction == 1) {
+        setForward(stepIndex, animate);
+    } else {
+        setBack(stepIndex, animate);
+    }
+    return animate;
+}
+function getMainPhoneAnimate() {
+    return gsap.fromTo(
         $(".module-show .main-phone"),
         { opacity: 0.3 },
         {
@@ -124,11 +315,9 @@ export default function showModuleScrollUpdate(): TYPE_SCROLL_UPDATE {
             opacity: 1,
         }
     );
-    let oldAnimateName;
-    let oldAnimate;
-    return function getCurrentSection({ progress, direction, isActive }) {
-        if (!isActive) return;
-        let animateName;
+}
+export default function showModuleScrollUpdate(): TYPE_SCROLL_UPDATE {
+    function getCurrentSection({ progress, direction, isActive }) {
         let pro = 0;
         if (progress > 0.99) {
             pro = 1;
@@ -137,23 +326,69 @@ export default function showModuleScrollUpdate(): TYPE_SCROLL_UPDATE {
         } else {
             pro = progress;
         }
-        mainPhoneAnimate.progress(progress / 0.2);
+        runAnimate(pro, isActive, direction);
+    }
+    const animateGroup = {
+        stepOneAnimate: (direction) => getAnimate(0, direction),
+        reStepOneAnimate: (direction) => getAnimate(0, direction),
+        stepTwoAnimate: (direction) => getAnimate(1, direction),
+        reStepTwoAnimate: (direction) => getAnimate(1, direction),
+        stepThreeAnimate: (direction) => getAnimate(2, direction),
+        reStepThreeAnimate: (direction) => getAnimate(2, direction),
+        stepFourAnimate: (direction) => getAnimate(3, direction),
+        reStepFourAnimate: (direction) => getAnimate(3, direction),
+        mainPhoneAnimate: getMainPhoneAnimate(),
+    };
+    let oldAnimateName;
+    let oldAnimate;
+    function runAnimate(progress, isActive, direction) {
+        if (!isActive) return;
+        let animateName;
+        let animate;
+        animateGroup.mainPhoneAnimate.progress(progress / 0.2);
+        switch (direction) {
+            case -1:
+                if (progress >= 0.2 && progress < 0.4) {
+                    animateName = "reStepOneAnimate";
+                }
+                if (progress >= 0.4 && progress < 0.6) {
+                    animateName = "reStepTwoAnimate";
+                }
+                if (progress >= 0.6 && progress < 0.8) {
+                    animateName = "reStepThreeAnimate";
+                }
+                if (progress >= 0.8 && progress <= 1) {
+                    animateName = "reStepFourAnimate";
+                }
+                break;
+            case 1:
+                if (progress >= 0 && progress < 0.2) {
+                    animateName = "stepOneAnimate";
+                }
+                if (progress >= 0.2 && progress < 0.4) {
+                    animateName = "stepTwoAnimate";
+                }
+                if (progress >= 0.4 && progress < 0.6) {
+                    animateName = "stepThreeAnimate";
+                }
+                if (progress >= 0.6 && progress < 0.8) {
+                    animateName = "stepFourAnimate";
+                }
+                if (progress >= 0.8 && progress <= 1) {
+                    animateName = "stepFourAnimate";
+                }
+                break;
 
-        if (direction == 1) {
-            if (pro >= 0.2) {
-                animateName = "hideAnimate";
-            }
-        } else {
-            if (pro <= 0.2) {
-                animateName = "reHideAnimate";
-            }
+            default:
+                break;
         }
         if (animateName && oldAnimateName != animateName) {
             oldAnimateName = animateName;
-            oldAnimate && oldAnimate.kill();
-            const animate = animateGroup[animateName]();
+            oldAnimate && oldAnimate.killTweensOf();
+            animate = animateGroup[animateName](direction);
             oldAnimate = animate;
             animate.play();
         }
-    };
+    }
+    return getCurrentSection;
 }

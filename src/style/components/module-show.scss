@@ -105,6 +105,8 @@
                 .item-intro {
                     overflow: hidden;
 
+                    transform: translate3d(0, 0, 0);
+
                     border-radius: 21px;
                     background: rgb(255 255 255);
                 }
@@ -121,17 +123,39 @@
                     border-radius: 21px;
                     box-shadow: 0 50px 100px 0 rgb(0 2 85 / 0.3);
                 }
+                .wrapper-main_phone_imgs {
+
+                    @include ab-cover;
+                    display: flex;
+                }
                 .main-phone-2 {
                     position: absolute;
                     top: 75px;
-                    right: 0;
-                    left: 0;
-            
-                    width: 262px;
+                    right: 6px;
+                    left: 6px;
+
                     margin: 0 auto;
-            
+
                     border-radius: 8px;
-                    box-shadow: 0 12px 24px 0 rgb(14 112 59 / 0.3);
+                }
+                .main-phone-2-img {
+                    overflow: hidden;
+                    
+                    width: 262px;
+
+                    border-radius: 8px;
+                    box-shadow: 0 12px 24px 0 rgb(14 112 59 / 30%);
+                }
+                .main-phone-back-card {
+                    position: absolute;
+                    right: -98%;
+                    bottom: 20%;
+
+                    width: auto;
+
+                    opacity: 0;
+                    border-radius: 10px;
+                    box-shadow: 0 10px 20px 0 rgb(0 0 0 / 0.4);
                 }
             }
             img {
@@ -205,11 +229,8 @@
         width: 370px;
 
         text-align: left;
-        .text {
-            transform: translateY(100%);
-        }
         .intro-item {
-            display: none;
+            // display: none;
             &>* {
                 overflow: hidden;
             }

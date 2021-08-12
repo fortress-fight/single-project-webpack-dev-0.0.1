@@ -100,6 +100,7 @@ export default class IndexPage extends SiteManage {
         });
     }
     showModule(): void {
+        if (!$(".module-show").length) return;
         gsap.timeline({
             scrollTrigger: {
                 trigger: ".module-show .module-body",
