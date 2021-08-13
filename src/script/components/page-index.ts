@@ -103,12 +103,13 @@ export default class IndexPage extends SiteManage {
         if (!$(".module-show").length) return;
         gsap.timeline({
             scrollTrigger: {
+                id: "moduleShow",
                 trigger: ".module-show .module-body",
                 start: "center center",
-                end: "+=300%",
+                end: "+=400%",
                 scrub: true,
                 pin: true,
-                onUpdate: showModuleScrollUpdate(),
+                onUpdate: showModuleScrollUpdate(this.vsScroll),
             },
         });
     }

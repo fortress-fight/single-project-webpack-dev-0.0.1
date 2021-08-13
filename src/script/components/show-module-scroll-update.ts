@@ -8,6 +8,7 @@
 type TYPE_SCROLL_UPDATE = ScrollTrigger.Callback;
 
 import { gsap } from "gsap";
+let siteVsScroll;
 
 interface TYPE_ANIMATE_PARAM_PRO {
     target: JQuery<HTMLElement>;
@@ -146,7 +147,7 @@ function getInfoAnimate() {
         const currentIndex = stepIndex;
         if (oldIndex == currentIndex) return;
         oldIndex = currentIndex;
-        // infoAnimate.kill();
+        infoAnimate.kill();
         infoAnimate.killTweensOf();
         infoAnimate = gsap.timeline({
             overwrite: true,
@@ -189,17 +190,45 @@ function getInfoAnimate() {
         });
     };
 }
-
+function getWebAnimate() {
+    const operDomWrapper = $(".wrapper-uemo_web");
+    const operDom = operDomWrapper.find(".slider-item");
+    let webAnimate = gsap.timeline();
+    let oldIndex = -1;
+    return function (stepIndex) {
+        const currentIndex = stepIndex;
+        if (oldIndex == currentIndex) return;
+        // infoAnimate.kill();
+        webAnimate.killTweensOf();
+        webAnimate = gsap.timeline({
+            overwrite: true,
+            smoothChildTiming: true,
+            defaults: {
+                duration: 1,
+                ease: "better-elastic",
+            },
+        });
+        webAnimate.to(operDom.not(operDom.eq(currentIndex)), { opacity: 0 });
+        webAnimate.to(operDom.eq(currentIndex), { opacity: 1 }, 0);
+        oldIndex = currentIndex;
+    };
+}
 let infoAnimate;
+let webAnimate;
 let initAnimate = false;
 let animateParam: ReturnType<typeof getAnimateParam>;
-function setForward(stepIndex, animate) {
+function setForward(stepIndex, animate: gsap.core.Timeline) {
     const { infoItem, bg, uemoWeb, phoneWrapper, backCard } =
         animateParam[stepIndex];
 
     animate.to(infoItem.target, {
         ...infoItem.param,
         duration: 0.6,
+        onStart() {
+            if (stepIndex == 1) {
+                siteVsScroll.stop();
+            }
+        },
         stagger: {
             grid: [4, 2],
             from: "end",
@@ -215,6 +244,11 @@ function setForward(stepIndex, animate) {
             onStart() {
                 infoAnimate(stepIndex);
             },
+            onComplete() {
+                if (stepIndex == 1) {
+                    siteVsScroll.start();
+                }
+            },
         },
         "-=0.2"
     );
@@ -227,6 +261,13 @@ function setForward(stepIndex, animate) {
         {
             ...phoneWrapper.param,
             duration: 1,
+            onStart() {
+                webAnimate(stepIndex);
+                siteVsScroll.stop();
+            },
+            onComplete() {
+                siteVsScroll.start();
+            },
         },
         "-=1"
     );
@@ -252,6 +293,10 @@ function setBack(stepIndex, animate) {
         {
             ...phoneWrapper.param,
             duration: 1,
+            onStart() {
+                webAnimate(stepIndex);
+                infoAnimate(stepIndex);
+            },
         },
         "-=1"
     );
@@ -266,9 +311,6 @@ function setBack(stepIndex, animate) {
     animate.to(bg.target, {
         ...bg.param,
         duration: 0.6,
-        onStart() {
-            infoAnimate(stepIndex);
-        },
     });
     animate.to(
         infoItem.target,
@@ -288,6 +330,7 @@ function getAnimate(stepIndex, direction) {
     if (!initAnimate) {
         animateParam = getAnimateParam();
         infoAnimate = getInfoAnimate();
+        webAnimate = getWebAnimate();
         initAnimate = true;
     }
     const animate = gsap.timeline({
@@ -320,9 +363,11 @@ function getMainPhoneAnimate() {
 //     animate.to({})
 //     return animate;
 // }
-export default function showModuleScrollUpdate(): TYPE_SCROLL_UPDATE {
-    const web = $(".box-m_web img:nth-child(2)");
-    const mWeb = $(".wrapper-uemo_web img:nth-child(2)");
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export default function showModuleScrollUpdate(vsScroll): TYPE_SCROLL_UPDATE {
+    siteVsScroll = vsScroll;
+    // const web = $(".box-m_web img:nth-child(2)");
+    // const mWeb = $(".wrapper-uemo_web img:nth-child(2)");
     function getCurrentSection({ progress, direction, isActive }) {
         let pro = 0;
         if (progress > 0.99) {
@@ -352,59 +397,36 @@ export default function showModuleScrollUpdate(): TYPE_SCROLL_UPDATE {
         let animateName;
         let animate;
         animateGroup.mainPhoneAnimate.progress(progress / 0.2);
+
+        // const { progress } = ScrollTrigger.getById("moduleShow");
+
         const webScrollProgress = gsap.utils.clamp(
             0,
             1,
-            gsap.utils.normalize(0.4, 0.6, progress)
+            gsap.utils.normalize(0.4, 0.7, progress)
         );
-        if (oldAnimate) {
-            console.log(!oldAnimate.paused);
-            gsap.to(web, {
-                y: -200 * webScrollProgress,
-            });
-            gsap.to(mWeb, {
-                y: -300 * webScrollProgress,
-            });
-        }
-        switch (direction) {
-            case -1:
-                if (progress >= 0 && progress < 0.2) {
-                    animateName = "reStepOneAnimate";
-                }
-                if (progress >= 0.2 && progress < 0.4) {
-                    animateName = "reStepTwoAnimate";
-                }
-                if (progress >= 0.4 && progress < 0.6) {
-                    animateName = "reStepThreeAnimate";
-                }
-                if (progress >= 0.6 && progress <= 0.8) {
-                    animateName = "reStepFourAnimate";
-                }
-                if (progress >= 0.8 && progress <= 1) {
-                    animateName = "reStepFourAnimate";
-                }
-                break;
-            case 1:
-                if (progress >= 0 && progress < 0.2) {
-                    animateName = "stepOneAnimate";
-                }
-                if (progress >= 0.2 && progress < 0.4) {
-                    animateName = "stepTwoAnimate";
-                }
-                if (progress >= 0.4 && progress < 0.6) {
-                    animateName = "stepThreeAnimate";
-                }
-                if (progress >= 0.6 && progress < 0.8) {
-                    animateName = "stepFourAnimate";
-                }
-                if (progress >= 0.8 && progress <= 1) {
-                    animateName = "stepFourAnimate";
-                }
-                break;
+        gsap.to($("#web-site-body"), {
+            y: -300 * webScrollProgress,
+        });
+        gsap.to($("#mweb-site-body"), {
+            y: -400 * webScrollProgress,
+        });
 
-            default:
-                break;
+        const dir = direction == -1 ? "reStep" : "step";
+        if (progress >= 0 && progress < 0.2) {
+            animateName = "OneAnimate";
         }
+        if (progress >= 0.2 && progress < 0.3) {
+            animateName = "TwoAnimate";
+        }
+        if (progress >= 0.3 && progress < 0.7) {
+            animateName = "ThreeAnimate";
+        }
+        if (progress >= 0.7 && progress <= 1) {
+            animateName = "FourAnimate";
+        }
+        animateName = dir + animateName;
+
         if (animateName && oldAnimateName != animateName) {
             oldAnimateName = animateName;
             oldAnimate && oldAnimate.killTweensOf();
