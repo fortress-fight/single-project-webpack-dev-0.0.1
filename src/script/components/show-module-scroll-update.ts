@@ -244,11 +244,6 @@ function setForward(stepIndex, animate: gsap.core.Timeline) {
             onStart() {
                 infoAnimate(stepIndex);
             },
-            onComplete() {
-                if (stepIndex == 1) {
-                    siteVsScroll.start();
-                }
-            },
         },
         "-=0.2"
     );
@@ -280,7 +275,7 @@ function setForward(stepIndex, animate: gsap.core.Timeline) {
         "-=1"
     );
 }
-function setBack(stepIndex, animate) {
+function setBack(stepIndex, animate: gsap.core.Timeline) {
     const { infoItem, bg, uemoWeb, phoneWrapper, backCard } =
         animateParam[stepIndex];
 
@@ -296,6 +291,9 @@ function setBack(stepIndex, animate) {
             onStart() {
                 webAnimate(stepIndex);
                 infoAnimate(stepIndex);
+                if (stepIndex == 1) {
+                    siteVsScroll.stop();
+                }
             },
         },
         "-=1"
@@ -317,6 +315,11 @@ function setBack(stepIndex, animate) {
         {
             ...infoItem.param,
             duration: 0.6,
+            onComplete() {
+                if (stepIndex == 1) {
+                    siteVsScroll.start();
+                }
+            },
             stagger: {
                 grid: [4, 2],
                 ease: "better-elastic",
@@ -396,14 +399,14 @@ export default function showModuleScrollUpdate(vsScroll): TYPE_SCROLL_UPDATE {
         if (!isActive) return;
         let animateName;
         let animate;
-        animateGroup.mainPhoneAnimate.progress(progress / 0.2);
+        animateGroup.mainPhoneAnimate.progress(progress / 0.1);
 
         // const { progress } = ScrollTrigger.getById("moduleShow");
 
         const webScrollProgress = gsap.utils.clamp(
             0,
             1,
-            gsap.utils.normalize(0.4, 0.7, progress)
+            gsap.utils.normalize(0.3, 0.7, progress)
         );
         gsap.to($("#web-site-body"), {
             y: -300 * webScrollProgress,
@@ -413,10 +416,10 @@ export default function showModuleScrollUpdate(vsScroll): TYPE_SCROLL_UPDATE {
         });
 
         const dir = direction == -1 ? "reStep" : "step";
-        if (progress >= 0 && progress < 0.2) {
+        if (progress >= 0 && progress < 0.1) {
             animateName = "OneAnimate";
         }
-        if (progress >= 0.2 && progress < 0.3) {
+        if (progress >= 0.1 && progress < 0.3) {
             animateName = "TwoAnimate";
         }
         if (progress >= 0.3 && progress < 0.7) {

@@ -191,7 +191,7 @@ function getCardAnimate(cardIndex) {
     cardAnimate.to(".phone-card .card-box-inner", {
         x: param.cardX,
     });
-    cardAnimate.to(".module-design", {
+    cardAnimate.to(".module-design .module-inner_wrapper", {
         backgroundColor: param.designBg,
         duration: 0.66,
     });
