@@ -1,89 +1,130 @@
 .module-statistic {
-    padding-top: 171px;
-    padding-bottom: 235px;
+    padding-top: 172px;
+    padding-bottom: 172px;
 
-    background-color: rgb(248 248 248);
+    color: rgb(255 255 255);
+    background-color: rgb(248 93 27);
+    .module-header {
+        margin-bottom: 216px;
+    }
+    .module-title {
+        font-size: 60px;
+        font-weight: 900;
+        line-height: 86px;
+
+        margin-bottom: 14px;
+    }
     .module-subtitle {
-        margin-bottom: 105px;
+        font-size: 16px;
+        line-height: 36px;
+
+        color: rgb(255 255 255);
     }
-    .intro-img {
+    .module-body {
+        .wrapper-limit_width {
+
+            @include limit-wrapper-min;
+            margin: 0 auto;
+        }
+        .list-intro_img {
+
+            @include image-placeholder(880px, 1351px);
+            top: 6px;
+
+            width: 439px;
+
+
+            border-radius: 24px;
+            background: rgb(255 255 255);
+        }
+        .item-intro_img {
+
+            @include ab-cover;
+            visibility: hidden;
+            overflow: hidden;
+
+            opacity: 0;
+            border-radius: 24px;
+            box-shadow: 0 40px 80px 0 rgb(0 0 0 / 0.35);
+
+            will-change: opacity;
+            img {
+                width: 100%;
+            }
+            &:first-child {
+                z-index: 10;
+
+                visibility: visible;
+
+                opacity: 1;
+            }
+        }
+        .list-info {
+            padding-top: 179px;
+            padding-bottom: 229px;
+        }
+        .item-info {
+            margin-bottom: 150px;
+            // margin-bottom: 190px;
+            &:last-child {
+                margin-bottom: 0;
+            }
+            .ic {
+                font-size: 54px;
+                line-height: 54px;
+
+                margin-bottom: 30px;
+            }
+            .title {
+                font-size: 48px;
+                font-weight: 900;
+                line-height: 88px;
+
+                margin-bottom: 17px;
+            }
+            .desc {
+                font-size: 16px;
+                line-height: 28px;
+
+                width: 440px;
+            }
+        }
+    }
+    .box-intro_img {
         position: relative;
-
-        width: 320px;
-        margin: 0 auto;
-
-        border-radius: 16px;
-        box-shadow: 0 30px 80px rgb(0 0 0/0.1);
-        img {
-            width: 100%;
-
-            border-radius: 16px;
-        }
-    }
-    .item-intro {
-        position: absolute;
-        &.state-pos_left {
-            right: calc(100% + 140px);
-
-            text-align: right;
-            .line {
-                right: -38px;
-                &::after {
-                    left: 100%;
-                }
-            }
-        }
-        &.state-pos_right {
-            left: calc(100% + 140px);
-
-            text-align: left;
-            .line {
-                left: -38px;
-                &::after {
-                    right: 100%;
-                }
-            }
-        }
-        &:nth-of-type(1) {
-            top: 96px;
-        }
-        &:nth-of-type(2) {
-            top: 222px;
-        }
-        &:nth-of-type(3) {
-            top: 520px;
-        }
-        .line {
-
-            @include circle(13px);
+        .box-bg {
             position: absolute;
-            top: 7px;
+            top: 50%;
+            left: 50%;
 
-            border: 3px solid rgb(51 51 51);
-            &::after {
-                position: absolute;
-                top: 50%;
+            width: 0;
+            height: 0;
+            margin: 0 auto;
+        }
+        .bg-circle {
+            
+            @include image-placeholder(880px, 880px);
+            position: absolute;
 
-                width: 134px;
-                height: 1px;
+            transform: translate3d(-50%, -50%, 0);
 
-                content: '';
+            border-radius: 50%;
+            box-shadow: inset 0 0 0 rgb(0 0 0);
+            &:nth-child(1) {
+                width: 598px;
 
-                background-color: rgb(0 0 0/0.2);
+                box-shadow: inset 0 0 40px 0 rgb(88 26 0 / 0.36);
             }
-        }
-        .title {
-            font-size: 20px;
+            &:nth-child(2) {
+                width: 772px;
 
-            margin-bottom: 13px;
-        }
-        .desc {
-            font-size: 14px;
-            line-height: 28px;
-
-            width: 264px;
-
-            color: rgb(153 153 153);
+                box-shadow: inset 0 0 40px 0 rgb(88 26 0 / 0.18);
+            }
+            &:nth-child(3) {
+                width: 932px;
+                
+                box-shadow: inset 0 0 40px 0 rgb(88 26 0 / 0.108);
+            }
         }
     }
 }

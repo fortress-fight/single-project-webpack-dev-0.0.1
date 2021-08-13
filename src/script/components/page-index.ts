@@ -26,6 +26,7 @@ export default class IndexPage extends SiteManage {
         "designModule",
         "showModule",
         "contactModule",
+        "statisticModule",
     ];
     private _getMainPhoneEnter() {
         const animate = gsap.timeline();
@@ -154,6 +155,78 @@ export default class IndexPage extends SiteManage {
                 { y: "0vh" },
                 0
             );
+        });
+    }
+    statisticModule(): void {
+        if (!$(".module-statistic").length) return;
+        const itemInfo = $(".module-statistic .item-info");
+        ScrollTrigger.create({
+            trigger: ".module-statistic .box-intro_img",
+            scrub: true,
+            start: "center center",
+            end: "bottom bottom",
+            endTrigger: ".module-statistic",
+            pin: true,
+        });
+        let oldIndex = -1;
+        const doms = $(".module-statistic .item-intro_img");
+        gsap.set(doms.not(doms.eq(0)), {
+            opacity: 0,
+        });
+        function setSection(currentIndex) {
+            if (oldIndex == currentIndex) return;
+            if (oldIndex != -1) {
+                gsap.set(doms.eq(oldIndex), {
+                    zIndex: 0,
+                });
+                gsap.to(doms.eq(oldIndex), {
+                    duration: 0.36,
+                    overwrite: "auto",
+                    autoAlpha: 0,
+                });
+            }
+            gsap.set(doms.eq(currentIndex), {
+                zIndex: 10,
+            });
+            gsap.to(doms.eq(currentIndex), {
+                duration: 0.36,
+                overwrite: "auto",
+                autoAlpha: 1,
+            });
+            oldIndex = currentIndex;
+        }
+        itemInfo.each((i, dom) => {
+            const animate = gsap.timeline({
+                defaults: {
+                    ease: "Power2.easeOut",
+                },
+                scrollTrigger: {
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    trigger: dom,
+                    scrub: true,
+                    onUpdate({ progress, direction }) {
+                        if (direction == -1) {
+                            progress <= 0.5 && setSection(i);
+                        } else {
+                            progress >= 0.5 && setSection(i);
+                        }
+                    },
+                },
+            });
+            animate.from(dom, {
+                opacity: () => {
+                    return i == 0 ? 1 : 0.2;
+                },
+            });
+            animate.to(dom, {
+                opacity: 1,
+            });
+            animate.to(dom, {
+                opacity: () => {
+                    return i == itemInfo.length - 1 ? 1 : 0.3;
+                },
+            });
         });
     }
 }
