@@ -48,7 +48,8 @@ export default class UemoCardSite extends SiteManage {
                     height: window.innerHeight,
                 };
             },
-            pinType: scrollContainer.style.transform ? "transform" : "fixed",
+            pinType: "transform",
+            //  scrollContainer.style.transform ? "transform" : "fixed",
         });
         ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
         const imgLoad = imagesLoaded(scrollContainer);

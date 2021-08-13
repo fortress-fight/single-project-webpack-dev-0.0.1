@@ -90,7 +90,7 @@ export default class IndexPage extends SiteManage {
         if (!$(".module-design").length) return;
         gsap.timeline({
             scrollTrigger: {
-                trigger: ".module-design",
+                trigger: ".module-design .module-inner_wrapper",
                 scrub: true,
                 start: "top top",
                 end: "+=300%",
