@@ -1,0 +1,83 @@
+/*
+ * @Description: 获客方式
+ * @Author: F-Stone
+ * @Date: 2021-08-16 10:27:35
+ * @LastEditTime: 2021-08-16 10:27:52
+ * @LastEditors: F-Stone
+ */
+.module-extension {
+    padding-top: 157px;
+    padding-bottom: 223px;
+    .module-head {
+        margin-bottom: 154px;
+    }
+    .module-desc {
+        font-size: 16px;
+        line-height: 28px;
+
+        width: 362px;
+
+        color: rgb(102 102 102);
+    }
+    .list-extension {
+        cursor: grab;
+
+        flex-wrap: nowrap;
+        &:active {
+            cursor: grabbing;
+        }
+    }
+    .item-extension {
+
+        @include flex(c, c);
+        flex-direction: column;
+        flex: 0 0 auto;
+
+        width: 426px;
+        height: 361px;
+        margin-right: 40px;
+        padding: 0 50px;
+
+        border: 1px solid rgb(241 241 241);
+        border-radius: 4px;
+        background-color: rgb(255 255 255);
+        &>* { width: 100%;}
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+    .item-head {
+
+        @include flex(sb,c); 
+        width: 100%;
+        margin-bottom: 36px;
+        .ic {
+            font-size: 65px;
+            line-height: 65px;
+
+
+            color: rgb(51 51 51);
+        }
+        .box-index {
+            font-size: 24px;
+
+            color: rgb(239 239 239);
+        }
+    }
+    .item-title {
+        font-size: 24px;
+        line-height: 40px;
+
+        margin-bottom: 18px;
+
+        color: rgb(0 0 0);
+    }
+    .item-desc {
+        font-size: 16px;
+        line-height: 28px;
+
+        padding-bottom: 20px;
+
+        color: rgb(153 153 153);
+    }
+}

@@ -17,6 +17,7 @@ import {
 } from "./propaganda-module";
 import showModuleScrollUpdate from "./show-module-scroll-update";
 import { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
+import Impetus from "impetus";
 import designModuleScrollUpdate from "./design-module-scroll-update";
 
 export default class IndexPage extends SiteManage {
@@ -27,6 +28,7 @@ export default class IndexPage extends SiteManage {
         "showModule",
         "contactModule",
         "statisticModule",
+        "extensionModule",
     ];
     private _getMainPhoneEnter() {
         const animate = gsap.timeline();
@@ -227,6 +229,19 @@ export default class IndexPage extends SiteManage {
                     return i == itemInfo.length - 1 ? 1 : 0.3;
                 },
             });
+        });
+    }
+    extensionModule(): void {
+        if (!$(".module-extension").length) return;
+        const dom = $(".module-extension .module-body .list-extension")[0];
+        const domParent = $(".module-extension .module-body")[0];
+        const disSize = Math.abs(dom.offsetWidth - domParent.offsetWidth);
+        new Impetus({
+            source: dom,
+            boundX: [-disSize, 0],
+            update: function (x) {
+                gsap.set(dom, { x: Math.round(x) });
+            },
         });
     }
 }

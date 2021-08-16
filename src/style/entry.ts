@@ -30,6 +30,7 @@ import "./components/module-contact.scss";
 import "./components/module-intro.scss";
 import "./components/module-doc.scss";
 import "./components/module-statistic.scss";
+import "./components/module-extension.scss";
 import "./components/page-index.scss";
 
 /* ---------------------------------- */
