@@ -19,6 +19,7 @@ import showModuleScrollUpdate from "./show-module-scroll-update";
 import { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
 import Impetus from "impetus";
 import designModuleScrollUpdate from "./design-module-scroll-update";
+import initDocModuleScroll from "./doc-module-scroll";
 
 export default class IndexPage extends SiteManage {
     disableTask = ["initScrollNav"];
@@ -29,6 +30,7 @@ export default class IndexPage extends SiteManage {
         "contactModule",
         "statisticModule",
         "extensionModule",
+        "docModule",
     ];
     private _getMainPhoneEnter() {
         const animate = gsap.timeline();
@@ -175,8 +177,12 @@ export default class IndexPage extends SiteManage {
         gsap.set(doms.not(doms.eq(0)), {
             opacity: 0,
         });
-        function setSection(currentIndex) {
-            if (oldIndex == currentIndex) return;
+        function setSection(currentIndex, dir) {
+            if (dir == 1) {
+                if (currentIndex <= oldIndex) return;
+            } else {
+                if (currentIndex >= oldIndex) return;
+            }
             if (oldIndex != -1) {
                 gsap.set(doms.eq(oldIndex), {
                     zIndex: 0,
@@ -209,9 +215,9 @@ export default class IndexPage extends SiteManage {
                     scrub: true,
                     onUpdate({ progress, direction }) {
                         if (direction == -1) {
-                            progress <= 0.5 && setSection(i);
+                            progress <= 0.5 && setSection(i, direction);
                         } else {
-                            progress >= 0.5 && setSection(i);
+                            progress >= 0.5 && setSection(i, direction);
                         }
                     },
                 },
@@ -243,5 +249,8 @@ export default class IndexPage extends SiteManage {
                 gsap.set(dom, { x: Math.round(x) });
             },
         });
+    }
+    docModule(): void {
+        initDocModuleScroll();
     }
 }
