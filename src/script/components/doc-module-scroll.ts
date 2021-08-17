@@ -13,7 +13,7 @@ export default function initDocModuleScroll(): void {
         scrollTrigger: {
             trigger: ".module-doc .wrapper-limit_width .module-doc_show",
             scrub: true,
-            start: "top top",
+            start: "top top+=20vh",
             end: "bottom bottom",
             pin: true,
         },
@@ -191,14 +191,14 @@ export default function initDocModuleScroll(): void {
             {
                 ...currentParam.introImg,
             },
-            0
+            "<"
         );
         animate.to(
             ".module-doc .main-phone-lock",
             {
                 ...currentParam.mainPhoneLock,
             },
-            0
+            "<"
         );
     }
     function setSection(currentIndex, dir) {
@@ -231,22 +231,24 @@ export default function initDocModuleScroll(): void {
             trigger: ".module-doc .wrapper-limit_width",
             scrub: true,
             start: "bottom bottom",
-            end: "+=100%",
+            end: "bottom top",
+            // end: "+=100%",
             pinSpacing: false,
         },
     }).to(".module-doc .wrapper-limit_width", {
+        ease: "Power0.easeNone",
         y: "20vh",
     });
-    gsap.timeline({
-        scrollTrigger: {
-            trigger: ".scale-placeholder",
-            start: "top bottom",
-            end: "bottom bottom",
-            scrub: true,
-        },
-    }).to(".module-doc  .intro-img", {
-        scale: "1",
-    });
+    // gsap.timeline({
+    //     scrollTrigger: {
+    //         trigger: ".scale-placeholder",
+    //         start: "top bottom",
+    //         end: "bottom bottom",
+    //         scrub: true,
+    //     },
+    // }).to(".module-doc .intro-img", {
+    //     scale: "1",
+    // });
 }
 
 // gsap.timeline({

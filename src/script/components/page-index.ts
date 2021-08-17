@@ -27,10 +27,10 @@ export default class IndexPage extends SiteManage {
         "propagandaModule",
         "designModule",
         "showModule",
-        "contactModule",
-        "statisticModule",
         "extensionModule",
         "docModule",
+        "statisticModule",
+        "contactModule",
     ];
     private _getMainPhoneEnter() {
         const animate = gsap.timeline();
@@ -125,36 +125,31 @@ export default class IndexPage extends SiteManage {
                 ease: "Power0.easeNone",
             },
             scrollTrigger: {
-                trigger: ".module-contact",
+                trigger: ".module-contact .wrapper-limit_width--min",
                 scrub: true,
                 start: "top bottom",
                 end: "bottom bottom",
-                onUpdate: updateContactModule,
+                pinSpacing: false,
+                pin: true,
             },
         });
 
-        function updateContactModule({ progress }) {
-            gsap.set($(".module-contact > .wrapper-limit_width--min"), {
-                y: -(1 - progress) * 100 + "%",
-            });
-        }
         animate.fromTo(
-            ".module-contact > .wrapper-limit_width--min",
+            ".module-contact .wrapper-module_body",
             {
-                top: () =>
-                    $(".module-contact > .wrapper-limit_width--min").height() *
-                    0.3,
+                ease: "Power0.easeNone",
+                y: "-70%",
             },
-            { top: "0vh" }
+            { y: "-100%" }
         );
         $(".module-contact .layer-circle img").each((i, dom) => {
             animate.fromTo(
                 dom,
                 {
                     y: () => {
-                        return $(dom).data("speed") * 6 + "vh";
+                        return $(dom).data("speed") * 4 + "vh";
                     },
-                    ease: "power1.none",
+                    ease: "Power0.easeNone",
                 },
                 { y: "0vh" },
                 0

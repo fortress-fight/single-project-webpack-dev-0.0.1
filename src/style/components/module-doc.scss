@@ -6,7 +6,7 @@
  * @LastEditors: F-Stone
  */
 .module-doc {
-    padding-top: 289px;
+    padding-top: 189px;
     &>.wrapper-limit_width {
         position: relative;
         z-index: 10;
@@ -19,12 +19,15 @@
             width: 50%;
         }
         &>.state-pos_right {
-            // padding-top: 200px;
+            padding-top: 280px;
         }
     }
-    .scale-placeholder {
-        margin-top: calc(100vh - 289px);
-        padding-top: 200vh;
+    // .scale-placeholder {
+    //     margin-top: calc(100vh - 289px);
+    //     padding-top: 200vh;
+    // }
+    .module-doc_show {
+        padding-top: 8vh;
     }
     .list-intro {
             
@@ -108,7 +111,7 @@
 
         @include circle(844px);
         position: absolute;
-        top: -3%;
+        top: 0;
         left: 50%;
 
         transform: translateX(-50%);
@@ -122,7 +125,7 @@
 
         width: 466px;
         
-        transform: scale(11);
+        // transform: scale(11);
         // &::after {
 
 
@@ -135,10 +138,10 @@
     .intro-img--fake {
 
         @include image-placeholder(466px, 1122px);
-
-        @include ab-cover;
+        position: absolute;
+        top: 8vh;
         .main-phone-lock {
-            top: 240px;
+            top: 22%;
             left: 50%;
 
             width: 29%;
