@@ -20,6 +20,7 @@ import { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
 import Impetus from "impetus";
 import designModuleScrollUpdate from "./design-module-scroll-update";
 import initDocModuleScroll from "./doc-module-scroll";
+import initCustomerModuleScroll from "./customer-module-scroll";
 
 export default class IndexPage extends SiteManage {
     disableTask = ["initScrollNav"];
@@ -27,9 +28,10 @@ export default class IndexPage extends SiteManage {
         "propagandaModule",
         "designModule",
         "showModule",
-        "extensionModule",
         "docModule",
+        "extensionModule",
         "statisticModule",
+        "customerModule",
         "contactModule",
     ];
     private _getMainPhoneEnter() {
@@ -247,5 +249,8 @@ export default class IndexPage extends SiteManage {
     }
     docModule(): void {
         initDocModuleScroll();
+    }
+    customerModule(): void {
+        initCustomerModuleScroll();
     }
 }

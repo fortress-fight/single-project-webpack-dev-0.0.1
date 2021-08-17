@@ -133,8 +133,11 @@
     }
 }
 
-@mixin image-placeholder($width, $height) {
-    position: relative;
+@mixin image-placeholder($width, $height, $position: relative) {
+
+    @if ($position != none) {
+        position: $position;
+    }
 
     width: $width;
     &>img {
