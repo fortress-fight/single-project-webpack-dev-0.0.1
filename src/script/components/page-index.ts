@@ -124,7 +124,7 @@ export default class IndexPage extends SiteManage {
         if (!$(".module-contact").length) return;
         const animate = gsap.timeline({
             defaults: {
-                ease: "Power0.easeNone",
+                ease: "none",
             },
             scrollTrigger: {
                 trigger: ".module-contact .wrapper-limit_width--min",
@@ -139,7 +139,7 @@ export default class IndexPage extends SiteManage {
         animate.fromTo(
             ".module-contact .wrapper-module_body",
             {
-                ease: "Power0.easeNone",
+                ease: "none",
                 y: "-70%",
             },
             { y: "-100%" }
@@ -151,7 +151,7 @@ export default class IndexPage extends SiteManage {
                     y: () => {
                         return $(dom).data("speed") * 4 + "vh";
                     },
-                    ease: "Power0.easeNone",
+                    ease: "none",
                 },
                 { y: "0vh" },
                 0

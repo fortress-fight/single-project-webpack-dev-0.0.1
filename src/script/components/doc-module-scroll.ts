@@ -236,28 +236,7 @@ export default function initDocModuleScroll(): void {
             pinSpacing: false,
         },
     }).to(".module-doc .wrapper-limit_width", {
-        ease: "Power0.easeNone",
+        ease: "none",
         y: "20vh",
     });
-    // gsap.timeline({
-    //     scrollTrigger: {
-    //         trigger: ".scale-placeholder",
-    //         start: "top bottom",
-    //         end: "bottom bottom",
-    //         scrub: true,
-    //     },
-    // }).to(".module-doc .intro-img", {
-    //     scale: "1",
-    // });
 }
-
-// gsap.timeline({
-//     scrollTrigger: {
-//         trigger: ".module-doc .wrapper-limit_width .intro-img",
-//         scrub: true,
-//         start: "top 10%",
-//         end: "bottom bottom",
-//         endTrigger: ".module-doc_show",
-//         pin: true,
-//     },
-// });
