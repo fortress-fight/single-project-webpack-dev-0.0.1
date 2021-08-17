@@ -12,6 +12,11 @@ let boxWidth = 0;
 const getMaxWidth = () => {
     maxWidth = $(".module-customer .module-list")[0].offsetWidth;
     boxWidth = $(".module-customer .module-list").parent()[0].offsetWidth;
+    gsap.set(".module-customer", {
+        marginBottom: () => {
+            return -$(".module-body").innerHeight();
+        },
+    });
 };
 export default function initCustomerModuleScroll(): void {
     getMaxWidth();
@@ -38,7 +43,7 @@ export default function initCustomerModuleScroll(): void {
             ease: "none",
         },
         scrollTrigger: {
-            trigger: ".module-customer .wrapper-limit_width",
+            trigger: ".module-customer .wrapper-limit_width .module-body",
             scrub: true,
             start: "center center",
             pin: true,
@@ -59,9 +64,21 @@ export default function initCustomerModuleScroll(): void {
             invalidateOnRefresh: true,
         },
     });
-    animate.to(".module-customer .module-list", {
-        x: -Math.abs(maxWidth - boxWidth),
-    });
+    // animate.fromTo(
+    //     ".module-customer .module-body",
+    //     {
+    //         ease: "none",
+    //         y: "-100%",
+    //     },
+    //     { y: "-100%" }
+    // );
+    animate.fromTo(
+        ".module-customer .module-list",
+        { x: boxWidth },
+        {
+            x: -Math.abs(maxWidth - boxWidth),
+        }
+    );
     $(".module-customer .module-item")
         .toArray()
         .forEach((dom) => {

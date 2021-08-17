@@ -1,8 +1,14 @@
 .module-customer {
-    padding-top: 202px;
-    padding-bottom: 204px;
+    overflow: hidden;
+
 
     background-color: rgb(255 255 255);
+    .module-body {
+        padding-top: 202px;
+        padding-bottom: 204px;
+
+        transform: translateY(-100%);
+    }
     .wrapper-module_list {
         position: relative;
         &::after {

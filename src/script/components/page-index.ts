@@ -248,9 +248,11 @@ export default class IndexPage extends SiteManage {
         });
     }
     docModule(): void {
+        if (!$(".module-doc").length) return;
         initDocModuleScroll();
     }
     customerModule(): void {
+        if (!$(".module-customer").length) return;
         initCustomerModuleScroll();
     }
 }
