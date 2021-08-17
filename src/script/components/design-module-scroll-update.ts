@@ -40,17 +40,6 @@ function getCardAnimateParam(cardIndex) {
                 cardIndex: cardIndex,
                 footerImg: 2,
                 cardX: "-200%",
-                designBg: "#370000",
-                cardBg: "#420001",
-                cardShadow: "0px 17px 33px 0px rgba(39, 3, 3, 0.68)",
-            };
-            break;
-
-        case 3:
-            param = {
-                cardIndex: cardIndex,
-                footerImg: 3,
-                cardX: "-300%",
                 designBg: "#33a47b",
                 cardBg: "#d9e3e7",
                 cardShadow: "0px 17px 33px 0px rgba(15, 160, 109, 0.68)",
@@ -73,19 +62,19 @@ function getCardOtherAnimate() {
         otherAnimate = gsap.timeline();
         otherAnimate
             .to(".deep-head", {
-                opacity: cardIndex == 3 ? 0 : 1,
+                opacity: cardIndex == 2 ? 0 : 1,
             })
             .to(
                 ".lighter-head",
                 {
-                    opacity: cardIndex == 3 ? 1 : 0,
+                    opacity: cardIndex == 2 ? 1 : 0,
                 },
                 0
             );
 
         if (
-            (newIndex == 3 && oldIndex != 3) ||
-            (oldIndex == 3 && newIndex != 3)
+            (newIndex == 2 && oldIndex != 2) ||
+            (oldIndex == 2 && newIndex != 2)
         ) {
             $(".phone-footer img").eq(newIndex).addClass("state-active");
             $(".phone-footer img").eq(oldIndex).removeClass("state-active");
@@ -258,8 +247,6 @@ export default function designModuleScrollUpdate(): TYPE_SCROLL_UPDATE {
         reTwoCardAnimate: () => getCardAnimate(1),
         threeCardAnimate: () => getCardAnimate(2),
         reThreeCardAnimate: () => getCardAnimate(2),
-        fourCardAnimate: () => getCardAnimate(3),
-        reFourCardAnimate: () => getCardAnimate(3),
     };
     let oldAnimateName;
     let oldAnimate;
@@ -268,32 +255,26 @@ export default function designModuleScrollUpdate(): TYPE_SCROLL_UPDATE {
         let animateName;
         switch (direction) {
             case -1:
-                if (progress >= 0 && progress < 0.25) {
+                if (progress >= 0 && progress < 0.3333) {
                     animateName = "reOneCardAnimate";
                 }
-                if (progress >= 0.25 && progress < 0.5) {
+                if (progress >= 0.3333 && progress < 0.6666) {
                     animateName = "reTwoCardAnimate";
                 }
-                if (progress >= 0.5 && progress < 0.75) {
+                if (progress >= 0.6666 && progress < 1) {
                     animateName = "reThreeCardAnimate";
-                }
-                if (progress >= 0.75 && progress <= 1) {
-                    animateName = "reFourCardAnimate";
                 }
                 break;
 
             case 1:
-                if (progress >= 0 && progress < 0.25) {
+                if (progress >= 0 && progress < 0.3333) {
                     animateName = "oneCardAnimate";
                 }
-                if (progress >= 0.25 && progress < 0.5) {
+                if (progress >= 0.3333 && progress < 0.6666) {
                     animateName = "twoCardAnimate";
                 }
-                if (progress >= 0.5 && progress < 0.75) {
+                if (progress >= 0.6666 && progress < 1) {
                     animateName = "threeCardAnimate";
-                }
-                if (progress >= 0.75 && progress <= 1) {
-                    animateName = "fourCardAnimate";
                 }
                 break;
 

@@ -138,6 +138,6 @@ export function propagandaModuleScroll(): void {
             scrub: true,
         },
     })
-        .to(textWrapper, { y: "30vh", opacity: 0 }, 0)
+        .to(textWrapper, { y: "60vh" }, 0)
         .to(IntroWrapper, { y: "20vh" }, 0);
 }

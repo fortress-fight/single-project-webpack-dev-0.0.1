@@ -73,9 +73,9 @@
 
             border-radius: 7px;
             box-shadow: 0 10px 20px 0 rgb(0 0 0 / 0.1);
-            &:last-child {
-                margin-bottom: 0;
-            }
+            // &:last-child {
+            //     margin-bottom: 0;
+            // }
         }
     }
     /* ---------------------------------- */
@@ -264,6 +264,8 @@
         }
         img {
             position: relative;
+
+            width: 100%;
             &:first-child {
                 z-index: 100;
             }
