@@ -202,12 +202,12 @@
 
 @mixin limit-wrapper {
     width: $max-limit-width;
-    max-width: 94%;
+    max-width: 94vw;
     margin: 0 auto;
 }
 
 @mixin limit-wrapper-min {
     width: $min-limit-width;
-    max-width: 94%;
+    max-width: 94vw;
     margin: 0 auto;
 }

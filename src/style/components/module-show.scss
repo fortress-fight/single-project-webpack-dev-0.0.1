@@ -9,40 +9,12 @@
     padding-top: 144px;
     padding-bottom: 223px;
 
-    background-color: rgb(255 255 255);
+    background-color: rgb(246 246 246);
     /* ---------------------------------- */
     /*           模块head区域              */
     /* ---------------------------------- */
     .module-header {
         margin-bottom: 41px;
-    }
-    .box-desc {
-        font-size: 16px;
-
-        width: 560px;
-        height: 80px;
-
-        border-radius: 40px;
-        box-shadow: 0 40px 80px 0 rgb(0 0 0 / 0.1);
-        &>.state-pos_left {
-            padding: 0 42px 0 52px;
-        }
-        &>.state-pos_right {
-            padding: 0  52px 0 42px;
-        }
-        .ic {
-            font-size: 30px;
-
-            margin-right: 20px;
-        }
-        .divide {
-            flex: 1 1 auto;
-
-            width: 10px;
-            height: 1px;
-
-            background-color: rgb(224 224 224);
-        }
     }
     /* ---------------------------------- */
     /*               主区域               */
@@ -65,23 +37,83 @@
             margin-bottom: 42px;
 
             border-radius: 7px;
-            box-shadow: 0 10px 20px 0 rgb(0 0 0 / 0.1);
+            box-shadow: 0 20px 40px 0 rgb(0 0 0 / 10%);
             // &:last-child {
             //     margin-bottom: 0;
             // }
         }
     }
-    .module-desc {
-        // margin-bottom: 179px;
+    /* ---------------------------------- */
+    /*               第零层               */
+    /* ---------------------------------- */
+    .wrapper-zero_area {
+        .wrapper-content {
+
+            @include image-placeholder(560px, 80px);
+        }
+        .box-container {
+
+            @include ab-cover;
+        }
+        .layer--scale {
+            position: relative;
+            z-index: 100;
+
+            overflow: hidden;
+            flex: 0 0 auto;
+
+            width: 100%;
+            height: 100%;
+
+            border-radius: 40px;
+            box-shadow: 0 40px 80px 0 rgb(0 0 0 / 0.15);
+        }
+        .layer--bg {
+
+            @include ab-cover;
+            opacity: 0;
+            background-color: rgb(255 255 255); 
+        }
+    }
+    .wrapper-desc {
+
+        @include ab-cover;
+        z-index: 10;
+    }
+    .box-desc {
+        font-size: 16px;
+
+        // width: 560px;
+        height: 80px;
+        &>.state-pos_left {
+            padding: 0 42px 0 52px;
+        }
+        &>.state-pos_right {
+            padding: 0  52px 0 42px;
+        }
+        .ic {
+            font-size: 24px;
+        }
+        .divide {
+            flex: 1 1 auto;
+
+            width: 10px;
+            height: 1px;
+
+            background-color: rgb(224 224 224);
+        }
     }
     /* ---------------------------------- */
     /*               第一层               */
     /* ---------------------------------- */
     .wrapper-first_area {
         position: relative;
-        z-index: 10;
+        z-index: 11;
 
-        pointer-events: none;
+        width: 100vw;
+        height: 100%;
+
+        opacity: 0;
         &>.wrapper-limit_width {
 
             @include limit-wrapper;
@@ -127,7 +159,6 @@
 
                 width: 100%;
 
-                opacity: 0.3;
                 border: 6px solid rgb(255 255 255);
                 border-radius: 21px;
                 box-shadow: 0 50px 100px 0 rgb(0 2 85 / 0.3);
@@ -140,6 +171,7 @@
             .main-phone-card {
 
                 @include image-placeholder(310px, 671px);
+                overflow: hidden;
                 flex: 0 0 auto;
                 img:first-child {
                     position: relative;

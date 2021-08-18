@@ -175,7 +175,7 @@ export default class IndexPage extends SiteManage {
     }
     showModule(): void {
         if (!$(".module-show").length) return;
-        initShowModuleScroll();
+        initShowModuleScroll(this.vsScroll);
         // gsap.timeline({
         //     scrollTrigger: {
         //         id: "moduleShow",
