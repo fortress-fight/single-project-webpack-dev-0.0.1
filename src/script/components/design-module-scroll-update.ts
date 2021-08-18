@@ -112,59 +112,12 @@ function getCardOtherAnimate() {
         return otherAnimate;
     };
 }
-function getCardInfoAnimate() {
-    let infoAnimate = gsap.timeline();
-    let oldIndex = 0;
-    const operDom = $(".module-design .list-intro .item-intro");
-    return function (param, cardIndex) {
-        if (oldIndex == cardIndex) return;
-        oldIndex = cardIndex;
-        // const animateDom = operDom.eq(0).find(".text");
-        infoAnimate.kill();
-        infoAnimate.killTweensOf();
-        infoAnimate = gsap.timeline({
-            defaults: {
-                duration: 0.8,
-                ease: "better-elastic",
-            },
-        });
-        operDom.each((i, dom) => {
-            const textDoms = $(dom).find(".text").toArray();
-            infoAnimate.to(
-                [...textDoms].reverse(),
-                {
-                    y: "100%",
-                    stagger: 0.1,
-                },
-                0
-            );
-            infoAnimate.to(
-                [...textDoms],
-                {
-                    y: "0%",
-                    onStart() {
-                        if (i == cardIndex) {
-                            operDom.not(dom).hide();
-                            $(dom).show();
-                        }
-                    },
-                    stagger: 0.1,
-                },
-                0.8 + 0.1 * (textDoms.length - 1)
-            );
-        });
-    };
-}
 
 let otherAnimate;
-let infoAnimate;
 function getCardAnimate(cardIndex) {
     const param = getCardAnimateParam(cardIndex);
     if (!otherAnimate) {
         otherAnimate = getCardOtherAnimate();
-    }
-    if (!infoAnimate) {
-        infoAnimate = getCardInfoAnimate();
     }
     const cardAnimate = gsap.timeline({
         paused: true,
@@ -174,16 +127,19 @@ function getCardAnimate(cardIndex) {
         },
         onStart: () => {
             otherAnimate(param, cardIndex);
-            infoAnimate(param, cardIndex);
         },
     });
     cardAnimate.to(".phone-card .card-box-inner", {
         x: param.cardX,
     });
-    cardAnimate.to(".module-design .module-inner_wrapper", {
-        backgroundColor: param.designBg,
-        duration: 0.66,
-    });
+    cardAnimate.to(
+        ".module-design .module-inner_wrapper",
+        {
+            backgroundColor: param.designBg,
+            duration: 0.66,
+        },
+        0
+    );
     cardAnimate.to(
         ".module-design .card-bg",
         {

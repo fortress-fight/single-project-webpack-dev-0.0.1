@@ -95,15 +95,81 @@ export default class IndexPage extends SiteManage {
 
     designModule(): void {
         if (!$(".module-design").length) return;
-        gsap.timeline({
+        const animate = gsap.timeline({
+            defaults: {
+                ease: "none",
+            },
             scrollTrigger: {
                 trigger: ".module-design .module-inner_wrapper",
                 scrub: true,
                 start: "top top",
-                end: "+=300%",
+                end: "+=200%",
                 pin: true,
                 onUpdate: designModuleScrollUpdate(),
             },
+        });
+        $(".module-design .list-intro .item-intro").each((i, dom) => {
+            switch (i) {
+                case 0:
+                    animate.to(dom, {
+                        y: "-30%",
+                        onUpdate() {
+                            gsap.set(dom, {
+                                opacity: gsap.utils.normalize(
+                                    0,
+                                    0.5,
+                                    1 - this.progress()
+                                ),
+                            });
+                        },
+                    });
+                    break;
+
+                case 1:
+                    animate.to(dom, {
+                        y: 0,
+                        onUpdate() {
+                            gsap.set(dom, {
+                                opacity: gsap.utils.normalize(
+                                    0,
+                                    0.5,
+                                    this.progress()
+                                ),
+                            });
+                        },
+                    });
+                    animate.to(dom, {
+                        y: "-30%",
+                        onUpdate() {
+                            gsap.set(dom, {
+                                opacity: gsap.utils.normalize(
+                                    0,
+                                    0.5,
+                                    1 - this.progress()
+                                ),
+                            });
+                        },
+                    });
+                    break;
+
+                case 2:
+                    animate.to(dom, {
+                        y: 0,
+                        onUpdate() {
+                            gsap.set(dom, {
+                                opacity: gsap.utils.normalize(
+                                    0,
+                                    0.5,
+                                    this.progress()
+                                ),
+                            });
+                        },
+                    });
+                    break;
+
+                default:
+                    break;
+            }
         });
     }
     showModule(): void {
