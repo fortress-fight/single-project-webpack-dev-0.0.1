@@ -7,7 +7,7 @@
  */
 .module-show {
     padding-top: 144px;
-    padding-bottom: 223px;
+    // padding-bottom: 223px;
 
     background-color: rgb(246 246 246);
     /* ---------------------------------- */
@@ -38,9 +38,9 @@
 
             border-radius: 7px;
             box-shadow: 0 20px 40px 0 rgb(0 0 0 / 10%);
-            // &:last-child {
-            //     margin-bottom: 0;
-            // }
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
     }
     /* ---------------------------------- */
@@ -120,6 +120,11 @@
         }
         .group-row {
             width: 100%;
+
+            transform-origin: center;
+
+            perspective: 1500px;
+            transform-style: preserve-3d;
         }
         .group-col {
             position: relative;
@@ -127,6 +132,8 @@
 
             width: 302px;
             min-width: 0;
+
+            transform-style: preserve-3d;
             &:nth-child(1),
             &:nth-child(4) {
                 margin-right: 47px;
@@ -145,6 +152,8 @@
             margin: 0 70px;
             .item-intro {
                 overflow: hidden;
+
+                margin: 0;
 
                 transform: translate3d(0, 0, 0);
 
@@ -227,12 +236,20 @@
         .module-bg {
 
             @include ab-cover;
+            
+            bottom: auto;
+
+            width: 100vw;
+            height: 100vh;
+            margin: 0 auto;
         }
         .state-pos_left {
             display: flex;
 
             width: 50%;
             height: 100%;
+
+            // opacity: 0;
 
             align-items: center;
             justify-content: center;
@@ -313,22 +330,25 @@
         }
     }
     .wrapper-intro {
+        position: relative;
+
         width: 370px;
 
         text-align: left;
         .intro-item {
-            // display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            transform: translateY(50%);
+            
+            opacity: 0;
             &>* {
                 overflow: hidden;
             }
             &:first-child {
-                display: block;
+                position: relative;
             }
-            .inner-row {
-                display: inline-block;
-
-                transform: translateY(100%);
-            }   
         }
         .title {
             font-weight: 900;

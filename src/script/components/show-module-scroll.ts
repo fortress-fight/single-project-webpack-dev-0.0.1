@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 展示模块的滚动效果
  * @Author: F-Stone
@@ -8,8 +7,7 @@
  */
 
 import { gsap } from "gsap";
-import { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
-import showModuleScrollUpdate from "./show-module-scroll-update";
+import secScroll from "./show-module-scroll-update";
 
 function firstScroll() {
     const $module = $(".module-show");
@@ -143,23 +141,6 @@ function firstScroll() {
             "<"
         )
         .addLabel("layerBgEnd");
-}
-function secScroll(vsScroll) {
-    const $module = $(".module-show");
-    gsap.timeline({
-        defaults: {
-            ease: "none",
-        },
-        scrollTrigger: {
-            trigger: $module.find("#show-placeholder-2"),
-            scrub: 1,
-            start: "top bottom",
-            end: "bottom bottom",
-            pinSpacing: false,
-            onUpdate: showModuleScrollUpdate(vsScroll),
-            pin: $module.find(".wrapper-module_content"),
-        },
-    });
 }
 export default function showModuleScroll(vsScroll: unknown): void {
     firstScroll();

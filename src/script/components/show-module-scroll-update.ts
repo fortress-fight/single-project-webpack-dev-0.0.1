@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 企业展示模块的滚动效果
  * @Author: F-Stone
@@ -8,435 +9,244 @@
 type TYPE_SCROLL_UPDATE = ScrollTrigger.Callback;
 
 import { gsap } from "gsap";
+import { ScrollTrigger as scrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
 let siteVsScroll;
 
 interface TYPE_ANIMATE_PARAM_PRO {
     target: JQuery<HTMLElement>;
     param: { [param: string]: string | number };
 }
-function getAnimateParam(): {
-    [param: number]: {
-        infoItem: TYPE_ANIMATE_PARAM_PRO;
-        bg: TYPE_ANIMATE_PARAM_PRO;
-        uemoWeb: TYPE_ANIMATE_PARAM_PRO;
-        phoneWrapper: TYPE_ANIMATE_PARAM_PRO;
-        backCard: TYPE_ANIMATE_PARAM_PRO;
-    };
-} {
+// function introItemScroll() {
+//     const $module = $(".module-show");
+
+//     $module.find(".wrapper-sec-area .intro-item").each((i, dom) => {
+//         const scrollParam: ScrollTrigger.Vars = {
+//             trigger: dom,
+//             start: "center center",
+//             onUpdate({ progress }) {
+//                 console.log("progress:", progress);
+//             },
+//         };
+//         scrollTrigger.create(scrollParam);
+//     });
+// }
+export default function secScroll(vsScroll: unknown): void {
+    const $module = $(".module-show");
+    const animate = gsap.timeline({
+        defaults: {
+            ease: "none",
+        },
+        scrollTrigger: {
+            trigger: $module.find("#show-placeholder-2"),
+            scrub: 1,
+            start: "top bottom",
+            end: "bottom bottom",
+            pinSpacing: false,
+            pin: $module.find(".wrapper-module_content"),
+        },
+    });
     const infoItem = $(
         ".module-show .module-body .item-intro:not(.intro-phone)"
     );
+    animate.to(infoItem, {
+        z: (index) => {
+            if (index >= 2 && index <= 5) {
+                return -400;
+            } else {
+                return -600;
+            }
+        },
+        opacity: 0,
+        stagger: {
+            grid: [4, 2],
+            from: "edges",
+            ease: "better-elastic",
+            amount: 0.1,
+        },
+    });
     const bg = $(".module-show .wrapper-sec-area .state-pos_right");
-    const uemoWeb = $(".module-show .wrapper-sec-area .uemo-web");
+    animate.to(bg, {
+        width: "50%",
+    });
+    const phoneInfoItem = $(".module-show .module-body .intro-phone");
+    animate.fromTo(
+        phoneInfoItem,
+        {
+            z: "150px",
+        },
+        {
+            z: 0,
+            ease: "better-elastic",
+        },
+        "<"
+    );
+    let oldIndex = -1;
     const phoneWrapper = $(
         ".module-show .wrapper-main_phone_imgs, .module-show .main-phone-2"
     );
-    const backCard = $(".module-show .main-phone-back-card");
-    return {
-        0: {
-            infoItem: {
-                target: infoItem,
-                param: { scale: 1, opacity: 1 },
-            },
-            bg: { target: bg, param: { width: 0 } },
-            uemoWeb: { target: uemoWeb, param: { y: "10vh", opacity: 0 } },
-            phoneWrapper: {
-                target: phoneWrapper,
-                param: { x: "0%" },
-            },
-            backCard: {
-                target: backCard,
-                param: { opacity: "0" },
-            },
-        },
-        1: {
-            infoItem: {
-                target: infoItem,
-                param: { scale: 0.4, opacity: 0 },
-            },
-            bg: {
-                target: bg,
-                param: { width: "50%" },
-            },
-            uemoWeb: {
-                target: uemoWeb,
-                param: { y: "0", opacity: 1 },
-            },
-            phoneWrapper: {
-                target: phoneWrapper,
-                param: { x: "0%" },
-            },
-            backCard: {
-                target: backCard,
-                param: { opacity: "0" },
-            },
-        },
-        2: {
-            infoItem: {
-                target: infoItem,
-                param: { scale: 0.4, opacity: 0 },
-            },
-            bg: {
-                target: bg,
-                param: { width: "50%" },
-            },
-            uemoWeb: {
-                target: uemoWeb,
-                param: { y: "0", opacity: 1 },
-            },
-            phoneWrapper: {
-                target: phoneWrapper,
-                param: { x: "-100%" },
-            },
-            backCard: {
-                target: backCard,
-                param: { opacity: "0.7" },
-            },
-        },
-        3: {
-            infoItem: {
-                target: infoItem,
-                param: { scale: 0.4, opacity: 0 },
-            },
-            bg: {
-                target: bg,
-                param: { width: "50%" },
-            },
-            uemoWeb: {
-                target: uemoWeb,
-                param: { y: "0", opacity: 1 },
-            },
-            phoneWrapper: {
-                target: phoneWrapper,
-                param: { x: "0%" },
-            },
-            backCard: {
-                target: backCard,
-                param: { opacity: "0.7" },
-            },
-        },
-        4: {
-            infoItem: {
-                target: infoItem,
-                param: { scale: 0.4, opacity: 0 },
-            },
-            bg: {
-                target: bg,
-                param: { width: "50%" },
-            },
-            uemoWeb: {
-                target: uemoWeb,
-                param: { y: "0", opacity: 1 },
-            },
-            phoneWrapper: {
-                target: phoneWrapper,
-                param: { x: "0%" },
-            },
-            backCard: {
-                target: backCard,
-                param: { opacity: "0.7" },
-            },
-        },
-    };
-}
-function getInfoAnimate() {
-    let infoAnimate = gsap.timeline();
-    let oldIndex = -1;
-    const operDom = $(".module-show .intro-item ");
-    return function (stepIndex) {
-        const currentIndex = stepIndex;
-        if (oldIndex == currentIndex) return;
-        oldIndex = currentIndex;
-        infoAnimate.kill();
-        infoAnimate.killTweensOf();
-        infoAnimate = gsap.timeline({
-            overwrite: true,
-            smoothChildTiming: true,
-            defaults: {
-                duration: 0.6,
-                ease: "better-elastic",
-            },
+    const doms = $(".module-show .slider-item");
+    function setSection(currentIndex) {
+        const dir = animate.scrollTrigger.direction;
+        if (dir == 1) {
+            if (currentIndex <= oldIndex) return;
+        } else {
+            if (currentIndex >= oldIndex) return;
+        }
+        switch (currentIndex) {
+            case 0:
+                if (dir == -1) {
+                    gsap.to(phoneWrapper, {
+                        overwrite: "auto",
+                        duration: 0.8,
+                        ease: "better-elastic",
+                        x: "0%",
+                    });
+                }
+                break;
+            case 1:
+                gsap.to(phoneWrapper, {
+                    overwrite: "auto",
+                    duration: 0.8,
+                    ease: "better-elastic",
+                    x: "-100%",
+                });
+                if (dir == 1) {
+                    //
+                }
+                break;
+            case 2:
+                if (dir == 1) {
+                    gsap.to(phoneWrapper, {
+                        overwrite: "auto",
+                        duration: 0.8,
+                        ease: "better-elastic",
+                        x: "0%",
+                    });
+                }
+                break;
+
+            default:
+                break;
+        }
+        if (oldIndex != -1) {
+            gsap.set(doms.eq(oldIndex), {
+                zIndex: 0,
+            });
+            gsap.to(doms.eq(oldIndex), {
+                overwrite: "auto",
+                duration: 0.5,
+                autoAlpha: 0,
+            });
+        }
+        gsap.set(doms.eq(currentIndex), {
+            zIndex: 10,
         });
-        operDom.each((i, dom) => {
-            const textDoms = $(dom).find(".inner-row").toArray();
-            infoAnimate.to(
-                textDoms,
-                {
-                    y: "100%",
-                    stagger: {
-                        amount: 0.1,
-                        from: "end",
+        gsap.to(doms.eq(currentIndex), {
+            overwrite: "auto",
+            duration: 0.5,
+            autoAlpha: 1,
+        });
+        oldIndex = currentIndex;
+    }
+    $module.find(".wrapper-sec-area .intro-item").each((i, dom) => {
+        animate.addLabel("introItemStart" + i);
+        switch (i) {
+            case 0:
+                animate.to(dom, {
+                    duration: 1,
+                    y: 0,
+                    onUpdate() {
+                        const progress = this.progress();
+                        gsap.set(dom, {
+                            opacity: gsap.utils.normalize(0, 0.5, progress),
+                        });
                     },
-                },
-                0
-            );
-            infoAnimate.to(
-                textDoms,
-                {
-                    y: "0%",
-                    onStart() {
-                        if (i == currentIndex) {
-                            operDom.not(dom).hide();
-                            $(dom).show();
+                    onComplete() {
+                        setSection(i);
+                    },
+                });
+                animate.to(dom, {
+                    duration: 1,
+                    y: "-50%",
+                    onUpdate() {
+                        const progress = this.progress();
+
+                        gsap.set(dom, {
+                            opacity: gsap.utils.normalize(0, 0.5, 1 - progress),
+                        });
+                        if (progress >= 0.9) {
+                            setSection(i);
                         }
                     },
-                    stagger: {
-                        amount: 0.1,
-                        from: "start",
+                });
+                break;
+            case 1:
+                animate.to(dom, {
+                    duration: 1,
+                    y: 0,
+                    onUpdate() {
+                        const progress = this.progress();
+                        gsap.set(dom, {
+                            opacity: gsap.utils.normalize(0, 0.5, progress),
+                        });
                     },
-                },
-                0.6 + 0.1 * (textDoms.length - 1)
-            );
-        });
-    };
-}
-function getWebAnimate() {
-    const operDomWrapper = $(".wrapper-uemo_web");
-    const operDom = operDomWrapper.find(".slider-item");
-    let webAnimate = gsap.timeline();
-    let oldIndex = -1;
-    return function (stepIndex) {
-        const currentIndex = stepIndex;
-        if (oldIndex == currentIndex) return;
-        // infoAnimate.kill();
-        webAnimate.killTweensOf();
-        webAnimate = gsap.timeline({
-            overwrite: true,
-            smoothChildTiming: true,
-            defaults: {
-                duration: 1,
-                ease: "better-elastic",
-            },
-        });
-        webAnimate.to(operDom.not(operDom.eq(currentIndex)), { opacity: 0 });
-        webAnimate.to(operDom.eq(currentIndex), { opacity: 1 }, 0);
-        oldIndex = currentIndex;
-    };
-}
-let infoAnimate;
-let webAnimate;
-let initAnimate = false;
-let animateParam: ReturnType<typeof getAnimateParam>;
-function setForward(stepIndex, animate: gsap.core.Timeline) {
-    const { infoItem, bg, uemoWeb, phoneWrapper, backCard } =
-        animateParam[stepIndex];
+                    onStart() {
+                        setSection(i);
+                    },
+                });
+                animate.to(dom, {
+                    duration: 1,
+                    y: "-50%",
+                    onUpdate() {
+                        const progress = this.progress();
+                        gsap.set(dom, {
+                            opacity: gsap.utils.normalize(0, 0.5, 1 - progress),
+                        });
+                        gsap.set($("#web-site-body"), {
+                            y: -300 * progress,
+                        });
+                        gsap.set($("#mweb-site-body"), {
+                            y: -400 * progress,
+                        });
+                        if (progress >= 0.9) {
+                            setSection(i);
+                        }
+                    },
+                });
+                break;
 
-    animate.to(infoItem.target, {
-        ...infoItem.param,
-        duration: 0.6,
-        onStart() {
-            if (stepIndex == 1) {
-                siteVsScroll.stop();
-            }
-        },
-        stagger: {
-            grid: [4, 2],
-            from: "end",
-            ease: "better-elastic",
-            amount: 0.2,
-        },
-    });
-    animate.to(
-        bg.target,
-        {
-            ...bg.param,
-            duration: 0.6,
-            onStart() {
-                infoAnimate(stepIndex);
-            },
-        },
-        "-=0.2"
-    );
-    animate.to(uemoWeb.target, {
-        ...uemoWeb.param,
-        duration: 1,
-    });
-    animate.to(
-        phoneWrapper.target,
-        {
-            ...phoneWrapper.param,
-            duration: 1,
-            onStart() {
-                webAnimate(stepIndex);
-                siteVsScroll.stop();
-            },
-            onComplete() {
-                siteVsScroll.start();
-            },
-        },
-        "-=1"
-    );
-    animate.to(
-        backCard.target,
-        {
-            ...backCard.param,
-            duration: 0.6,
-        },
-        "-=1"
-    );
-}
-function setBack(stepIndex, animate: gsap.core.Timeline) {
-    const { infoItem, bg, uemoWeb, phoneWrapper, backCard } =
-        animateParam[stepIndex];
+            case 2:
+                animate.to(dom, {
+                    duration: 1,
+                    y: 0,
+                    onUpdate() {
+                        gsap.set(dom, {
+                            opacity: gsap.utils.normalize(
+                                0,
+                                0.5,
+                                this.progress()
+                            ),
+                            onComplete() {
+                                setSection(i);
+                            },
+                        });
+                    },
+                });
+                break;
 
-    animate.to(backCard.target, {
-        ...backCard.param,
-        duration: 0.6,
+            default:
+                break;
+        }
+        animate.addLabel("introItemEnd" + i);
     });
+
+    const uemoWeb = $(".module-show .wrapper-sec-area .uemo-web");
     animate.to(
-        phoneWrapper.target,
+        uemoWeb,
         {
-            ...phoneWrapper.param,
-            duration: 1,
-            onStart() {
-                webAnimate(stepIndex);
-                infoAnimate(stepIndex);
-                if (stepIndex == 1) {
-                    siteVsScroll.stop();
-                }
-            },
-        },
-        "-=1"
-    );
-    animate.to(
-        uemoWeb.target,
-        {
-            ...uemoWeb.param,
-            duration: 1,
-        },
-        "-=1"
-    );
-    animate.to(bg.target, {
-        ...bg.param,
-        duration: 0.6,
-    });
-    animate.to(
-        infoItem.target,
-        {
-            ...infoItem.param,
-            duration: 0.6,
-            onComplete() {
-                if (stepIndex == 1) {
-                    siteVsScroll.start();
-                }
-            },
-            stagger: {
-                grid: [4, 2],
-                ease: "better-elastic",
-                amount: 0.2,
-            },
-        },
-        "-=0.2"
-    );
-}
-function getAnimate(stepIndex, direction) {
-    if (!initAnimate) {
-        animateParam = getAnimateParam();
-        infoAnimate = getInfoAnimate();
-        webAnimate = getWebAnimate();
-        initAnimate = true;
-    }
-    const animate = gsap.timeline({
-        paused: true,
-        overwrite: true,
-        smoothChildTiming: true,
-        defaults: {
-            ease: "better-elastic",
-        },
-    });
-    if (direction == 1) {
-        setForward(stepIndex, animate);
-    } else {
-        setBack(stepIndex, animate);
-    }
-    return animate;
-}
-function getMainPhoneAnimate() {
-    return gsap.fromTo(
-        $(".module-show .main-phone"),
-        { opacity: 0.3 },
-        {
-            paused: true,
+            y: "0",
             opacity: 1,
-        }
+        },
+        "introItemStart0"
     );
-}
-// function getWebScroll() {
-//     const animate = gsap.timeline();
-//     animate.to({})
-//     return animate;
-// }
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export default function showModuleScrollUpdate(vsScroll): TYPE_SCROLL_UPDATE {
-    siteVsScroll = vsScroll;
-    // const web = $(".box-m_web img:nth-child(2)");
-    // const mWeb = $(".wrapper-uemo_web img:nth-child(2)");
-    function getCurrentSection({ progress, direction, isActive }) {
-        let pro = 0;
-        if (progress > 0.99) {
-            pro = 1;
-        } else if (progress < 0.01) {
-            pro = 0;
-        } else {
-            pro = progress;
-        }
-        runAnimate(pro, isActive, direction);
-    }
-    const animateGroup = {
-        stepOneAnimate: (direction) => getAnimate(0, direction),
-        reStepOneAnimate: (direction) => getAnimate(0, direction),
-        stepTwoAnimate: (direction) => getAnimate(1, direction),
-        reStepTwoAnimate: (direction) => getAnimate(1, direction),
-        stepThreeAnimate: (direction) => getAnimate(2, direction),
-        reStepThreeAnimate: (direction) => getAnimate(2, direction),
-        stepFourAnimate: (direction) => getAnimate(3, direction),
-        reStepFourAnimate: (direction) => getAnimate(3, direction),
-        mainPhoneAnimate: getMainPhoneAnimate(),
-    };
-    let oldAnimateName;
-    let oldAnimate;
-    function runAnimate(progress, isActive, direction) {
-        if (!isActive) return;
-        let animateName;
-        let animate;
-        animateGroup.mainPhoneAnimate.progress(progress / 0.1);
-
-        // const { progress } = ScrollTrigger.getById("moduleShow");
-
-        const webScrollProgress = gsap.utils.clamp(
-            0,
-            1,
-            gsap.utils.normalize(0.3, 0.7, progress)
-        );
-        gsap.to($("#web-site-body"), {
-            y: -300 * webScrollProgress,
-        });
-        gsap.to($("#mweb-site-body"), {
-            y: -400 * webScrollProgress,
-        });
-
-        const dir = direction == -1 ? "reStep" : "step";
-        if (progress >= 0 && progress < 0.1) {
-            animateName = "OneAnimate";
-        }
-        if (progress >= 0.1 && progress < 0.3) {
-            animateName = "TwoAnimate";
-        }
-        if (progress >= 0.3 && progress < 0.7) {
-            animateName = "ThreeAnimate";
-        }
-        if (progress >= 0.7 && progress <= 1) {
-            animateName = "FourAnimate";
-        }
-        animateName = dir + animateName;
-
-        if (animateName && oldAnimateName != animateName) {
-            oldAnimateName = animateName;
-            oldAnimate && oldAnimate.killTweensOf();
-            animate = animateGroup[animateName](direction);
-            oldAnimate = animate;
-            animate.play();
-        }
-    }
-    return getCurrentSection;
 }
