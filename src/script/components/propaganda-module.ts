@@ -130,14 +130,18 @@ export function getLineEnterEnd(): gsap.core.Timeline {
 export function propagandaModuleScroll(): void {
     const textWrapper = $(".wrapper-propaganda_text");
     const IntroWrapper = $(".wrapper-propaganda_intro");
-
+    const secHand = $(".wrapper-propaganda_intro .layer-hand-ahead");
+    gsap.set(secHand, { x: "5vh", y: "10vh" });
     gsap.timeline({
         scrollTrigger: {
             trigger: ".module-propaganda",
             start: "top top",
+            end: "bottom top",
             scrub: true,
         },
     })
-        .to(textWrapper, { y: "60vh" }, 0)
-        .to(IntroWrapper, { y: "20vh" }, 0);
+        .to(textWrapper, { y: "60vh", duration: 1 }, 0)
+        .to(IntroWrapper, { y: "20vh", duration: 1 }, 0)
+        .to(secHand, { x: "0", y: "0", duration: 0.8 }, 0)
+        .to(secHand, { x: "0", y: "0", duration: 0.2 });
 }

@@ -108,7 +108,7 @@
 
         @include ab-cover;
 
-        opacity: 0;
+        // opacity: 0;
 
         will-change: transform, opacity;
     }
@@ -133,6 +133,48 @@
 
             width: 8.5625%;
         }
+    }
+    .layer-hand-center {
+
+        @include image-placeholder(365px, 754px);
+        position: absolute;
+        top: 0;
+        left: 38.6%;
+
+        width: 22.8%;
+        .wrapper-card {
+
+            @include image-placeholder(672px, 1280px);
+            position: absolute;
+            z-index: 10;
+            top: 12%;
+            right: 0;
+            left: 0;
+
+            overflow: hidden;
+
+            width: 69.97%;
+            margin: 0 auto;
+
+            border-radius: 15px;
+            background: rgb(89 102 232);
+            box-shadow: 0 15px 31px 0 rgb(0 20 191 / 0.46);
+        }
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+        }
+    }
+    .layer-hand-ahead {
+        position: absolute;
+        z-index: 10;
+        right: 20%;
+        bottom: -25.3%;
+
+        width: 31.0625%;
     }
     .propaganda-intro {
         opacity: 0;

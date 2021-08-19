@@ -38,7 +38,7 @@ export default class IndexPage extends SiteManage {
     private _getMainPhoneEnter() {
         const animate = gsap.timeline();
         // const mainPhone = $(".layer-main_phone");
-        const mainHand = $(".layer-hand-back");
+        const mainHand = $(".wrapper-propaganda_intro .inner-wrapper");
         animate.fromTo(
             mainHand,
             {
@@ -96,6 +96,49 @@ export default class IndexPage extends SiteManage {
 
     designModule(): void {
         if (!$(".module-design").length) return;
+        // const originPath = {
+        //     0: 20,
+        //     1: 0,
+        //     2: 80,
+        //     3: 0,
+        //     4: 80,
+        //     5: 85,
+        //     6: 20,
+        //     7: 85,
+        // };
+        // const targetPath = {
+        //     0: 0,
+        //     1: 0,
+        //     2: 100,
+        //     3: 0,
+        //     4: 100,
+        //     5: 100,
+        //     6: 0,
+        //     7: 100,
+        // };
+        // gsap.set(".module-design .module-inner_wrapper", {
+        //     "clip-path": `polygon(${originPath[0]}% ${originPath[1]}%, ${originPath[2]}% ${originPath[3]}%, ${originPath[4]}% ${originPath[5]}%, ${originPath[6]}% ${originPath[7]}%)`,
+        // });
+        // const animateClip = gsap.timeline({
+        //     defaults: {
+        //         ease: "none",
+        //     },
+        //     scrollTrigger: {
+        //         trigger: ".module-design .module-inner_wrapper",
+        //         scrub: true,
+        //         start: "top bottom",
+        //         end: "top top",
+        //     },
+        // });
+        // animateClip.to(originPath, {
+        //     ...targetPath,
+        //     onUpdate() {
+        //         gsap.set(".module-design .module-inner_wrapper", {
+        //             "clip-path": `polygon(${originPath[0]}% ${originPath[1]}%, ${originPath[2]}% ${originPath[3]}%, ${originPath[4]}% ${originPath[5]}%, ${originPath[6]}% ${originPath[7]}%)`,
+        //         });
+        //     },
+        // });
+
         const animate = gsap.timeline({
             defaults: {
                 ease: "none",
