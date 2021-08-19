@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 企业展示模块的滚动效果
  * @Author: F-Stone
@@ -6,31 +5,10 @@
  * @LastEditTime: 2021-08-11 15:59:07
  * @LastEditors: F-Stone
  */
-type TYPE_SCROLL_UPDATE = ScrollTrigger.Callback;
 
 import { gsap } from "gsap";
-import { ScrollTrigger as scrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
-let siteVsScroll;
 
-interface TYPE_ANIMATE_PARAM_PRO {
-    target: JQuery<HTMLElement>;
-    param: { [param: string]: string | number };
-}
-// function introItemScroll() {
-//     const $module = $(".module-show");
-
-//     $module.find(".wrapper-sec-area .intro-item").each((i, dom) => {
-//         const scrollParam: ScrollTrigger.Vars = {
-//             trigger: dom,
-//             start: "center center",
-//             onUpdate({ progress }) {
-//                 console.log("progress:", progress);
-//             },
-//         };
-//         scrollTrigger.create(scrollParam);
-//     });
-// }
-export default function secScroll(vsScroll: unknown): void {
+export default function secScroll(): void {
     const $module = $(".module-show");
     const animate = gsap.timeline({
         defaults: {

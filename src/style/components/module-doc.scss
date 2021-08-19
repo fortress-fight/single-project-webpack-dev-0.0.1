@@ -6,12 +6,14 @@
  * @LastEditors: F-Stone
  */
 .module-doc {
+    overflow: hidden;
+
     padding-top: 189px;
     &>.wrapper-limit_width {
         position: relative;
         z-index: 10;
     }
-    .wrapper-limit_width {
+    .module-body {
         &>.state-pos_left,
         &>.state-pos_right {
             flex: 0 0 auto;
@@ -27,6 +29,8 @@
     //     padding-top: 200vh;
     // }
     .module-doc_show {
+        position: relative;
+
         padding-top: 8vh;
     }
     .list-intro {
@@ -43,6 +47,15 @@
 
 
         width: 60.1045296167247%;
+        .main-phone_head {
+
+            @include image-placeholder(1920px, 440px);
+            position: absolute;
+            top: 0;
+            left: 0%;
+
+            width: 100%;
+        }
         .main-phone {
 
             @include ab-cover;
@@ -155,9 +168,18 @@
     //     transform: translateX(-102px);
     // }
     .item-intro {
+        position: absolute;
+        top: 0;
+        left: 0;
+
         margin-bottom: 40vh;
+
+        opacity: 0;
         &:last-child {
             margin-bottom: 0;
+        }
+        &:first-child {
+            position: relative;
         }
         .title {
             font-size: 60px;

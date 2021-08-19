@@ -142,7 +142,7 @@ function firstScroll() {
         )
         .addLabel("layerBgEnd");
 }
-export default function showModuleScroll(vsScroll: unknown): void {
+export default function showModuleScroll(): void {
     firstScroll();
-    secScroll(vsScroll);
+    secScroll();
 }

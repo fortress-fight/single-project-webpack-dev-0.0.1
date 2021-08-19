@@ -15,7 +15,6 @@ import {
     getLineEnter,
     getLineEnterEnd,
 } from "./propaganda-module";
-// import showModuleScrollUpdate from "./show-module-scroll-update";
 import { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
 import Impetus from "impetus";
 import designModuleScrollUpdate from "./design-module-scroll-update";
@@ -175,18 +174,7 @@ export default class IndexPage extends SiteManage {
     }
     showModule(): void {
         if (!$(".module-show").length) return;
-        initShowModuleScroll(this.vsScroll);
-        // gsap.timeline({
-        //     scrollTrigger: {
-        //         id: "moduleShow",
-        //         trigger: ".module-show .module-body",
-        //         start: "center center",
-        //         end: "+=400%",
-        //         scrub: true,
-        //         pin: true,
-        //         onUpdate: showModuleScrollUpdate(this.vsScroll),
-        //     },
-        // });
+        initShowModuleScroll();
     }
     contactModule(): void {
         if (!$(".module-contact").length) return;
