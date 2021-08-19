@@ -45,6 +45,7 @@ export default function secScroll(vsScroll: unknown): void {
             pin: $module.find(".wrapper-module_content"),
         },
     });
+    animate.to({}, { duration: 0.3 });
     const infoItem = $(
         ".module-show .module-body .item-intro:not(.intro-phone)"
     );
@@ -148,6 +149,29 @@ export default function secScroll(vsScroll: unknown): void {
         });
         oldIndex = currentIndex;
     }
+    const webScrollAnimate = gsap.timeline({
+        paused: true,
+        defaults: { ease: "none" },
+    });
+    webScrollAnimate.to($("#web-site-body"), { y: -200 });
+    webScrollAnimate.to($("#mweb-site-body"), { y: -280 }, 0);
+    webScrollAnimate.to($(".main-phone-back-card"), {
+        duration: 0.3,
+        scale: 0.8,
+    });
+    webScrollAnimate.to($(".main-phone-back-card"), {
+        duration: 0.3,
+        scale: 1,
+    });
+    webScrollAnimate.to(
+        $(".main-phone-back-card .btn-shadow"),
+        {
+            duration: 0.4,
+            opacity: 0,
+            scale: 1.8,
+        },
+        "<"
+    );
     $module.find(".wrapper-sec-area .intro-item").each((i, dom) => {
         animate.addLabel("introItemStart" + i);
         switch (i) {
@@ -202,12 +226,7 @@ export default function secScroll(vsScroll: unknown): void {
                         gsap.set(dom, {
                             opacity: gsap.utils.normalize(0, 0.5, 1 - progress),
                         });
-                        gsap.set($("#web-site-body"), {
-                            y: -300 * progress,
-                        });
-                        gsap.set($("#mweb-site-body"), {
-                            y: -400 * progress,
-                        });
+                        webScrollAnimate.progress(progress);
                         if (progress >= 0.9) {
                             setSection(i);
                         }
@@ -249,4 +268,5 @@ export default function secScroll(vsScroll: unknown): void {
         },
         "introItemStart0"
     );
+    animate.to({}, { duration: 0.3 });
 }
