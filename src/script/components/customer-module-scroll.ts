@@ -10,7 +10,9 @@ import { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
 let maxWidth = 0;
 let boxWidth = 0;
 const getMaxWidth = () => {
-    maxWidth = $(".module-customer .module-list")[0].offsetWidth;
+    maxWidth =
+        $(".module-customer .module-list")[0].offsetWidth +
+        window.innerWidth * 0.3;
     boxWidth = $(".module-customer .module-list").parent()[0].offsetWidth;
     gsap.set(".module-customer", {
         marginBottom: () => {

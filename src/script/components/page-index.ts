@@ -216,6 +216,7 @@ export default class IndexPage extends SiteManage {
     }
     statisticModule(): void {
         if (!$(".module-statistic").length) return;
+        const $module = $(".module-statistic");
         const itemInfo = $(".module-statistic .item-info");
         ScrollTrigger.create({
             trigger: ".module-statistic .box-intro_img",
@@ -289,6 +290,23 @@ export default class IndexPage extends SiteManage {
                 },
             });
         });
+        gsap.fromTo(
+            $module.find(".bg-circle"),
+            {
+                opacity: 0,
+                scale: 0.4,
+            },
+            {
+                opacity: 1,
+                scale: 1,
+                stagger: 0.1,
+                ease: "Power2.easeOut",
+                scrollTrigger: {
+                    trigger: $module.find(".box-bg"),
+                    start: "center bottom",
+                },
+            }
+        );
     }
     extensionModule(): void {
         if (!$(".module-extension").length) return;

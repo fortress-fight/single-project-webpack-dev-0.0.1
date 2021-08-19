@@ -186,7 +186,7 @@ export default function initDocModuleScroll(): void {
             return -(headPosition.bottom - modulePosition.top);
         },
         scale: () => {
-            return window.innerWidth / $(".main-phone").width();
+            return window.innerWidth / $module.find(".main-phone").width();
         },
     });
     const scrollAnimate = gsap.timeline({
