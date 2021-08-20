@@ -9,6 +9,9 @@ import { gsap } from "gsap";
 
 const mainPhoneAnimateParam = {
     0: {
+        leftAreaBg: {
+            scale: 1,
+        },
         introImg: {
             scale: 1,
             filter: "blur(0px)",
@@ -21,10 +24,14 @@ const mainPhoneAnimateParam = {
             backgroundColor: "rgb(0 0 0 / 0)",
         },
         docShow2: { y: "100%" },
+        userOperBar: { y: 0, opacity: 1 },
         group: { x: 0 },
         docShow4: { y: 20, opacity: 0 },
     },
     1: {
+        leftAreaBg: {
+            scale: 1.1,
+        },
         introImg: {
             scale: 0.92,
             filter: "blur(5px)",
@@ -37,10 +44,14 @@ const mainPhoneAnimateParam = {
             backgroundColor: "rgb(0 0 0 / 0)",
         },
         docShow2: { y: "100%" },
+        userOperBar: { y: 0, opacity: 1 },
         group: { x: 0 },
         docShow4: { y: 20, opacity: 0 },
     },
     2: {
+        leftAreaBg: {
+            scale: 1,
+        },
         introImg: {
             scale: 1,
             filter: "blur(0px)",
@@ -53,10 +64,14 @@ const mainPhoneAnimateParam = {
             backgroundColor: "rgba(0,0,0,0.20)",
         },
         docShow2: { y: "0%" },
+        userOperBar: { y: "100%", opacity: 0 },
         group: { x: 0 },
         docShow4: { y: 20, opacity: 0 },
     },
     3: {
+        leftAreaBg: {
+            scale: 1,
+        },
         introImg: {
             scale: 1,
             filter: "blur(0px)",
@@ -69,14 +84,24 @@ const mainPhoneAnimateParam = {
             backgroundColor: "rgb(0 0 0 / 0)",
         },
         docShow2: { y: "100%" },
+        userOperBar: { y: 0, opacity: 1 },
         group: { x: "-100%" },
         docShow4: { y: 0, opacity: 1 },
     },
 };
 function forwardAnimate(animate, currentParam) {
     animate.to(".module-doc .intro-img", {
+        id: "introImg",
         ...currentParam.introImg,
     });
+    animate.to(
+        ".module-doc_show .left_area-bg",
+        {
+            id: "leftAreaBg",
+            ...currentParam.leftAreaBg,
+        },
+        "-=0.4"
+    );
     animate.to(
         ".module-doc .main-phone-lock",
         {
@@ -85,13 +110,21 @@ function forwardAnimate(animate, currentParam) {
         0
     );
     animate.to(
+        ".module-doc .layer-cover .user-oper_bar",
+        {
+            ...currentParam.userOperBar,
+            delay: 0.5,
+        },
+        0
+    );
+    animate.to(
         ".module-doc .layer-cover",
         {
             ...currentParam.layerCover,
         },
-        0
+        "<"
     );
-    animate.to(".module-doc .layer-cover img", {
+    animate.to(".module-doc .layer-cover .doc-show-2", {
         ...currentParam.docShow2,
     });
     animate.to(
@@ -122,7 +155,14 @@ function backAnimate(animate, currentParam) {
         },
         "0.15"
     );
-    animate.to(".module-doc .layer-cover img", {
+    animate.to(
+        ".module-doc .layer-cover .user-oper_bar",
+        {
+            ...currentParam.userOperBar,
+        },
+        "<"
+    );
+    animate.to(".module-doc .layer-cover .doc-show-2", {
         ...currentParam.docShow2,
     });
     animate.to(
@@ -135,6 +175,7 @@ function backAnimate(animate, currentParam) {
     animate.to(
         ".module-doc .intro-img",
         {
+            id: "introImg",
             ...currentParam.introImg,
         },
         "<"
@@ -145,6 +186,14 @@ function backAnimate(animate, currentParam) {
             ...currentParam.mainPhoneLock,
         },
         "<"
+    );
+    animate.to(
+        ".module-doc_show .left_area-bg",
+        {
+            id: "leftAreaBg",
+            ...currentParam.leftAreaBg,
+        },
+        ">-=0.4"
     );
 }
 
@@ -200,11 +249,27 @@ export default function initDocModuleScroll(): void {
         },
     });
     scrollAnimate.to($scaleDom, {
-        duration: 4,
+        overwrite: "auto",
+        duration: 3,
         scale: 1,
         x: 0,
         y: 0,
+        onReverseComplete() {
+            gsap.killTweensOf($scaleDom);
+        },
     });
+    scrollAnimate.fromTo(
+        $(".module-doc_show .left_area-bg"),
+        { scale: 0.5 },
+        {
+            scale: 1,
+            duration: 1,
+            onReverseComplete() {
+                gsap.killTweensOf($scaleDom);
+            },
+        },
+        "2"
+    );
     let oldIndex = -1;
     let phoneAnimate = gsap.timeline({
         paused: true,

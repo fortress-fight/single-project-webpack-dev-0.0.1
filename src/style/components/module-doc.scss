@@ -84,6 +84,18 @@
 
                 width: 100%;
             }
+            .user-oper_bar {
+                position: absolute;
+                right: 0;
+                bottom: 5%;
+                left: 0;
+    
+                width: 93%;
+                margin: 0 auto;
+    
+                border-radius: 23px;
+                box-shadow: 0 8px 10px rgb(0 0 0 / 16%);
+            }
         }
         .item-1 {
             .layer-cover {
@@ -154,7 +166,7 @@
         position: absolute;
         top: 8vh;
         .main-phone-lock {
-            top: 22%;
+            top: 20%;
             left: 50%;
 
             width: 29%;
