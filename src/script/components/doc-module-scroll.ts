@@ -94,10 +94,14 @@ const mainPhoneAnimateParam = {
     },
 };
 function forwardAnimate(animate, currentParam) {
-    animate.to(".module-doc .intro-img", {
-        id: "introImg",
-        ...currentParam.introImg,
-    });
+    animate.to(
+        ".module-doc .intro-img",
+        {
+            id: "introImg",
+            ...currentParam.introImg,
+        },
+        0
+    );
     animate.to(
         ".module-doc_show .left_area-bg",
         {
@@ -260,6 +264,13 @@ export default function initDocModuleScroll(): void {
         scale: 1,
         x: 0,
         y: 0,
+        onComplete() {
+            gsap.to(".module-doc .layer-cover .user-oper_bar", {
+                overwrite: "auto",
+                opacity: 1,
+                y: "0%",
+            });
+        },
         onReverseComplete() {
             gsap.killTweensOf($scaleDom);
         },
@@ -327,6 +338,13 @@ export default function initDocModuleScroll(): void {
                     },
                     onStart() {
                         setSection(i);
+                    },
+                    onReverseComplete() {
+                        gsap.to(".module-doc .layer-cover .user-oper_bar", {
+                            overwrite: "auto",
+                            opacity: 0,
+                            y: "100%",
+                        });
                     },
                 });
                 scrollAnimate.to(dom, {

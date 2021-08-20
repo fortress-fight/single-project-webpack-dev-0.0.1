@@ -234,7 +234,21 @@ export default function initDesignModuleScroll(): void {
         cardMove(dir, currentIndex);
         oldIndex = currentIndex;
     }
-
+    gsap.timeline({
+        defaults: {
+            ease: "none",
+        },
+        scrollTrigger: {
+            trigger: ".module-design .module-inner_wrapper",
+            scrub: true,
+            start: "top bottom",
+            end: "top top",
+        },
+    }).fromTo(
+        $(".module-design .list-intro"),
+        { y: "100%", opacity: 0 },
+        { y: 0, opacity: 1 }
+    );
     const scrollAnimate = gsap.timeline({
         defaults: {
             ease: "none",
@@ -243,7 +257,6 @@ export default function initDesignModuleScroll(): void {
             trigger: ".module-design .module-inner_wrapper",
             scrub: true,
             start: "top top",
-            end: "+=200%",
             pin: true,
         },
     });
@@ -266,7 +279,6 @@ export default function initDesignModuleScroll(): void {
                     },
                 });
                 break;
-
             case 1:
                 scrollAnimate.to(dom, {
                     y: 0,
@@ -274,7 +286,7 @@ export default function initDesignModuleScroll(): void {
                         gsap.set(dom, {
                             opacity: gsap.utils.normalize(
                                 0,
-                                0.5,
+                                0.6,
                                 this.progress()
                             ),
                         });
@@ -292,7 +304,7 @@ export default function initDesignModuleScroll(): void {
                         gsap.set(dom, {
                             opacity: gsap.utils.normalize(
                                 0,
-                                0.5,
+                                0.6,
                                 1 - this.progress()
                             ),
                         });
@@ -307,7 +319,7 @@ export default function initDesignModuleScroll(): void {
                         gsap.set(dom, {
                             opacity: gsap.utils.normalize(
                                 0,
-                                0.5,
+                                0.6,
                                 this.progress()
                             ),
                         });

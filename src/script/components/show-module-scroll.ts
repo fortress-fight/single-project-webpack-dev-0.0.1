@@ -17,13 +17,27 @@ function firstScroll() {
     gsap.set($module.find(".box-desc > *"), {
         opacity: 0,
     });
+    gsap.timeline({
+        defaults: {
+            ease: "none",
+            overwrite: "auto",
+        },
+        scrollTrigger: {
+            trigger: $module.find(".module-header"),
+            scrub: true,
+            end: "bottom bottom",
+            endTrigger: $module.find(".module-body .wrapper-zero_area"),
+        },
+    }).fromTo($module.find(".module-header"), { opacity: 0 }, { opacity: 1 });
+
     const scrollAnimate = gsap.timeline({
         defaults: {
+            overwrite: "auto",
             ease: "none",
         },
         scrollTrigger: {
             trigger: $module.find(".module-body .wrapper-zero_area"),
-            scrub: 1,
+            scrub: true,
             start: "center center",
             end: "bottom bottom",
             endTrigger: "#show-placeholder",

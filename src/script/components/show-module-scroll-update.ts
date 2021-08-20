@@ -90,27 +90,58 @@ export default function secScroll(): void {
         switch (currentIndex) {
             case 0:
                 if (dir == -1) {
+                    gsap.to(".module-show .main-phone-back-card", {
+                        overwrite: true,
+                        x: "-200px",
+                        duration: 0.8,
+                        ease: "better-elastic",
+                        onComplete() {
+                            gsap.set(".module-show .main-phone-back-card", {
+                                x: "200px",
+                            });
+                        },
+                    });
                     gsap.to(phoneWrapper, {
                         overwrite: "auto",
                         duration: 0.8,
                         ease: "better-elastic",
                         x: "0%",
                     });
+                } else {
+                    gsap.set(".module-show .main-phone-back-card", {
+                        x: "200px",
+                    });
                 }
                 break;
             case 1:
-                gsap.to(phoneWrapper, {
-                    overwrite: "auto",
-                    duration: 0.8,
-                    ease: "better-elastic",
-                    x: "-100%",
-                });
-                if (dir == 1) {
-                    //
+                {
+                    gsap.to(".module-show .main-phone-back-card", {
+                        overwrite: true,
+                        x: "0",
+                        duration: 0.8,
+                        ease: "better-elastic",
+                    });
+                    gsap.to(phoneWrapper, {
+                        overwrite: "auto",
+                        duration: 0.8,
+                        ease: "better-elastic",
+                        x: "-100%",
+                    });
                 }
                 break;
             case 2:
                 if (dir == 1) {
+                    gsap.to(".module-show .main-phone-back-card", {
+                        overwrite: true,
+                        x: "-200px",
+                        duration: 0.8,
+                        ease: "better-elastic",
+                        onComplete() {
+                            gsap.set(".module-show .main-phone-back-card", {
+                                x: "200px",
+                            });
+                        },
+                    });
                     gsap.to(phoneWrapper, {
                         overwrite: "auto",
                         duration: 0.8,

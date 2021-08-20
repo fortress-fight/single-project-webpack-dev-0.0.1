@@ -89,10 +89,13 @@
                 right: 0;
                 bottom: 5%;
                 left: 0;
-    
+
                 width: 93%;
                 margin: 0 auto;
+
+                transform: translateY(100%);
     
+                opacity: 0;
                 border-radius: 23px;
                 box-shadow: 0 8px 10px rgb(0 0 0 / 16%);
             }
@@ -164,7 +167,7 @@
 
         @include image-placeholder(466px, 1122px);
         position: absolute;
-        top: 8vh;
+        top: 9%;
         .main-phone-lock {
             top: 20%;
             left: 50%;

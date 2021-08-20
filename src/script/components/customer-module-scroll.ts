@@ -16,7 +16,7 @@ const getMaxWidth = () => {
     boxWidth = $(".module-customer .module-list").parent()[0].offsetWidth;
     gsap.set(".module-customer", {
         marginBottom: () => {
-            return -$(".module-body").innerHeight();
+            return -$(".module-customer .module-body").innerHeight();
         },
     });
 };
