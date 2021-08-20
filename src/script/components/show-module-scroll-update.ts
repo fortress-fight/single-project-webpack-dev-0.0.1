@@ -173,6 +173,7 @@ export default function secScroll(): void {
                 animate.to(dom, {
                     duration: 1,
                     y: 0,
+                    zIndex: 10,
                     onUpdate() {
                         const progress = this.progress();
                         gsap.set(dom, {
@@ -186,15 +187,13 @@ export default function secScroll(): void {
                 animate.to(dom, {
                     duration: 1,
                     y: "-50%",
+                    zIndex: 0,
                     onUpdate() {
                         const progress = this.progress();
 
                         gsap.set(dom, {
                             opacity: gsap.utils.normalize(0, 0.5, 1 - progress),
                         });
-                        if (progress >= 0.9) {
-                            setSection(i);
-                        }
                     },
                 });
                 break;
@@ -202,6 +201,7 @@ export default function secScroll(): void {
                 animate.to(dom, {
                     duration: 1,
                     y: 0,
+                    zIndex: 10,
                     onUpdate() {
                         const progress = this.progress();
                         gsap.set(dom, {
@@ -211,19 +211,20 @@ export default function secScroll(): void {
                     onStart() {
                         setSection(i);
                     },
+                    onReverseComplete() {
+                        setSection(i - 1);
+                    },
                 });
                 animate.to(dom, {
                     duration: 1,
                     y: "-50%",
+                    zIndex: 0,
                     onUpdate() {
                         const progress = this.progress();
                         gsap.set(dom, {
                             opacity: gsap.utils.normalize(0, 0.5, 1 - progress),
                         });
                         webScrollAnimate.progress(progress);
-                        if (progress >= 0.9) {
-                            setSection(i);
-                        }
                     },
                 });
                 break;
@@ -232,6 +233,7 @@ export default function secScroll(): void {
                 animate.to(dom, {
                     duration: 1,
                     y: 0,
+                    zIndex: 10,
                     onUpdate() {
                         gsap.set(dom, {
                             opacity: gsap.utils.normalize(
@@ -239,10 +241,13 @@ export default function secScroll(): void {
                                 0.5,
                                 this.progress()
                             ),
-                            onComplete() {
-                                setSection(i);
-                            },
                         });
+                    },
+                    onStart() {
+                        setSection(i);
+                    },
+                    onReverseComplete() {
+                        setSection(i - 1);
                     },
                 });
                 break;

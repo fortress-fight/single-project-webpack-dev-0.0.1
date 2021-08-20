@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 首页的执行类
  * @Author: F-Stone
@@ -18,10 +17,10 @@ import {
 } from "./propaganda-module";
 import { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
 import Impetus from "impetus";
-import designModuleScrollUpdate from "./design-module-scroll-update";
 import initDocModuleScroll from "./doc-module-scroll";
 import initCustomerModuleScroll from "./customer-module-scroll";
 import initShowModuleScroll from "./show-module-scroll";
+import initDesignModuleScroll from "./design-module-scroll";
 
 export default class IndexPage extends SiteManage {
     disableTask = ["initScrollNav"];
@@ -96,82 +95,7 @@ export default class IndexPage extends SiteManage {
 
     designModule(): void {
         if (!$(".module-design").length) return;
-        const animate = gsap.timeline({
-            defaults: {
-                ease: "none",
-            },
-            scrollTrigger: {
-                trigger: ".module-design .module-inner_wrapper",
-                scrub: true,
-                start: "top top",
-                end: "+=200%",
-                pin: true,
-                onUpdate: designModuleScrollUpdate(),
-            },
-        });
-        $(".module-design .list-intro .item-intro").each((i, dom) => {
-            switch (i) {
-                case 0:
-                    animate.to(dom, {
-                        y: "-30%",
-                        onUpdate() {
-                            gsap.set(dom, {
-                                opacity: gsap.utils.normalize(
-                                    0,
-                                    0.5,
-                                    1 - this.progress()
-                                ),
-                            });
-                        },
-                    });
-                    break;
-
-                case 1:
-                    animate.to(dom, {
-                        y: 0,
-                        onUpdate() {
-                            gsap.set(dom, {
-                                opacity: gsap.utils.normalize(
-                                    0,
-                                    0.5,
-                                    this.progress()
-                                ),
-                            });
-                        },
-                    });
-                    animate.to(dom, {
-                        y: "-30%",
-                        onUpdate() {
-                            gsap.set(dom, {
-                                opacity: gsap.utils.normalize(
-                                    0,
-                                    0.5,
-                                    1 - this.progress()
-                                ),
-                            });
-                        },
-                    });
-                    break;
-
-                case 2:
-                    animate.to(dom, {
-                        y: 0,
-                        onUpdate() {
-                            gsap.set(dom, {
-                                opacity: gsap.utils.normalize(
-                                    0,
-                                    0.5,
-                                    this.progress()
-                                ),
-                            });
-                        },
-                    });
-                    break;
-
-                default:
-                    break;
-            }
-        });
+        initDesignModuleScroll();
     }
     showModule(): void {
         if (!$(".module-show").length) return;

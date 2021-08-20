@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 营销文档
  * @Author: F-Stone
@@ -7,7 +6,6 @@
  * @LastEditors: F-Stone
  */
 import { gsap } from "gsap";
-// import { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
 
 const mainPhoneAnimateParam = {
     0: {
@@ -250,7 +248,7 @@ export default function initDocModuleScroll(): void {
                             opacity: gsap.utils.normalize(0, 0.5, progress),
                         });
                     },
-                    onComplete() {
+                    onStart() {
                         setSection(i);
                     },
                 });
@@ -263,9 +261,6 @@ export default function initDocModuleScroll(): void {
                         gsap.set(dom, {
                             opacity: gsap.utils.normalize(0, 0.5, 1 - progress),
                         });
-                        if (progress >= 0.9) {
-                            setSection(i);
-                        }
                     },
                 });
                 break;
@@ -283,6 +278,9 @@ export default function initDocModuleScroll(): void {
                     onStart() {
                         setSection(i);
                     },
+                    onReverseComplete() {
+                        setSection(i - 1);
+                    },
                 });
                 scrollAnimate.to(dom, {
                     duration: 1,
@@ -292,9 +290,6 @@ export default function initDocModuleScroll(): void {
                         gsap.set(dom, {
                             opacity: gsap.utils.normalize(0, 0.5, 1 - progress),
                         });
-                        if (progress >= 0.9) {
-                            setSection(i);
-                        }
                     },
                 });
                 break;
@@ -310,10 +305,13 @@ export default function initDocModuleScroll(): void {
                                 0.5,
                                 this.progress()
                             ),
-                            onComplete() {
-                                setSection(i);
-                            },
                         });
+                    },
+                    onStart() {
+                        setSection(i);
+                    },
+                    onReverseComplete() {
+                        setSection(i - 1);
                     },
                 });
                 break;
