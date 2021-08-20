@@ -28,23 +28,23 @@
             <!--  -->
             <% require("./components/module-design.ejs")({IMG_PATH}) %>
             <!--  -->
-            <div
+            <!-- <div
                 data-scroll-section
                 style="height: 100vh; background: #fff"
-            ></div>
+            ></div> -->
             <% require("./components/module-show.ejs")({IMG_PATH}) %>
             <!--  -->
             <% require("./components/module-doc.ejs")({IMG_PATH}) %>
             <!--  -->
-            <% require("./components/module-extension.ejs")({IMG_PATH}) %>
+            <%- require("./components/module-extension.ejs")({IMG_PATH}) %>
             <!--  -->
             <% require("./components/module-statistic.ejs")({IMG_PATH}) %>
             <!--  -->
-            <div
+            <!-- <div
                 data-scroll-section
                 style="height: 100vh; background: #fff"
-            ></div>
-            <% require("./components/module-customer.ejs")({IMG_PATH}) %>
+            ></div> -->
+            <%- require("./components/module-customer.ejs")({IMG_PATH}) %>
             <!--  -->
             <%- require("./components/module-contact.ejs")({IMG_PATH}) %>
         </div>
@@ -57,7 +57,7 @@
                     <div class="icon-weixin_code flex flex-c-c">
                         <i class="ic iconfont icon-code"></i>
                     </div>
-                    <span class="text">点我体验下吧</span>
+                    <span class="text">点我体验下吧！</span>
                 </div>
             </div>
         </div>

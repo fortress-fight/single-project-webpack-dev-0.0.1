@@ -14,6 +14,7 @@ const mainPhoneAnimateParam = {
         },
         introImg: {
             scale: 1,
+            y: "0%",
             filter: "blur(0px)",
         },
         mainPhoneLock: {
@@ -33,7 +34,8 @@ const mainPhoneAnimateParam = {
             scale: 1.1,
         },
         introImg: {
-            scale: 0.92,
+            scale: 0.85,
+            y: "7%",
             filter: "blur(5px)",
         },
         mainPhoneLock: {
@@ -54,6 +56,7 @@ const mainPhoneAnimateParam = {
         },
         introImg: {
             scale: 1,
+            y: "0%",
             filter: "blur(0px)",
         },
         mainPhoneLock: {
@@ -74,6 +77,7 @@ const mainPhoneAnimateParam = {
         },
         introImg: {
             scale: 1,
+            y: "0%",
             filter: "blur(0px)",
         },
         mainPhoneLock: {
@@ -98,9 +102,10 @@ function forwardAnimate(animate, currentParam) {
         ".module-doc_show .left_area-bg",
         {
             id: "leftAreaBg",
+            duration: 0.8,
             ...currentParam.leftAreaBg,
         },
-        "-=0.4"
+        "-=0.45"
     );
     animate.to(
         ".module-doc .main-phone-lock",
@@ -192,8 +197,9 @@ function backAnimate(animate, currentParam) {
         {
             id: "leftAreaBg",
             ...currentParam.leftAreaBg,
+            duration: 0.8,
         },
-        ">-=0.4"
+        ">-=0.45"
     );
 }
 
@@ -263,12 +269,12 @@ export default function initDocModuleScroll(): void {
         { scale: 0.5 },
         {
             scale: 1,
-            duration: 1,
+            duration: 2,
             onReverseComplete() {
                 gsap.killTweensOf($scaleDom);
             },
         },
-        "2"
+        "1.3"
     );
     let oldIndex = -1;
     let phoneAnimate = gsap.timeline({
@@ -303,6 +309,7 @@ export default function initDocModuleScroll(): void {
         phoneAnimate.play();
         oldIndex = currentIndex;
     }
+    scrollAnimate.to({}, {}, ">-=1");
     $module.find(".module-body .item-intro").each((i, dom) => {
         const distance = "50%";
         gsap.set(dom, { y: distance });

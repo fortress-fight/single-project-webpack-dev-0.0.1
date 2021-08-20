@@ -134,9 +134,9 @@
     }
     .left_area-bg {
 
-        @include circle(844px);
+        @include circle(744px);
         position: absolute;
-        top: 0;
+        top: 7%;
         left: 50%;
 
         transform: translateX(-50%);

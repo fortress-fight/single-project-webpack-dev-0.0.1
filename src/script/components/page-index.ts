@@ -25,7 +25,6 @@ import initDesignModuleScroll from "./design-module-scroll";
 export default class IndexPage extends SiteManage {
     disableTask = ["initScrollNav"];
     otherTask = [
-        "weixinCode",
         "propagandaModule",
         "designModule",
         "showModule",
@@ -34,6 +33,7 @@ export default class IndexPage extends SiteManage {
         "statisticModule",
         "customerModule",
         "contactModule",
+        "weixinCode",
     ];
     weixinCode(): void {
         let startDisableOpen;
