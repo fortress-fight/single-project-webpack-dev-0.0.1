@@ -34,7 +34,7 @@
             ></div>
             <% require("./components/module-show.ejs")({IMG_PATH}) %>
             <!--  -->
-            <%- require("./components/module-doc.ejs")({IMG_PATH}) %>
+            <% require("./components/module-doc.ejs")({IMG_PATH}) %>
             <!--  -->
             <% require("./components/module-extension.ejs")({IMG_PATH}) %>
             <!--  -->
@@ -46,12 +46,18 @@
             ></div>
             <% require("./components/module-customer.ejs")({IMG_PATH}) %>
             <!--  -->
-            <% require("./components/module-contact.ejs")({IMG_PATH}) %>
+            <%- require("./components/module-contact.ejs")({IMG_PATH}) %>
         </div>
         <div class="footer_layer--fixed">
             <div class="wrapper-limit_width">
-                <div class="btn-open_QR flex flex-c-c">
-                    <i class="ic iconfont icon-code"></i>
+                <div
+                    class="btn-open_QR flex flex-y-c"
+                    data-img-src="<%= IMG_PATH %>weixin-code.png"
+                >
+                    <div class="icon-weixin_code flex flex-c-c">
+                        <i class="ic iconfont icon-code"></i>
+                    </div>
+                    <span class="text">点我体验下吧</span>
                 </div>
             </div>
         </div>

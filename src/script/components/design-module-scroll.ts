@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: design module 的滚动行为
  * @Author: F-Stone
@@ -7,9 +6,6 @@
  * @LastEditors: F-Stone
  */
 import { gsap } from "gsap";
-import type { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
-
-type TYPE_SCROLL_UPDATE = ScrollTrigger.Callback;
 
 function getCardAnimateParam(cardIndex) {
     let param;

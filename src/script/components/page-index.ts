@@ -25,6 +25,7 @@ import initDesignModuleScroll from "./design-module-scroll";
 export default class IndexPage extends SiteManage {
     disableTask = ["initScrollNav"];
     otherTask = [
+        "weixinCode",
         "propagandaModule",
         "designModule",
         "showModule",
@@ -34,6 +35,109 @@ export default class IndexPage extends SiteManage {
         "customerModule",
         "contactModule",
     ];
+    weixinCode(): void {
+        let startDisableOpen;
+        let endDisableOpen;
+        gsap.to(".footer_layer--fixed", {
+            opacity: 0,
+            onStart() {
+                endDisableOpen = true;
+            },
+            onReverseComplete() {
+                endDisableOpen = false;
+            },
+            scrollTrigger: {
+                trigger: ".module-contact",
+                scrub: true,
+                start: "top bottom",
+                end: "bottom bottom",
+                onUpdate({ progress }) {
+                    gsap.set(".footer_layer--fixed", {
+                        y: -progress * $(".module-contact").height(),
+                    });
+                },
+            },
+        });
+        const weixinBtnAnimate = gsap.to(".btn-open_QR", {
+            paused: true,
+            duration: 0.36,
+            ease: "Power2.easeOut",
+            width: "auto",
+        });
+        let state = "close";
+        function openWeixinCode() {
+            if (startDisableOpen || endDisableOpen) return;
+            if (state == "open") return;
+            state = "open";
+            weixinBtnAnimate.play();
+        }
+        function closeWeixinCode() {
+            if (state == "close") return;
+            state = "close";
+            weixinBtnAnimate.reverse();
+        }
+        let timeout;
+        const waitTime = 600;
+        this.vsScroll.on("scroll", (args) => {
+            const scrollY = args.delta.y;
+            closeWeixinCode();
+            clearTimeout(timeout);
+            if (scrollY < 10) {
+                startDisableOpen = true;
+            } else {
+                startDisableOpen = false;
+            }
+            timeout = setTimeout(() => {
+                openWeixinCode();
+            }, waitTime);
+        });
+        let disableClick = false;
+        $(".btn-open_QR").on("click", () => {
+            if (disableClick) return;
+            const wrapperWeixinCode = $(`
+                <div class="wrapper-weixin_code flex flex-c-c">
+                    <div class="box-weixin_code">
+                        <img src="${$(".btn-open_QR").attr(
+                            "data-img-src"
+                        )}" alt="" />
+                    </div>
+                </div>
+            `).appendTo("body");
+            requestAnimationFrame(() => {
+                const showWeixinCode = gsap
+                    .timeline({
+                        onStart() {
+                            disableClick = false;
+                        },
+                        onReverseComplete() {
+                            wrapperWeixinCode.remove();
+                        },
+                    })
+                    .to(wrapperWeixinCode, {
+                        duration: 0.36,
+                        backgroundColor: "rgba(0,0,0,0.6)",
+                    })
+                    .fromTo(
+                        wrapperWeixinCode.find(".box-weixin_code"),
+                        {
+                            y: "0vh",
+                            opacity: 0,
+                        },
+                        {
+                            y: "-5vh",
+                            opacity: 1,
+                            duration: 0.26,
+                        }
+                    );
+                wrapperWeixinCode.one("click", (ev) => {
+                    if (ev.target != wrapperWeixinCode[0]) {
+                        return;
+                    }
+                    showWeixinCode.reverse();
+                });
+            });
+        });
+    }
     private _getMainPhoneEnter() {
         const animate = gsap.timeline();
         // const mainPhone = $(".layer-main_phone");
@@ -92,7 +196,6 @@ export default class IndexPage extends SiteManage {
         this._propagandaModuleEnter();
         propagandaModuleScroll();
     }
-
     designModule(): void {
         if (!$(".module-design").length) return;
         initDesignModuleScroll();
