@@ -90,13 +90,13 @@ function firstScroll() {
             {
                 height: "100vh",
                 ease: "Power4.easeIn",
-                boxShadow: "0 40px 80px 0 rgba(0,0,0,0)",
+                boxShadow: "15px 20px 30px 0px rgba(0,0,0,0)",
                 borderRadius: 0,
                 duration: dM.layerScale,
                 onUpdate() {
                     const originHeight = $module.find(".layer--scale").height();
                     gsap.set($module.find(".layer--scale")[0], {
-                        width: (Number(originHeight) / 80) * 560,
+                        width: (Number(originHeight) / 100) * 560,
                     });
                 },
             },

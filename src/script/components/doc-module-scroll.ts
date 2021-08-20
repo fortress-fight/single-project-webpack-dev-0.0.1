@@ -199,7 +199,12 @@ export default function initDocModuleScroll(): void {
             pin: true,
         },
     });
-    scrollAnimate.to($scaleDom, { duration: 4, scale: 1, x: 0, y: 0 });
+    scrollAnimate.to($scaleDom, {
+        duration: 4,
+        scale: 1,
+        x: 0,
+        y: 0,
+    });
     let oldIndex = -1;
     let phoneAnimate = gsap.timeline({
         paused: true,

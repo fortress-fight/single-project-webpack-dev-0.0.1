@@ -147,8 +147,8 @@ export default function secScroll(): void {
         paused: true,
         defaults: { ease: "none" },
     });
-    webScrollAnimate.to($("#web-site-body"), { y: -200 });
-    webScrollAnimate.to($("#mweb-site-body"), { y: -280 }, 0);
+    webScrollAnimate.to($("#web-site-body"), { y: -100 });
+    webScrollAnimate.to($("#mweb-site-body"), { y: -160 }, 0);
     webScrollAnimate.to($(".main-phone-back-card"), {
         duration: 0.3,
         scale: 0.8,
