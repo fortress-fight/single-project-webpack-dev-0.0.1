@@ -57,7 +57,6 @@ export default class UemoCardSite extends SiteManage {
         imgLoad.on("progress", () => {
             locoScroll.update();
         });
-
         this.vsScroll = locoScroll;
     }
     initScrollNav(): void {

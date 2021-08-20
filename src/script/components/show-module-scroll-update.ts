@@ -23,23 +23,39 @@ export default function secScroll(): void {
             pin: $module.find(".wrapper-module_content"),
         },
     });
-    animate.to({}, { duration: 0.3 });
+    animate.to({}, { duration: 0.6 });
     const infoItem = $(
         ".module-show .module-body .item-intro:not(.intro-phone)"
     );
     animate.to(infoItem, {
         z: (index) => {
             if (index >= 2 && index <= 5) {
-                return -400;
+                return -100;
             } else {
-                return -600;
+                return -160;
             }
         },
-        opacity: 0,
+        // opacity: 0,
         stagger: {
             grid: [4, 2],
             from: "edges",
-            ease: "better-elastic",
+            ease: "none",
+            amount: 0.1,
+        },
+    });
+    animate.to(infoItem, {
+        z: (index) => {
+            if (index >= 2 && index <= 5) {
+                return -5000;
+            } else {
+                return -8000;
+            }
+        },
+        // opacity: 0,
+        stagger: {
+            grid: [4, 2],
+            from: "edges",
+            ease: "Power4.easeIn",
             amount: 0.1,
         },
     });

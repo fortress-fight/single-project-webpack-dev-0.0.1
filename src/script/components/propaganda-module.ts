@@ -94,15 +94,9 @@ export function getLineEnterEnd(): gsap.core.Timeline {
     const modulePropaganda = $(".module-propaganda");
     const modulePropagandaTitle = $(".module-propaganda .title");
     const modulePropagandaServe = $(".module-propaganda .project-serve");
-    animate.fromTo(
-        modulePropaganda,
-        {
-            paddingTop: "28.462963vh",
-        },
-        {
-            paddingTop: "25.462962962963vh",
-        }
-    );
+    animate.to(modulePropaganda.find(".module-body"), {
+        y: "-3vh",
+    });
     animate.fromTo(
         modulePropagandaTitle,
         {
@@ -142,6 +136,6 @@ export function propagandaModuleScroll(): void {
     })
         .to(textWrapper, { y: "60vh", duration: 1 }, 0)
         .to(IntroWrapper, { y: "20vh", duration: 1 }, 0)
-        .to(secHand, { x: "0", y: "0", duration: 0.8 }, 0)
-        .to(secHand, { x: "0", y: "0", duration: 0.2 });
+        .to(secHand, { x: "0", y: "0", duration: 0.5 }, 0)
+        .to(secHand, { x: "0", y: "0", duration: 0.5 }, ">");
 }

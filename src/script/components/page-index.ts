@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 首页的执行类
  * @Author: F-Stone
@@ -55,11 +56,11 @@ export default class IndexPage extends SiteManage {
     private _propagandaModuleEnter() {
         const animate = getLineEnter();
         const animateEnterEnd = getLineEnterEnd();
-        animateEnterEnd.eventCallback("onComplete", () => {
-            ScrollTrigger.update();
-            ScrollTrigger.refresh();
-            this.vsScroll.update();
-        });
+        // animateEnterEnd.eventCallback("onComplete", () => {
+        //     ScrollTrigger.update();
+        //     ScrollTrigger.refresh();
+        //     this.vsScroll.update();
+        // });
         const mainPhoneEnter = this._getMainPhoneEnter();
         animate.add(animateEnterEnd, ">");
         animate.add(mainPhoneEnter, "-=0.3");
