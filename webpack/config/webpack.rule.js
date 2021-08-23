@@ -128,8 +128,8 @@ module.exports = {
                         fiber: require("fibers"),
                     },
                     additionalData:
-                        "@import '@/style/mixin.scss';" +
-                        "@import '@/style/var.scss';",
+                        "@import '@desktop/style/mixin.scss';" +
+                        "@import '@desktop/style/var.scss';",
                 },
             },
         ],

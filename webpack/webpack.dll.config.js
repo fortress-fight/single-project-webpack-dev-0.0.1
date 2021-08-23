@@ -11,7 +11,7 @@ const path = require("path");
 const webpackRules = require("./config/webpack.rule");
 const { WEBPACK_MINIMIZE } = require("./config/webpack.min");
 const { DLL_WEBPACK_PLUGIN } = require("./config/webpack.plugin");
-const { WORKSPACE_FOLDER } = require("./config/webpack.env");
+const { WORKSPACE_FOLDER, DEVICE } = require("./config/webpack.env");
 
 module.exports = {
     mode: "production",
@@ -34,7 +34,7 @@ module.exports = {
     output: {
         publicPath: "/",
         filename: "script/[name].dll.js",
-        path: path.resolve(WORKSPACE_FOLDER, "dll"),
+        path: path.resolve(WORKSPACE_FOLDER, "dll/" + DEVICE),
         library: "[name]_dll",
     },
     resolveLoader: {

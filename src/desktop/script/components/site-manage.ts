@@ -6,13 +6,13 @@
  * @LastEditors: F-Stone
  */
 
-import SiteManage from "@/util/site-manage-0.1.0";
+import SiteManage from "@desktop/util/site-manage-0.1.0";
 
 import imagesLoaded from "imagesloaded";
 import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
 
-import { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
+import { ScrollTrigger } from "@desktop/lib/gsap-member/esm/ScrollTrigger";
 
 export default class UemoCardSite extends SiteManage {
     name = "uemo-card";

@@ -15,7 +15,7 @@ import {
     getLineEnter,
     getLineEnterEnd,
 } from "./propaganda-module";
-import { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
+import { ScrollTrigger } from "@desktop/lib/gsap-member/esm/ScrollTrigger";
 import Impetus from "impetus";
 import initDocModuleScroll from "./doc-module-scroll";
 import initCustomerModuleScroll from "./customer-module-scroll";

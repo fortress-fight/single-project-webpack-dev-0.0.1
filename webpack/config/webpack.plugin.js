@@ -18,6 +18,7 @@ const {
     OUT_PUT_PATH,
     IS_DEV_MODEL,
     WORKSPACE_FOLDER,
+    DEVICE,
 } = require("./webpack.env");
 
 /* ---------------------------------- */
@@ -88,7 +89,7 @@ const DEV_WEBPACK_PLUGIN = [
     new CopyPlugin({
         patterns: [
             {
-                from: path.resolve(WORKSPACE_FOLDER, "public"),
+                from: path.resolve(WORKSPACE_FOLDER, "public/" + DEVICE),
                 to: OUT_PUT_PATH,
                 toType: "dir",
                 globOptions: {
@@ -97,7 +98,7 @@ const DEV_WEBPACK_PLUGIN = [
                 noErrorOnMissing: true,
             },
             {
-                from: path.resolve(WORKSPACE_FOLDER, "dll"),
+                from: path.resolve(WORKSPACE_FOLDER, "dll/" + DEVICE),
                 to: OUT_PUT_PATH,
                 toType: "dir",
                 globOptions: {
@@ -139,11 +140,16 @@ const DLL_WEBPACK_PLUGIN = [
     ...WEBPACK_PLUGIN_BASE,
     // 清理旧的 dll 文件
     new CleanWebpackPlugin({
-        cleanOnceBeforeBuildPatterns: [path.resolve(WORKSPACE_FOLDER, "dll/*")],
+        cleanOnceBeforeBuildPatterns: [
+            path.resolve(WORKSPACE_FOLDER, "dll/" + DEVICE + "/*"),
+        ],
     }),
     new webpack.DllPlugin({
         name: "[name]_dll",
-        path: path.resolve(WORKSPACE_FOLDER, "dll/[name].manifest.json"),
+        path: path.resolve(
+            WORKSPACE_FOLDER,
+            "dll/" + DEVICE + "/[name].manifest.json"
+        ),
     }),
     new MiniCssExtractPlugin({
         filename: pathManage.css.path + "/[name].dll.css",

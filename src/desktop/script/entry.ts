@@ -8,7 +8,7 @@
 /* ---------------------------------- */
 /*            register lib            */
 /* ---------------------------------- */
-import "@/lib/gsap.plugin";
+import "@desktop/lib/gsap.plugin";
 
 /* ---------------------------------- */
 /*            page manages            */

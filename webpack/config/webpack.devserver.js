@@ -23,7 +23,7 @@ const chokidar = require("chokidar");
 const {
     PUBLIC_PATH,
     WORKSPACE_FOLDER,
-    OUT_PUT_DIR,
+    DEVICE,
 } = require("../config/webpack.env");
 
 /* ---------------------------------- */
@@ -44,7 +44,7 @@ exports.WEBPACK_SERVER_CONFIG = {
         aggregateTimeout: 500,
         ignored: [
             path.resolve(WORKSPACE_FOLDER, "node_modules"),
-            path.resolve(WORKSPACE_FOLDER, OUT_PUT_DIR),
+            path.resolve(WORKSPACE_FOLDER, "dist"),
         ],
     },
     quiet: true,
@@ -61,7 +61,7 @@ exports.WEBPACK_SERVER_CONFIG = {
     },
     // 告诉服务器从哪里提供内容, 默认情况下，将使用当前工作目录作为提供内容的目录
     before(app, server) {
-        const files = [path.resolve(WORKSPACE_FOLDER, "src/pages")];
+        const files = [path.resolve(WORKSPACE_FOLDER, `src/${DEVICE}/pages`)];
         chokidar.watch(files).on("all", () => {
             setTimeout(() => {
                 server.sockWrite(server.sockets, "content-changed");

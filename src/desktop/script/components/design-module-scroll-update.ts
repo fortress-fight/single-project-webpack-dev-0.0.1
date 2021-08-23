@@ -7,7 +7,7 @@
  */
 
 import { gsap } from "gsap";
-import type { ScrollTrigger } from "@/lib/gsap-member/esm/ScrollTrigger";
+import type { ScrollTrigger } from "@desktop/lib/gsap-member/esm/ScrollTrigger";
 
 type TYPE_SCROLL_UPDATE = ScrollTrigger.Callback;
 

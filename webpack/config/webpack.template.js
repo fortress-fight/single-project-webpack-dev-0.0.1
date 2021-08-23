@@ -20,7 +20,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 /* ---------------------------------- */
 /*               set env              */
 /* ---------------------------------- */
-const { PUBLIC_PATH, WORKSPACE_FOLDER } = require("../config/webpack.env");
+const {
+    PUBLIC_PATH,
+    WORKSPACE_FOLDER,
+    DEVICE,
+} = require("../config/webpack.env");
 
 /* ---------------------------------- */
 /*            require tools           */
@@ -30,7 +34,10 @@ const { testFileIsExit } = require("../helper/test-fileIs-exit");
 const { createFile } = require("../helper/create-file");
 
 function genHTMLConfig(name, config = {}) {
-    let templatePath = path.resolve(WORKSPACE_FOLDER, `src/pages/${name}.ejs`);
+    let templatePath = path.resolve(
+        WORKSPACE_FOLDER,
+        `src/${DEVICE}/pages/${name}.ejs`
+    );
     testFileIsExit(templatePath).then(
         () => {},
         () => {

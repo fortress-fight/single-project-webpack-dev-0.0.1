@@ -4,9 +4,12 @@
     "description": "独立项目的webpack本地开发基础",
     "main": "index.js",
     "scripts": {
-        "start:dev": "cross-env NODE_ENV=development webpack serve",
-        "build": "cross-env NODE_ENV=production webpack",
-        "dll": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.dll.config.js",
+        "start:desktop": "cross-env NODE_ENV=development device=desktop webpack serve",
+        "build:desktop": "cross-env NODE_ENV=production device=desktop webpack",
+        "dll:desktop": "cross-env NODE_ENV=production device=desktop webpack --config ./webpack/webpack.dll.config.js",
+        "start:mobile": "cross-env NODE_ENV=development device=mobile webpack serve",
+        "build:mobile": "cross-env NODE_ENV=production device=mobile webpack",
+        "dll:mobile": "cross-env NODE_ENV=production device=mobile webpack --config ./webpack/webpack.dll.config.js",
         "lint": "eslint '*/**/*.{js,ts,tsx,vue}' --quiet --fix",
         "test": "echo \"Error: no test specified\" && exit 1",
         "prepare": "husky install"
