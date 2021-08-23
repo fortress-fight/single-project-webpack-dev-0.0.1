@@ -20,7 +20,7 @@ const WORKSPACE_FOLDER = path.resolve(__dirname, "../../");
 const OUT_PUT_DIR = "dist";
 const OUT_PUT_PATH = path.resolve(__dirname, "../../" + OUT_PUT_DIR + "/");
 const USE_HASH_NAME = true;
-const PUBLIC_PATH = IS_DEV_MODEL ? "/" : "/";
+const PUBLIC_PATH = IS_DEV_MODEL ? "/" : "./";
 const PROJECT_NAME = "single-project-webpack-dev";
 
 module.exports = {

@@ -50,6 +50,7 @@ module.exports = {
             { ignore: ["consecutive-duplicates-with-different-values"] },
         ],
         "declaration-block-no-duplicate-custom-properties": true,
+        "scss/selector-no-redundant-nesting-selector": null,
         "order/properties-order": [
             [
                 {

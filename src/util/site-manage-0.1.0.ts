@@ -24,6 +24,7 @@ export default class SiteManage {
     readonly preTask: string[] = [];
     readonly defaultTask: string[] = [];
     readonly disableTask: string[] = [];
+    readonly otherTask: string[] = [];
 
     getTask(
         taskName: string,
@@ -78,7 +79,7 @@ export default class SiteManage {
                     result[v] = res[i];
                 });
                 this.defaultTask
-                    .concat(_param.otherTask)
+                    .concat([...this.otherTask, ..._param.otherTask])
                     .forEach((taskName) => {
                         result[taskName] = this.getTask(taskName)();
                     });

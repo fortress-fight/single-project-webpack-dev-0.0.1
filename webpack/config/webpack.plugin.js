@@ -92,7 +92,7 @@ const DEV_WEBPACK_PLUGIN = [
                 to: OUT_PUT_PATH,
                 toType: "dir",
                 globOptions: {
-                    ignore: [".DS_Store"],
+                    ignore: [".DS_Store", "**/.gitkeep"],
                 },
                 noErrorOnMissing: true,
             },
@@ -101,7 +101,7 @@ const DEV_WEBPACK_PLUGIN = [
                 to: OUT_PUT_PATH,
                 toType: "dir",
                 globOptions: {
-                    ignore: [".DS_Store", "**/*.json"],
+                    ignore: [".DS_Store", "**/*.json", "**/.gitkeep"],
                 },
                 noErrorOnMissing: true,
             },

@@ -6,14 +6,23 @@
  * @LastEditors: F-Stone
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><%= process.env.PROJECT_NAME %></title>
+        <link rel="icon" href="<%= IMG_PATH + 'logo-icon.png' %>" />
+        <title>首页</title>
     </head>
-    <body>
-        --- <%= testData %> ---
+    <body class="state-prevent_scroll">
+        <div
+            id="site-page"
+            class="site-page"
+            data-type="page-index"
+            date-page-name="index-page"
+            data-scroll-container
+        >
+            <%- require("./components/header.ejs")({IMG_PATH}) %>
+        </div>
     </body>
 </html>

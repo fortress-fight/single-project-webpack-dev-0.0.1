@@ -12,7 +12,7 @@ const genTempParam = (config) =>
         {
             PROJECT_NAME,
             PUB_PATH: PUBLIC_PATH,
-            IMG_PATH: PUBLIC_PATH + "imgs/",
+            IMG_PATH: PUBLIC_PATH + "image/",
             process,
         },
         config

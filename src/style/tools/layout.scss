@@ -1,0 +1,80 @@
+/* ---------------------------------- */
+/*          start flex-layout         */
+/* ---------------------------------- */
+.flex-inline {
+    display: inline-flex;
+}
+.flex {
+    display: flex;
+}
+.flex-x-sb {
+    justify-content: space-between;
+}
+.flex-x-sa {
+    justify-content: space-around;
+}
+.flex-x-s {
+    justify-content: flex-start;
+}
+.flex-x-e {
+    justify-content: flex-end;
+}
+.flex-x-c {
+    justify-content: center;
+}
+.flex-c-c {
+    align-items: center;
+    justify-content: center;
+}
+.flex-y-s {
+    align-items: flex-start;
+}
+.flex-y-c {
+    align-items: center;
+}
+.flex-y-e {
+    align-items: flex-end;
+}
+.flex-d-c {
+    flex-direction: column;
+}
+.flex-fix {
+    flex: 0 0 auto;
+}
+.flex-auto {
+    flex: 1 1 auto;
+}
+
+@for $num from 1 through 24 {
+    .flex-#{$num} {
+        width: #{$num}px;
+    }
+
+}
+
+/* ---------------------------------- */
+/*          start grid-layout         */
+/* ---------------------------------- */
+.grid {
+    display: grid;
+    &-y-c {
+        display: grid;
+
+        align-items: center;
+    }
+}
+
+@for $num from 1 through 24 {
+    .grid-colspac-#{$num} {
+        grid-column-gap: #{$num}px;
+    }
+
+    .grid-rowspac-#{$num} {
+        grid-row-gap: #{$num}px;
+    }
+
+    .grid-col-#{$num} {
+        grid-template-columns: repeat($num, 1fr);
+    }
+
+}
