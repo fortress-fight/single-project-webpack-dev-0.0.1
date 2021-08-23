@@ -15,12 +15,13 @@ import {
     getLineEnter,
     getLineEnterEnd,
 } from "./propaganda-module";
-import { ScrollTrigger } from "@desktop/lib/gsap-member/esm/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Impetus from "impetus";
 import initDocModuleScroll from "./doc-module-scroll";
 import initCustomerModuleScroll from "./customer-module-scroll";
 import initShowModuleScroll from "./show-module-scroll";
 import initDesignModuleScroll from "./design-module-scroll";
+import lottie from "lottie-web";
 
 export default class IndexPage extends SiteManage {
     disableTask = ["initScrollNav"];
@@ -347,6 +348,23 @@ export default class IndexPage extends SiteManage {
             update: function (x) {
                 gsap.set(dom, { x: Math.round(x) });
             },
+        });
+        $(".module-extension .item-extension .box-icon").each((i, dom) => {
+            const lottieAnimate = lottie.loadAnimation({
+                container: dom,
+                renderer: "svg",
+                loop: false,
+                autoplay: false,
+                path: $(dom).data("ae-icon"),
+            });
+            $(dom).data("lottieAnimate", lottieAnimate);
+        });
+        $(".module-extension .item-extension").on("pointerenter", (ev) => {
+            const dom = ev.currentTarget;
+            const animate = $(dom).find(".box-icon").data("lottieAnimate");
+            if (animate.isPaused) {
+                animate.goToAndPlay(0, 1);
+            }
         });
     }
     docModule(): void {

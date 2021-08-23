@@ -6,7 +6,7 @@
  * @LastEditors: F-Stone
  */
 import { gsap } from "gsap";
-import { ScrollTrigger } from "@desktop/lib/gsap-member/esm/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 let maxWidth = 0;
 let boxWidth = 0;
 const getMaxWidth = () => {

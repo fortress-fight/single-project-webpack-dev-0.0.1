@@ -12,7 +12,7 @@ import imagesLoaded from "imagesloaded";
 import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
 
-import { ScrollTrigger } from "@desktop/lib/gsap-member/esm/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default class UemoCardSite extends SiteManage {
     name = "uemo-card";

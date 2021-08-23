@@ -1,0 +1,70 @@
+@custom-media --small-viewport (max-width: 734px);
+
+@custom-media --middle-viewport (max-width: 1068px);
+
+@custom-media --normal-viewport (max-width: 1460px);
+
+@custom-media --big-viewport (max-width: 1920px);
+
+@media only screen and (--normal-viewport) {
+    /* ---------------------------------- */
+    /*              顶部导航               */
+    /* ---------------------------------- */
+    .site-head {
+        height: 116px;
+    }
+    .site-head .site-logo {
+        height: 36px;
+    }
+    .btn-open_project_QR {
+        font-size: 15px;
+        line-height: 50px;
+    }
+    .btn-open_project_QR > .state-pos_left {
+        padding: 0 20px 0 24px;
+        .ic {
+            margin-right: 18px;
+        }
+    }
+    .btn-open_project_QR > .state-pos_right {
+        padding: 0  24px 0 20px;
+        .ic {
+            margin-left: 18px;
+        }
+    }
+    .btn-open_project_QR > .state-pos_left,
+    .btn-open_project_QR > .state-pos_right {
+        font-size: 15px;
+    }
+
+}
+
+@media only screen and (--middle-viewport) {
+
+    /* ---------------------------------- */
+    /*              顶部导航               */
+    /* ---------------------------------- */
+    .site-head {
+        height: 106px;
+    }
+    .btn-open_project_QR {
+        line-height: 47px;
+    }
+    .btn-open_project_QR > .state-pos_left {
+        padding: 0  18px 0 22px;
+        .ic {
+            margin-right: 16px;
+        }
+    }
+    .btn-open_project_QR > .state-pos_right {
+        padding: 0 22px 0 18px;
+        .ic {
+            margin-left: 16px;
+        }
+    }
+    .btn-open_project_QR > .state-pos_left,
+    .btn-open_project_QR > .state-pos_right {
+        font-size: 14px;
+    }
+
+}

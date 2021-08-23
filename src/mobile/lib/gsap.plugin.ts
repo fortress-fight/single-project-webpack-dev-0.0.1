@@ -10,7 +10,7 @@
 import { gsap } from "gsap";
 import { CustomEase } from "./gsap-member/esm/CustomEase.js";
 // import { ScrollToPlugin } from "./gsap-member/esm/ScrollToPlugin.js";
-import { ScrollTrigger } from "./gsap-member/esm/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(CustomEase);
 // gsap.registerPlugin(ScrollToPlugin);
