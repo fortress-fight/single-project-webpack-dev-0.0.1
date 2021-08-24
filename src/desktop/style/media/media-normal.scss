@@ -52,6 +52,44 @@
     .wrapper-propaganda_intro .layer-hand-center .wrapper-card {
         border-radius: 13px;
     }
+    /* ---------------------------------- */
+    /*            module-design           */
+    /* ---------------------------------- */
+    .module-design .module-body .box-preview_layout,
+    .module-design .bg-body .box-preview_layout {
+        width: 272px;
+    }
+    .module-design .bg-body .list-card--left,
+    .module-design .bg-body .list-card--right {
+        top: 69px;
+    }
+    .module-design .item-card {
+        width: 216px;
+        margin-right: 36px;
+    }
+    .module-design .bg-body .list-card--left .list-card-box {
+        transform: translateX(760px);
+    }
+    .module-design .bg-body > .state-pos_right,
+    .module-design .module-body > .state-pos_right {
+        padding-top: 110px;
+        padding-left: 56px;
+    }
+    .module-design .item-intro .title {
+        font-size: 130px;
+    }
+    .module-design .item-intro .subtitle {
+        font-size: 48px;
+        line-height: 78px;
+    }
+    .module-design .item-intro .desc {
+        font-size: 16px;
+        line-height: 26px;
+    }
+    .module-design .module-inner_wrapper {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
 
 }   
 

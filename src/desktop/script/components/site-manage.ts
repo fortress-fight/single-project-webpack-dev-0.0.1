@@ -26,6 +26,12 @@ export default class UemoCardSite extends SiteManage {
             smooth: true,
             speed: true,
             lerp: 0.075,
+            tablet: {
+                smooth: true,
+            },
+            smartphone: {
+                smooth: true,
+            },
         });
 
         locoScroll.on("scroll", ScrollTrigger.update);

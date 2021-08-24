@@ -212,6 +212,18 @@
     margin: 0 auto;
 }
 
+@mixin limit-wrapper-small {
+    width: $max-limit-width;
+    max-width: 84vw;
+    margin: 0 auto;
+}
+
+@mixin limit-wrapper-small-min {
+    width: $max-limit-width;
+    max-width: 73.3333333333333vw;
+    margin: 0 auto;
+}
+
 @mixin limit-wrapper-min {
     width: $min-limit-width;
     max-width: 94vw;

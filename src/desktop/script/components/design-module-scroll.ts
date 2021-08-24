@@ -6,6 +6,8 @@
  * @LastEditors: F-Stone
  */
 import { gsap } from "gsap";
+import { twoNumber } from "@/util/two-number";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 function getCardAnimateParam(cardIndex) {
     let param;
@@ -223,17 +225,6 @@ function cardMove(direction, sectionIndex) {
 export default function initDesignModuleScroll(): void {
     // console.log("running");
 
-    let oldIndex = -1;
-    function setSection(currentIndex) {
-        const dir = scrollAnimate.scrollTrigger.direction;
-        if (dir == 1) {
-            if (currentIndex <= oldIndex) return;
-        } else {
-            if (currentIndex >= oldIndex) return;
-        }
-        cardMove(dir, currentIndex);
-        oldIndex = currentIndex;
-    }
     gsap.timeline({
         defaults: {
             ease: "none",
@@ -249,92 +240,145 @@ export default function initDesignModuleScroll(): void {
         { y: "100%", opacity: 0 },
         { y: 0, opacity: 1 }
     );
-    const scrollAnimate = gsap.timeline({
-        defaults: {
-            ease: "none",
+    // ScrollTrigger.saveStyles(
+    //     ".module-design .list-intro .item-intro, .module-design .module-inner_wrapper"
+    // );
+    let oldIndex = -1;
+    ScrollTrigger.matchMedia({
+        // all
+        "(min-width: 735px)": function () {
+            const scrollAnimate = gsap.timeline({
+                defaults: {
+                    ease: "none",
+                },
+                scrollTrigger: {
+                    trigger: ".module-design .module-inner_wrapper",
+                    scrub: true,
+                    start: "top top",
+                    pin: true,
+                },
+            });
+            function setSection(scrollAnimate, currentIndex) {
+                const dir = scrollAnimate.scrollTrigger.direction;
+                if (dir == 1) {
+                    if (currentIndex <= oldIndex) return;
+                } else {
+                    if (currentIndex >= oldIndex) return;
+                }
+                cardMove(dir, currentIndex);
+                oldIndex = currentIndex;
+            }
+            itemIntroScrollAnimate(scrollAnimate, setSection, "50%");
         },
-        scrollTrigger: {
-            trigger: ".module-design .module-inner_wrapper",
-            scrub: true,
-            start: "top top",
-            pin: true,
+        "(max-width: 734px)": function () {
+            const scrollAnimate = gsap.timeline({
+                defaults: {
+                    ease: "none",
+                },
+                scrollTrigger: {
+                    trigger: ".module-design .module-inner_wrapper",
+                    scrub: true,
+                    start: "top top",
+                    pin: true,
+                },
+            });
+            function setSection(scrollAnimate, currentIndex) {
+                const dir = scrollAnimate.scrollTrigger.direction;
+                if (dir == 1) {
+                    if (currentIndex <= oldIndex) return;
+                } else {
+                    if (currentIndex >= oldIndex) return;
+                }
+                cardMove(dir, currentIndex);
+                $(".module-design .footer-index-nav .current").text(
+                    twoNumber(currentIndex + 1)
+                );
+                oldIndex = currentIndex;
+            }
+            itemIntroScrollAnimate(scrollAnimate, setSection, "30%");
         },
     });
-    $(".module-design .list-intro .item-intro").each((i, dom) => {
-        switch (i) {
-            case 0:
-                scrollAnimate.to(dom, {
-                    y: "-50%",
-                    onUpdate() {
-                        gsap.set(dom, {
-                            opacity: gsap.utils.normalize(
-                                0,
-                                0.5,
-                                1 - this.progress()
-                            ),
-                        });
-                    },
-                    onStart() {
-                        setSection(i);
-                    },
-                });
-                break;
-            case 1:
-                scrollAnimate.to(dom, {
-                    y: 0,
-                    onUpdate() {
-                        gsap.set(dom, {
-                            opacity: gsap.utils.normalize(
-                                0,
-                                0.6,
-                                this.progress()
-                            ),
-                        });
-                    },
-                    onStart() {
-                        setSection(i);
-                    },
-                    onReverseComplete() {
-                        setSection(i - 1);
-                    },
-                });
-                scrollAnimate.to(dom, {
-                    y: "-50%",
-                    onUpdate() {
-                        gsap.set(dom, {
-                            opacity: gsap.utils.normalize(
-                                0,
-                                0.6,
-                                1 - this.progress()
-                            ),
-                        });
-                    },
-                });
-                break;
+    function itemIntroScrollAnimate(
+        scrollAnimate,
+        setSection,
+        distance = "50%"
+    ) {
+        $(".module-design .list-intro .item-intro").each((i, dom) => {
+            switch (i) {
+                case 0:
+                    scrollAnimate.to(dom, {
+                        y: "-" + distance,
+                        onUpdate() {
+                            gsap.set(dom, {
+                                opacity: gsap.utils.normalize(
+                                    0,
+                                    0.5,
+                                    1 - this.progress()
+                                ),
+                            });
+                        },
+                        onStart() {
+                            setSection(scrollAnimate, i);
+                        },
+                    });
+                    break;
+                case 1:
+                    scrollAnimate.to(dom, {
+                        y: 0,
+                        onUpdate() {
+                            gsap.set(dom, {
+                                opacity: gsap.utils.normalize(
+                                    0,
+                                    0.6,
+                                    this.progress()
+                                ),
+                            });
+                        },
+                        onStart() {
+                            setSection(scrollAnimate, i);
+                        },
+                        onReverseComplete() {
+                            setSection(scrollAnimate, i - 1);
+                        },
+                    });
+                    scrollAnimate.to(dom, {
+                        y: "-" + distance,
+                        onUpdate() {
+                            gsap.set(dom, {
+                                opacity: gsap.utils.normalize(
+                                    0,
+                                    0.6,
+                                    1 - this.progress()
+                                ),
+                            });
+                        },
+                    });
+                    break;
 
-            case 2:
-                scrollAnimate.to(dom, {
-                    y: 0,
-                    onUpdate() {
-                        gsap.set(dom, {
-                            opacity: gsap.utils.normalize(
-                                0,
-                                0.6,
-                                this.progress()
-                            ),
-                        });
-                    },
-                    onStart() {
-                        setSection(i);
-                    },
-                    onReverseComplete() {
-                        setSection(i - 1);
-                    },
-                });
-                break;
+                case 2:
+                    scrollAnimate.to(dom, {
+                        y: 0,
+                        onUpdate() {
+                            gsap.set(dom, {
+                                opacity: gsap.utils.normalize(
+                                    0,
+                                    0.6,
+                                    this.progress()
+                                ),
+                            });
+                        },
+                        onStart() {
+                            setSection(scrollAnimate, i);
+                        },
+                        onReverseComplete() {
+                            setSection(scrollAnimate, i - 1);
+                        },
+                    });
+                    break;
 
-            default:
-                break;
-        }
-    });
+                default:
+                    break;
+            }
+        });
+    }
 }
