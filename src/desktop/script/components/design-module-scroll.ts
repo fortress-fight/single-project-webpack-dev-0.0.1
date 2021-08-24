@@ -195,14 +195,14 @@ let oldAnimateName;
 let oldAnimate;
 function cardMove(direction, sectionIndex) {
     let _animateName;
-    switch (sectionIndex) {
-        case 0:
+    switch (String(sectionIndex)) {
+        case "0":
             _animateName = "oneCardAnimate";
             break;
-        case 1:
+        case "1":
             _animateName = "twoCardAnimate";
             break;
-        case 2:
+        case "2":
             _animateName = "threeCardAnimate";
             break;
 
@@ -214,6 +214,7 @@ function cardMove(direction, sectionIndex) {
             ? `re${_animateName.replace(/^\S/, (s) => s.toUpperCase())}`
             : _animateName;
 
+    console.log("animateName:", animateName, oldAnimateName);
     if (animateName && oldAnimateName != animateName) {
         oldAnimateName = animateName;
         oldAnimate && oldAnimate.kill();
@@ -240,12 +241,9 @@ export default function initDesignModuleScroll(): void {
         { y: "100%", opacity: 0 },
         { y: 0, opacity: 1 }
     );
-    // ScrollTrigger.saveStyles(
-    //     ".module-design .list-intro .item-intro, .module-design .module-inner_wrapper"
-    // );
     let oldIndex = -1;
+
     ScrollTrigger.matchMedia({
-        // all
         "(min-width: 735px)": function () {
             const scrollAnimate = gsap.timeline({
                 defaults: {
@@ -256,6 +254,9 @@ export default function initDesignModuleScroll(): void {
                     scrub: true,
                     start: "top top",
                     pin: true,
+                    onUpdate() {
+                        setSection(scrollAnimate, scrollAnimate.currentLabel());
+                    },
                 },
             });
             function setSection(scrollAnimate, currentIndex) {
@@ -265,6 +266,7 @@ export default function initDesignModuleScroll(): void {
                 } else {
                     if (currentIndex >= oldIndex) return;
                 }
+                // if (currentIndex == oldIndex) return;
                 cardMove(dir, currentIndex);
                 oldIndex = currentIndex;
             }
@@ -280,6 +282,9 @@ export default function initDesignModuleScroll(): void {
                     scrub: true,
                     start: "top top",
                     pin: true,
+                    onUpdate() {
+                        setSection(scrollAnimate, scrollAnimate.currentLabel());
+                    },
                 },
             });
             function setSection(scrollAnimate, currentIndex) {
@@ -289,6 +294,8 @@ export default function initDesignModuleScroll(): void {
                 } else {
                     if (currentIndex >= oldIndex) return;
                 }
+
+                // if (currentIndex == oldIndex) return;
                 cardMove(dir, currentIndex);
                 $(".module-design .footer-index-nav .current").text(
                     twoNumber(currentIndex + 1)
@@ -299,41 +306,35 @@ export default function initDesignModuleScroll(): void {
         },
     });
     function itemIntroScrollAnimate(
-        scrollAnimate,
+        scrollAnimate: gsap.core.Timeline,
         setSection,
         distance = "50%"
     ) {
         $(".module-design .list-intro .item-intro").each((i, dom) => {
+            ScrollTrigger.saveStyles(dom);
             switch (i) {
                 case 0:
+                    scrollAnimate.addLabel("0");
                     scrollAnimate.to(dom, {
                         y: "-" + distance,
-                        onUpdate() {
-                            gsap.set(dom, {
-                                opacity: gsap.utils.normalize(
-                                    0,
-                                    0.5,
-                                    1 - this.progress()
-                                ),
-                            });
-                        },
                         onStart() {
                             setSection(scrollAnimate, i);
                         },
                     });
+                    scrollAnimate.to(
+                        dom,
+                        {
+                            opacity: 0,
+                            ease: "none",
+                            duration: 0.3,
+                        },
+                        "-=0.3"
+                    );
                     break;
                 case 1:
+                    scrollAnimate.addLabel("1");
                     scrollAnimate.to(dom, {
                         y: 0,
-                        onUpdate() {
-                            gsap.set(dom, {
-                                opacity: gsap.utils.normalize(
-                                    0,
-                                    0.6,
-                                    this.progress()
-                                ),
-                            });
-                        },
                         onStart() {
                             setSection(scrollAnimate, i);
                         },
@@ -341,32 +342,33 @@ export default function initDesignModuleScroll(): void {
                             setSection(scrollAnimate, i - 1);
                         },
                     });
+                    scrollAnimate.to(
+                        dom,
+                        {
+                            opacity: 1,
+                            ease: "none",
+                            duration: 0.3,
+                        },
+                        "<"
+                    );
                     scrollAnimate.to(dom, {
                         y: "-" + distance,
-                        onUpdate() {
-                            gsap.set(dom, {
-                                opacity: gsap.utils.normalize(
-                                    0,
-                                    0.6,
-                                    1 - this.progress()
-                                ),
-                            });
-                        },
                     });
+                    scrollAnimate.to(
+                        dom,
+                        {
+                            opacity: 0,
+                            ease: "none",
+                            duration: 0.3,
+                        },
+                        "-=0.3"
+                    );
                     break;
 
                 case 2:
+                    scrollAnimate.addLabel("2");
                     scrollAnimate.to(dom, {
                         y: 0,
-                        onUpdate() {
-                            gsap.set(dom, {
-                                opacity: gsap.utils.normalize(
-                                    0,
-                                    0.6,
-                                    this.progress()
-                                ),
-                            });
-                        },
                         onStart() {
                             setSection(scrollAnimate, i);
                         },
@@ -374,6 +376,15 @@ export default function initDesignModuleScroll(): void {
                             setSection(scrollAnimate, i - 1);
                         },
                     });
+                    scrollAnimate.to(
+                        dom,
+                        {
+                            opacity: 1,
+                            ease: "none",
+                            duration: 0.3,
+                        },
+                        "<"
+                    );
                     break;
 
                 default:

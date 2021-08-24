@@ -55,7 +55,10 @@ export default class UemoCardSite extends SiteManage {
             pinType: "transform",
         });
         ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
-
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (window as any).aScrollTrigger = ScrollTrigger;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (window as any).clocoScroll = locoScroll;
         $(window).on("resize", () => {
             locoScroll.update();
         });
