@@ -15,14 +15,19 @@
     padding-bottom: 80px;
 }
 .module-propaganda {
-    padding-top: 276px;
+    padding-top: 246px;
     .effect-line-1 {
         br {
             display: none;
         }
     }
+    .module-body {
+        transform: translateY(30px);
+    }
 }
-
+.wrapper-propaganda_intro .layer-hand-ahead {
+    transform: translate3d(5vh, 10vh, 0);
+}
 /* ---------------------------------- */
 /*            module-design           */
 /* ---------------------------------- */
