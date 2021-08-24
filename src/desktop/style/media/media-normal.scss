@@ -1,0 +1,85 @@
+
+@custom-media --normal-viewport (max-width: 1460px);
+
+@custom-media --normal-min-viewport (max-width: 1300px);
+
+
+@media only screen and (--normal-viewport) {
+    /* ---------------------------------- */
+    /*              顶部导航               */
+    /* ---------------------------------- */
+    .site-head {
+        height: 116px;
+    }
+    .site-head .site-logo {
+        height: 36px;
+    }
+    .btn-open_project_qr {
+        font-size: 15px;
+        line-height: 50px;
+    }
+    .btn-open_project_qr > .state-pos_left {
+        padding: 0 20px 0 24px;
+        .ic {
+            margin-right: 18px;
+        }
+    }
+    .btn-open_project_qr > .state-pos_right {
+        padding: 0  24px 0 20px;
+        .ic {
+            margin-left: 18px;
+        }
+    }
+    .btn-open_project_qr > .state-pos_left,
+    .btn-open_project_qr > .state-pos_right {
+        font-size: 15px;
+    }
+    /* ---------------------------------- */
+    /*          module-propaganda         */
+    /* ---------------------------------- */
+    .box-text_effect {
+        height: 14vw;
+    }
+    .box-text_effect .effect-line-1 {
+        font-size: 6.3vw;
+    }
+    .wrapper-propaganda_text {
+        padding-bottom: 4.5vw;
+    }
+    .wrapper-propaganda_intro .inner-wrapper {
+        width: 90%;
+    }
+    .wrapper-propaganda_intro .layer-hand-center .wrapper-card {
+        border-radius: 13px;
+    }
+
+}   
+
+@media only screen and (--normal-min-viewport) {
+    
+    /* ---------------------------------- */
+    /*          module-propaganda         */
+    /* ---------------------------------- */
+    .box-text_effect {
+        height: 172px;
+    }
+    .box-text_effect .effect-line-1 {
+        font-size: 83px;
+    }
+    .wrapper-propaganda_intro .inner-wrapper {
+        width: 100%;
+    }
+    .wrapper-propaganda_text {
+        padding-bottom: 60px;
+    }
+    .box-text_effect .effect-line-2 {
+        font-size: 14px;
+    }
+    .wrapper-propaganda_text .project-serve {
+        width: 82.5%;
+    }
+    .wrapper-propaganda_intro .layer-hand-center .wrapper-card {
+        border-radius: 12px;
+    }
+
+}

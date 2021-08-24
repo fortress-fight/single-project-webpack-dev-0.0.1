@@ -1,0 +1,55 @@
+@custom-media --middle-viewport (max-width: 1068px);
+
+@media only screen and (--middle-viewport) {
+    .wrapper-limit_width {
+        max-width: 88vw;
+    }
+    /* ---------------------------------- */
+    /*              顶部导航               */
+    /* ---------------------------------- */
+    .site-head {
+        height: 106px;
+        .site-logo {
+            height: 34px;
+        }
+    }
+    .btn-open_project_qr {
+        line-height: 47px;
+    }
+    .btn-open_project_qr > .state-pos_left {
+        padding: 0  18px 0 22px;
+        .ic {
+            margin-right: 16px;
+        }
+    }
+    .btn-open_project_qr > .state-pos_right {
+        padding: 0 22px 0 18px;
+        .ic {
+            margin-left: 16px;
+        }
+    }
+    .btn-open_project_qr > .state-pos_left,
+    .btn-open_project_qr > .state-pos_right {
+        font-size: 14px;
+    }
+    
+    /* ---------------------------------- */
+    /*          module-propaganda         */
+    /* ---------------------------------- */
+    .box-text_effect {
+        height: 16vw;
+    }
+    .box-text_effect .effect-line-1 {
+        font-size: 7.5vw;
+    }
+    .wrapper-propaganda_text {
+        padding-bottom: 5.6vw;
+    }
+    .module-propaganda {
+        padding-top: 266px;
+    }
+    .wrapper-propaganda_intro .layer-hand-center .wrapper-card {
+        border-radius: 8px;
+    }
+
+}

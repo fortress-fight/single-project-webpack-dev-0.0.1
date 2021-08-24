@@ -1,0 +1,38 @@
+@custom-media --big-viewport (max-width: 1920px);
+
+/* ---------------------------------- */
+/*               public               */
+/* ---------------------------------- */
+.site-page {
+    overflow: hidden !important;
+}
+
+
+/* ---------------------------------- */
+/*          module-propaganda         */
+/* ---------------------------------- */
+.wrapper-propaganda_text {
+    padding-bottom: 80px;
+}
+.module-propaganda {
+    padding-top: 276px;
+    .effect-line-1 {
+        br {
+            display: none;
+        }
+    }
+}
+
+/* ---------------------------------- */
+/*            module-design           */
+/* ---------------------------------- */
+.module-design .module-inner_wrapper {
+    min-height: calc(100vh + 1px);
+}
+
+/* ---------------------------------- */
+/*                other               */
+/* ---------------------------------- */
+.c-scrollbar {
+    z-index: 1111;
+}

@@ -8,7 +8,6 @@
 
 import SiteManage from "@desktop/util/site-manage-0.1.0";
 
-import imagesLoaded from "imagesloaded";
 import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
 
@@ -20,21 +19,20 @@ export default class UemoCardSite extends SiteManage {
     readonly preTask = ["initVsScroll"];
     readonly defaultTask = ["initScrollNav"];
     initVsScroll(): void {
-        const scrollContainer = $("[data-scroll-container]")[0];
+        // const scrollContainer = $("body")[0];
+        // el: scrollContainer,
         const locoScroll = new LocomotiveScroll({
-            el: scrollContainer,
+            el: document.querySelector("#site-page"),
             smooth: true,
             speed: true,
             lerp: 0.075,
-            offset: ["-100%", "-100%"],
         });
 
         locoScroll.on("scroll", ScrollTrigger.update);
-
         ScrollTrigger.defaults({
-            scroller: scrollContainer,
+            scroller: document.querySelector("#site-page"),
         });
-        ScrollTrigger.scrollerProxy("[data-scroll-container]", {
+        ScrollTrigger.scrollerProxy("#site-page", {
             scrollTop(value) {
                 return value
                     ? locoScroll.scrollTo(value, 0, 0)
@@ -49,12 +47,10 @@ export default class UemoCardSite extends SiteManage {
                 };
             },
             pinType: "transform",
-            //  scrollContainer.style.transform ? "transform" : "fixed",
         });
         ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
-        const imgLoad = imagesLoaded(scrollContainer);
 
-        imgLoad.on("progress", () => {
+        $(window).on("resize", () => {
             locoScroll.update();
         });
         this.vsScroll = locoScroll;

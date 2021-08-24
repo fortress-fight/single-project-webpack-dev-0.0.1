@@ -97,25 +97,41 @@ export function getLineEnterEnd(): gsap.core.Timeline {
     animate.to(modulePropaganda.find(".module-body"), {
         y: "-3vh",
     });
+    const defaultTitleSize = modulePropagandaTitle.css("font-size");
+    const startTitleSize = parseInt(defaultTitleSize) * 1.289;
     animate.fromTo(
         modulePropagandaTitle,
         {
-            fontSize: "128px",
+            fontSize: startTitleSize,
             "letter-spacing": "-4px",
         },
         {
-            fontSize: "100px",
+            fontSize: defaultTitleSize,
             "letter-spacing": "-0px",
+            onComplete() {
+                modulePropagandaTitle.css({
+                    fontSize: "",
+                    letterSpacing: "",
+                });
+            },
         },
         0
     );
+    const defaultSubtitleSize = modulePropagandaServe.css("font-size");
+    const startSubtitleSize = parseInt(defaultSubtitleSize) * (19 / 15);
     animate.fromTo(
         modulePropagandaServe,
         {
-            fontSize: "19px",
+            fontSize: startSubtitleSize,
         },
         {
-            fontSize: "15px",
+            fontSize: defaultSubtitleSize,
+            onComplete() {
+                modulePropagandaServe.css({
+                    fontSize: "",
+                    letterSpacing: "",
+                });
+            },
         },
         0
     );

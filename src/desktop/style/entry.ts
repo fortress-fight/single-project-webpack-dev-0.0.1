@@ -37,7 +37,10 @@ import "./components/page-index.scss";
 /* ---------------------------------- */
 /*             适配相关样式            */
 /* ---------------------------------- */
-import "./media.scss";
+import "./media/media-big.scss";
+import "./media/media-normal.scss";
+import "./media/media-middle.scss";
+import "./media/media-small.scss";
 
 /* ---------------------------------- */
 /*                其它样式            */
