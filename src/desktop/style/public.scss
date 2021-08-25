@@ -144,7 +144,8 @@ a {
 
         flex: 0 0 auto;
 
-        transition: background-color 0.26s ease;
+        transition: 0.26s ease;
+        transition-property: transform, background-color;
 
         color: rgb(255 255 255);
         background-color: $main-color;
