@@ -90,6 +90,46 @@
         padding-top: 30px;
         padding-bottom: 30px;
     }
+    /* ---------------------------------- */
+    /*             module-show            */
+    /* ---------------------------------- */
+    .module-show {
+        .module-header {
+            margin-bottom: 7vw;
+        }
+        .module-title {
+            font-size: 4.9vw;
+            line-height: 1.22em;
+        }
+        .box-desc .title {
+            font-size: 2.1vw;
+            line-height: 1.25em;
+            
+            padding-top: 2px;
+        }
+        .box-desc .subtitle {
+            font-size: 15px;
+            line-height: 1.73em;
+        }
+        .box-desc .ic {
+            font-size: 23px;
+
+            width: 3.2vw;
+            height: 3.2vw;
+        }
+        .box-desc {
+            height: 6.849vw;
+        }
+        .wrapper-zero_area .wrapper-content {
+            width: 470px;
+        }
+        .box-desc > .state-pos_left {
+            padding: 0 40px 0 34px;
+        }
+        .box-desc > .state-pos_right {
+            padding: 0 34px 0 40px;
+        }
+    }
 
 }   
 
@@ -118,6 +158,51 @@
     }
     .wrapper-propaganda_intro .layer-hand-center .wrapper-card {
         border-radius: 12px;
+    }
+    
+    /* ---------------------------------- */
+    /*             module-show            */
+    /* ---------------------------------- */
+    .module-show {
+        .module-header {
+            margin-bottom: 74px;
+        }
+        .module-title {
+            font-size: 52px;
+
+            margin-bottom: 8px;
+        }
+        .module-subtitle {
+            font-size: 14px;
+            line-height: 32px;
+        }
+        .box-desc .title {
+            font-size: 22px;
+
+            padding-top: 3px;
+        }
+        .box-desc .subtitle {
+            font-size: 13px;
+        }
+        .box-desc .ic {
+            font-size: 21px;
+
+            width: 38px;
+            height: 38px;
+        }
+        .box-desc {
+            height: 73px;
+            padding: 0 20px;
+        }
+        .wrapper-zero_area .wrapper-content {
+            width: 420px;
+        }
+        .box-desc > .state-pos_left {
+            padding: 0 30px 0 38px;
+        }
+        .box-desc > .state-pos_right {
+            padding: 0 38px 0 30px;
+        }
     }
 
 }

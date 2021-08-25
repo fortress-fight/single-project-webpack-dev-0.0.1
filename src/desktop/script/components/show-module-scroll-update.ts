@@ -25,12 +25,10 @@ export default function secScroll(): void {
         },
     });
     animate.to({}, { duration: 0.6 });
-    const infoItem = $(
-        ".module-show .module-body .item-intro:not(.intro-phone)"
-    );
-    animate.to(infoItem, {
+    const infoItem = $(".module-show .module-body .group-col");
+    animate.to(infoItem.not(infoItem.eq(2)), {
         z: (index) => {
-            if (index >= 2 && index <= 5) {
+            if (index >= 1 && index <= 2) {
                 return -1600;
             } else {
                 return -2500;
@@ -40,13 +38,13 @@ export default function secScroll(): void {
         ease: "test-es",
         // opacity: 0,
         stagger: {
-            grid: [4, 2],
             from: "edges",
         },
     });
     const bg = $(".module-show .wrapper-sec-area .state-pos_right");
     animate.to(bg, {
         width: "50%",
+        ease: "better-elastic",
     });
     const phoneInfoItem = $(".module-show .module-body .intro-phone");
     animate.to(
@@ -74,24 +72,15 @@ export default function secScroll(): void {
                 if (dir == -1) {
                     gsap.to(".module-show .main-phone-back-card", {
                         overwrite: true,
-                        x: "-200px",
+                        x: "200%",
                         duration: 0.8,
                         ease: "better-elastic",
-                        onComplete() {
-                            gsap.set(".module-show .main-phone-back-card", {
-                                x: "200px",
-                            });
-                        },
                     });
                     gsap.to(phoneWrapper, {
                         overwrite: "auto",
                         duration: 0.8,
                         ease: "better-elastic",
                         x: "0%",
-                    });
-                } else {
-                    gsap.set(".module-show .main-phone-back-card", {
-                        x: "200px",
                     });
                 }
                 break;
@@ -115,14 +104,9 @@ export default function secScroll(): void {
                 if (dir == 1) {
                     gsap.to(".module-show .main-phone-back-card", {
                         overwrite: true,
-                        x: "-200px",
+                        x: "200%",
                         duration: 0.8,
                         ease: "better-elastic",
-                        onComplete() {
-                            gsap.set(".module-show .main-phone-back-card", {
-                                x: "200px",
-                            });
-                        },
                     });
                     gsap.to(phoneWrapper, {
                         overwrite: "auto",
@@ -161,7 +145,7 @@ export default function secScroll(): void {
         defaults: { ease: "none" },
     });
     webScrollAnimate.to($("#web-site-body"), { y: -100 });
-    webScrollAnimate.to($("#mweb-site-body"), { y: -160 }, 0);
+    webScrollAnimate.to($("#mweb-site-body"), { y: -80 }, 0);
     webScrollAnimate.to($(".main-phone-back-card"), {
         duration: 0.3,
         scale: 0.8,
@@ -275,7 +259,6 @@ export default function secScroll(): void {
     animate.to(
         uemoWeb,
         {
-            y: "0",
             opacity: 1,
         },
         "introItemStart0"

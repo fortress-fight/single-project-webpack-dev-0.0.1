@@ -110,7 +110,14 @@ function firstScroll() {
                 onUpdate() {
                     const originHeight = $module.find(".layer--scale").height();
                     gsap.set($module.find(".layer--scale")[0], {
-                        width: (Number(originHeight) / 100) * 560,
+                        width:
+                            (Number(originHeight) /
+                                $module
+                                    .find(".wrapper-zero_area .wrapper-content")
+                                    .height()) *
+                            $module
+                                .find(".wrapper-zero_area .wrapper-content")
+                                .width(),
                     });
                 },
             },

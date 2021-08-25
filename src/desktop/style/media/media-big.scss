@@ -39,6 +39,35 @@
 }
 
 /* ---------------------------------- */
+/*            module-show           */
+/* ---------------------------------- */
+.module-show .module-title br {
+    display: none;
+}
+.module-show .wrapper-first_area .group-col:nth-child(1),
+.module-show .wrapper-first_area .group-col:nth-child(4) {
+    margin-right: 2.4479vw;
+}
+.module-show .wrapper-first_area .group-col:nth-child(3) {
+    width: 16.7708vw;
+    margin: 3.6458vw;
+}
+.module-show .wrapper-first_area .group-col {
+    width: 15.72916vw;
+}
+.module-show .module-body .item-intro {
+    margin-bottom: 2.1875vw;
+    &[data-show-size='small'] {
+        display: none;
+    }
+    &[data-show-size='normal'] {
+        display: block;
+    }
+}
+.module-show .wrapper-first_area .group-row {
+    justify-content: center;
+}
+/* ---------------------------------- */
 /*                other               */
 /* ---------------------------------- */
 .c-scrollbar {

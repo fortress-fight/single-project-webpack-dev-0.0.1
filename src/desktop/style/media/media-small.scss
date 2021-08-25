@@ -186,5 +186,99 @@
             background-color: rgb(255 255 255 / 0.22);
         }
     }
+    
+    /* ---------------------------------- */
+    /*             module-show            */
+    /* ---------------------------------- */
+    .module-show {
+        padding-top: c(232px);
+        .module-header {
+
+            @include limit-wrapper-small;
+            margin-bottom: c(168px);
+
+            text-align: left;
+        }
+        .module-title {
+            font-size: c(80px);
+            line-height: c(95px);
+
+            margin-bottom: c(28px);
+            br {
+                display: block;
+            }
+        }
+        .module-subtitle {
+            font-size: c(24px);
+            line-height: c(48px);
+
+            margin: 0;
+        }
+        .wrapper-zero_area .wrapper-content {
+            
+            @include limit-wrapper-small;
+            width: 100%;
+        }
+    }
+    .module-show .box-desc {
+        height: c(154px);
+        padding: 0;
+    }
+    .module-show .wrapper-zero_area .layer--scale {
+        border-radius: c(20px);
+        box-shadow: 0 c(40px) c(80px) 0 rgb(14 20 160 / 0.2);
+    }
+    .module-show .box-desc .title {
+        font-size: c(48px);
+
+        padding-top: 0;
+    }
+    .module-show .box-desc .subtitle {
+        font-size: c(24px);
+    }
+    .module-show .box-desc .ic {
+        font-size: c(30px);
+
+        width: c(55px);
+        height: c(55px);
+
+        border-color: rgb(255 255 255 / 0.3);
+    }
+    .box-desc > .state-pos_left {
+        padding: 0 c(30px);
+    }
+    .box-desc > .state-pos_right {
+        padding: 0 c(30px);
+    }
+    .module-show .wrapper-first_area .group-col {
+        // width: 18vw;
+        width: cw(182);
+        &:first-child,
+        &:last-child {
+            display: none;
+        }  
+    } 
+    .module-show .wrapper-first_area .group-col:nth-child(3) {
+        width: cw(239);
+        margin: 0 cw(37.5);
+    }
+    .module-show .module-body .item-intro {
+        // margin-bottom: 1.7vw;
+        margin-bottom: cw(17);
+        &[data-show-size='small'] {
+            display: block;
+        }
+        &[data-show-size='normal'] {
+            display: none;
+        }
+    }
+    .module-show .wrapper-first_area .group-col:nth-child(3) .intro-phone,
+    .module-show .wrapper-first_area .group-col:nth-child(3) .main-phone {
+        border-radius: c(28px);
+    }
+    // .module-show .module-body .intro-phone {
+    //     box-shadow: 0 cw(50) cw(100) 0 rgb(0 2 85 / 0.3);
+    // }    
+
 
 }

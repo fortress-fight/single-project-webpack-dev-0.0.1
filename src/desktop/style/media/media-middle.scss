@@ -102,5 +102,38 @@
         border: 5px solid rgb(255 255 255);
         border-radius: 20px;
     }
+    
+    /* ---------------------------------- */
+    /*             module-show            */
+    /* ---------------------------------- */
+    .module-show .wrapper-zero_area .layer--scale {
+        border-radius: 60px;
+    }
+    .module-show .wrapper-first_area .group-col {
+        // width: 18vw;
+        width: 200px;
+        &:first-child,
+        &:last-child {
+            display: none;
+        }  
+    } 
+    .module-show .wrapper-first_area .group-col:nth-child(3) {
+        // width: 260px;
+        
+        width: 256px;
+        // width: 24vw;
+        margin: 0 5vw;
+        // margin: 0 56px;
+    }
+    .module-show .module-body .item-intro {
+        // margin-bottom: 1.7vw;
+        margin-bottom: 18px;
+        &[data-show-size='small'] {
+            display: block;
+        }
+        &[data-show-size='normal'] {
+            display: none;
+        }
+    }
 
 }
