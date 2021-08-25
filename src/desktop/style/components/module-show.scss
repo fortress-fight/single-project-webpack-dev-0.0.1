@@ -151,7 +151,8 @@
 
             transform-origin: center;
 
-            perspective: 1500px;
+            // perspective: 1500px;
+            perspective: 500px;
             transform-style: preserve-3d;
         }
         .group-col {
@@ -178,12 +179,12 @@
 
             width: 322px;
             margin: 0 70px;
-            .item-intro {
+            .intro-phone {
                 overflow: hidden;
 
                 margin: 0;
 
-                transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 50px);
 
                 border-radius: 21px;
                 background: rgb(255 255 255);

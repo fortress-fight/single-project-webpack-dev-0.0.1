@@ -13,6 +13,7 @@ export default function secScroll(): void {
     const animate = gsap.timeline({
         defaults: {
             ease: "none",
+            overwrite: "auto",
         },
         scrollTrigger: {
             trigger: $module.find("#show-placeholder-2"),
@@ -30,33 +31,17 @@ export default function secScroll(): void {
     animate.to(infoItem, {
         z: (index) => {
             if (index >= 2 && index <= 5) {
-                return -100;
+                return -1600;
             } else {
-                return -160;
+                return -2500;
             }
         },
+        duration: 1,
+        ease: "test-es",
         // opacity: 0,
         stagger: {
             grid: [4, 2],
             from: "edges",
-            ease: "none",
-            amount: 0.1,
-        },
-    });
-    animate.to(infoItem, {
-        z: (index) => {
-            if (index >= 2 && index <= 5) {
-                return -5000;
-            } else {
-                return -8000;
-            }
-        },
-        // opacity: 0,
-        stagger: {
-            grid: [4, 2],
-            from: "edges",
-            ease: "Power4.easeIn",
-            amount: 0.1,
         },
     });
     const bg = $(".module-show .wrapper-sec-area .state-pos_right");
@@ -64,11 +49,8 @@ export default function secScroll(): void {
         width: "50%",
     });
     const phoneInfoItem = $(".module-show .module-body .intro-phone");
-    animate.fromTo(
+    animate.to(
         phoneInfoItem,
-        {
-            z: "150px",
-        },
         {
             z: 0,
             ease: "better-elastic",

@@ -103,7 +103,7 @@ function firstScroll() {
             $module.find(".layer--scale"),
             {
                 height: "100vh",
-                ease: "Power4.easeIn",
+                ease: "test-es-1",
                 boxShadow: "15px 20px 30px 0px rgba(0,0,0,0)",
                 borderRadius: 0,
                 duration: dM.layerScale,
@@ -127,8 +127,8 @@ function firstScroll() {
             },
             {
                 scale: 1,
-                ease: "Power2.easeIn",
-                duration: dM.layerScale,
+                ease: "power1.inOut",
+                duration: dM.layerScale + 0.4,
             },
             "<"
         )
