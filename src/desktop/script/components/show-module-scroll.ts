@@ -43,6 +43,7 @@ function firstScroll() {
             endTrigger: "#show-placeholder",
             pinSpacing: false,
             pin: $module.find(".wrapper-module_content"),
+            invalidateOnRefresh: true,
         },
     });
     const dM = {
@@ -97,34 +98,88 @@ function firstScroll() {
             "descTextEnd"
         )
         .addLabel("descEnd");
-    scrollAnimate
-        .addLabel("layerScaleStart")
-        .to(
-            $module.find(".layer--scale"),
-            {
-                height: "100vh",
-                ease: "test-es-1",
-                boxShadow: "15px 20px 30px 0px rgba(0,0,0,0)",
-                borderRadius: 0,
-                duration: dM.layerScale,
-                onUpdate() {
-                    const originHeight = $module.find(".layer--scale").height();
-                    gsap.set($module.find(".layer--scale")[0], {
-                        width:
-                            (Number(originHeight) /
-                                $module
-                                    .find(".wrapper-zero_area .wrapper-content")
-                                    .height()) *
-                            $module
-                                .find(".wrapper-zero_area .wrapper-content")
-                                .width(),
-                    });
-                },
-            },
-            "descTextEnd"
-        )
-        .addLabel("layerScaleEnd");
 
+    const $scaleDom = $module.find(".layer--scale");
+    const $zeroArea = $module.find(".wrapper-zero_area .wrapper-content");
+    let scaleRota = $zeroArea.width() / $zeroArea.height();
+    let originHeight = $scaleDom.height();
+    scrollAnimate.addLabel("layerScaleStart", "descTextEnd");
+    scrollAnimate.fromTo(
+        $scaleDom,
+        {
+            borderRadius: () => {
+                $scaleDom.css("borderRadius", "");
+                return $scaleDom.css("borderRadius");
+            },
+            boxShadow: () => {
+                $scaleDom.css("boxShadow", "");
+                return $scaleDom.css("boxShadow");
+            },
+        },
+        {
+            ease: "test-es-1",
+            boxShadow: "15px 20px 30px 0px rgba(0,0,0,0)",
+            borderRadius: 0,
+            duration: dM.layerScale,
+        },
+        "descTextEnd"
+    );
+    const templateHeight = { height: "0px" };
+    const scaleAnimate = gsap.fromTo(
+        templateHeight,
+        {
+            height() {
+                scaleRota = $zeroArea.width() / $zeroArea.height();
+
+                const currentHeight = $scaleDom.height();
+                $scaleDom.css("height", "");
+                originHeight = $scaleDom.height();
+                $scaleDom.css("height", currentHeight);
+
+                return originHeight;
+            },
+        },
+        {
+            duration: dM.layerScale,
+            ease: "test-es-1",
+            height: () => window.innerHeight,
+            onUpdate() {
+                if (
+                    this.progress() == 1 &&
+                    parseFloat(templateHeight.height) == originHeight
+                ) {
+                    return;
+                }
+                gsap.set($scaleDom[0], {
+                    height: templateHeight.height,
+                    width: parseFloat(templateHeight.height) * scaleRota,
+                });
+            },
+        }
+    );
+    scrollAnimate.add(scaleAnimate, "<+=0");
+
+    // .fromTo(
+    //     $zeroArea,
+    //     {
+    //         width: () => {
+    //             $zeroArea.css("width", "");
+    //             return $zeroArea.css("width");
+    //         },
+    //     },
+    //     {
+    //         duration: dM.layerScale,
+    //         ease: "test-es-1",
+    //         width: () => {
+    //             return (
+    //                 ($scaleDom.width() / $zeroArea.height()) *
+    //                 window.innerWidth
+    //             );
+    //         },
+    //     },
+    //     "<+=0"
+    // )
+    scrollAnimate.addLabel("layerScaleEnd", ">");
     scrollAnimate
         .addLabel("wrapperFirstAreaScaleStart")
         .fromTo(

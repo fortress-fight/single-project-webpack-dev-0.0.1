@@ -254,7 +254,7 @@ export default function initDesignModuleScroll(): void {
                     scrub: true,
                     start: "top top",
                     pin: true,
-                    onUpdate() {
+                    onRefresh() {
                         setSection(scrollAnimate, scrollAnimate.currentLabel());
                     },
                 },
@@ -282,7 +282,7 @@ export default function initDesignModuleScroll(): void {
                     scrub: true,
                     start: "top top",
                     pin: true,
-                    onUpdate() {
+                    onRefresh() {
                         setSection(scrollAnimate, scrollAnimate.currentLabel());
                     },
                 },
