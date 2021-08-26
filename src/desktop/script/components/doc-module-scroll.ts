@@ -6,6 +6,7 @@
  * @LastEditors: F-Stone
  */
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const mainPhoneAnimateParam = {
     0: {
@@ -214,13 +215,14 @@ function parallax() {
             scrub: true,
             start: "bottom bottom",
             end: "bottom top",
+            invalidateOnRefresh: true,
         },
     }).to(".module-doc .module-body", {
         ease: "none",
         y: "20vh",
     });
 }
-export default function initDocModuleScroll(): void {
+function getDocCover() {
     const $module = $(".module-doc");
     const $scaleDom = $module.find(".intro-img");
     gsap.set($scaleDom, {
@@ -246,47 +248,9 @@ export default function initDocModuleScroll(): void {
             return window.innerWidth / $module.find(".main-phone").width();
         },
     });
-    const scrollAnimate = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: {
-            trigger: ".module-doc .wrapper-limit_width",
-            scrub: true,
-            start: "top top+=20vh",
-            end: "bottom bottom",
-            endTrigger: "#placeholder-doc_scroll",
-            pinSpacing: false,
-            pin: true,
-        },
-    });
-    scrollAnimate.to($scaleDom, {
-        overwrite: "auto",
-        duration: 3,
-        scale: 1,
-        x: 0,
-        y: 0,
-        onComplete() {
-            gsap.to(".module-doc .layer-cover .user-oper_bar", {
-                overwrite: "auto",
-                opacity: 1,
-                y: "0%",
-            });
-        },
-        onReverseComplete() {
-            gsap.killTweensOf($scaleDom);
-        },
-    });
-    scrollAnimate.fromTo(
-        $(".module-doc_show .left_area-bg"),
-        { scale: 0.5 },
-        {
-            scale: 1,
-            duration: 2,
-            onReverseComplete() {
-                gsap.killTweensOf($scaleDom);
-            },
-        },
-        "1.3"
-    );
+}
+function getInfoAnim(scrollAnimate, distance = "50%", type = "normal") {
+    const $module = $(".module-doc");
     let oldIndex = -1;
     let phoneAnimate = gsap.timeline({
         paused: true,
@@ -312,6 +276,9 @@ export default function initDocModuleScroll(): void {
             },
         });
         const currentParam = mainPhoneAnimateParam[currentIndex];
+        if (type == "smallScreen") {
+            currentParam.leftAreaBg.scale = 1;
+        }
         if (dir == 1) {
             forwardAnimate(phoneAnimate, currentParam);
         } else {
@@ -322,7 +289,6 @@ export default function initDocModuleScroll(): void {
     }
     scrollAnimate.to({}, {}, ">-=1");
     $module.find(".module-body .item-intro").each((i, dom) => {
-        const distance = "50%";
         gsap.set(dom, { y: distance });
         scrollAnimate.addLabel("itemIntroStart" + i);
         switch (i) {
@@ -415,6 +381,90 @@ export default function initDocModuleScroll(): void {
                 break;
         }
         scrollAnimate.addLabel("itemIntroEnd" + i);
+    });
+}
+function getBeforeEnter(scrollAnimate) {
+    const $module = $(".module-doc");
+    const $scaleDom = $module.find(".intro-img");
+    scrollAnimate.to($scaleDom, {
+        overwrite: "auto",
+        duration: 3,
+        scale: 1,
+        x: 0,
+        y: 0,
+        onComplete() {
+            gsap.to(".module-doc .layer-cover .user-oper_bar", {
+                overwrite: "auto",
+                opacity: 1,
+                y: "0%",
+            });
+        },
+        onReverseComplete() {
+            gsap.killTweensOf($scaleDom);
+        },
+    });
+    scrollAnimate.fromTo(
+        $(".module-doc_show .left_area-bg"),
+        { scale: 0.5 },
+        {
+            scale: 1,
+            duration: 2,
+            onReverseComplete() {
+                gsap.killTweensOf($scaleDom);
+            },
+        },
+        "1.3"
+    );
+}
+function bigScreen() {
+    getDocCover();
+    const scrollAnimate = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+            trigger: ".module-doc .wrapper-limit_width",
+            scrub: true,
+            start: "top top",
+            end: "bottom bottom",
+            endTrigger: "#placeholder-doc_scroll",
+            pinSpacing: false,
+            pin: true,
+            invalidateOnRefresh: true,
+        },
+    });
+    getBeforeEnter(scrollAnimate);
+    getInfoAnim(scrollAnimate);
+    scrollAnimate.to({}, { duration: 1 });
+}
+function smallScreen() {
+    getDocCover();
+    const scrollAnimate = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+            trigger: ".module-doc .wrapper-limit_width",
+            scrub: true,
+            start: "top top",
+            end: "bottom bottom",
+            endTrigger: "#placeholder-doc_scroll",
+            pinSpacing: false,
+            pin: true,
+            invalidateOnRefresh: true,
+        },
+    });
+    getBeforeEnter(scrollAnimate);
+    getInfoAnim(scrollAnimate, "10%", "smallScreen");
+    scrollAnimate.to({}, { duration: 1 });
+}
+// function phoneScreen() {
+//     //
+// }
+export default function initDocModuleScroll(): void {
+    const $module = $(".module-doc");
+    const $scaleDom = $module.find(".intro-img");
+    ScrollTrigger.saveStyles($scaleDom);
+    ScrollTrigger.matchMedia({
+        "(min-width: 1069px)": bigScreen,
+        "(min-width: 735px) and (max-width: 1068px)": smallScreen,
+        "(max-width: 734px)": smallScreen,
     });
     parallax();
 }

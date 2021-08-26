@@ -168,6 +168,23 @@
         padding: 0 2.7958vw;
     }
 
+    /* ---------------------------------- */
+    /*             module-doc             */
+    /* ---------------------------------- */
+    .module-doc .left_area-bg {
+        width: 644px;
+        height: 644px;
+    }
+    .module-doc .module-body > .state-pos_right {
+        padding-top: 0;
+    }
+    .module-doc .item-intro {
+        margin: 0;
+        padding-top: 0;
+    }
+    
+    
+
 }   
 
 @media only screen and (--normal-min-viewport) {
@@ -266,7 +283,35 @@
     .module-show .uemo-web .slider-item {
         border-radius: 20px;
     }
-    
+    /* ---------------------------------- */
+    /*             module-doc             */
+    /* ---------------------------------- */
+    .module-doc .item-intro .title {
+        font-size: 52px;
+        line-height: 66px;
+    }
+    .module-doc .module-body > .state-pos_right {
+        transform: translateX(50px);
+    }
+    .module-doc .left_area-bg {
+        top: 11%;
+
+        width: 50vw;
+        height: 50vw;
+    }
+    .module-doc .intro-img--fake,
+    .module-doc .intro-img {
+        width: 34.26966vw;
+    }
+    .module-doc .wrapper-main_phone {
+        left: 19.8%;
+
+        width: 60.210453%;
+    }
+    .module-doc .module-doc_show {
+        padding-top: 13vh;
+    }
+
 }
 
 @keyframes animatedBackground {
