@@ -272,13 +272,59 @@
             display: none;
         }
     }
+    .module-show .wrapper-sec-area .state-pos_right {
+        width: 92vw;
+    }
+    .module-show .wrapper-sec-area .box-left_arrow {
+        display: none;
+    }
+    .module-show .uemo-web {
+        width: 129.4667vw;
+    }
+    .module-show .wrapper-sec-area {
+        transform: translateY(-5vw);
+    }
+    .module-show .wrapper-intro .intro-item  .foot {
+        display: none;
+    }
+    .module-show .wrapper-first_area .group-col:nth-child(3) .main-phone-back-card {
+        border-width: c(4px);
+    }
+    .module-show .wrapper-first_area .group-col:nth-child(3) .main-phone {
+        border-width: c(6px);
+    }
     .module-show .wrapper-first_area .group-col:nth-child(3) .intro-phone,
     .module-show .wrapper-first_area .group-col:nth-child(3) .main-phone {
-        border-radius: c(28px);
-    }
-    // .module-show .module-body .intro-phone {
-    //     box-shadow: 0 cw(50) cw(100) 0 rgb(0 2 85 / 0.3);
-    // }    
+        transform: translate3d(0, 0, 0);
 
+        border-radius: cw(14);
+    }
+    .module-show .uemo-web,
+    .module-show .uemo-web .wrapper-uemo_web,
+    .module-show .uemo-web .slider-item {
+        transform: translate3d(0, 0, 0);
+
+        border-radius: cw(14);
+    }
+    .module-show .wrapper-intro .title {
+        margin-bottom: c(26px);
+    }
+    .module-show .wrapper-intro .title .text {
+        font-size: c(48px);
+        line-height: c(47px);
+    }
+    .module-show .wrapper-intro .desc {
+        font-size: c(24px);
+        line-height: c(47px);
+    }
+    .module-show .wrapper-intro {
+        position: absolute;
+        top: calc(100% + 25vw);
+
+        width: 100%;
+    }
+    .module-show .wrapper-first_area .group-col:nth-child(3) .intro-phone {
+        transform: translate3d(0, 0, 60px);
+    }
 
 }

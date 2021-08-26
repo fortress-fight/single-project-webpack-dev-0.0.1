@@ -244,6 +244,8 @@
                 box-shadow: 0 12px 24px 0 rgb(14 112 59 / 30%);
             }
             .main-phone-back-card {
+                
+                @include image-placeholder(100px, 100px);
                 position: absolute;
                 z-index: 10;
                 right: 5%;
@@ -251,13 +253,12 @@
 
                 width: 17.5%;
 
-                transform: translateX(200%);
+                transform: translate3d(200%, 0, 0);
 
                 border: 3px solid rgb(255 255 255);
                 border-radius: 50%;
                 box-shadow: 0 10px 20px 0 rgb(0 0 0 / 20%);
                 img {
-                    position: relative;
                     z-index: 10;
 
                     width: 100%;
@@ -385,7 +386,6 @@
             top: 0;
             left: 0;
 
-            transform: translateY(50%);
             
             opacity: 0;
             &>* {

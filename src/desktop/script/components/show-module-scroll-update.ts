@@ -85,6 +85,35 @@ function getMiddleBgShowAnim(scrollAnim) {
     });
     scrollAnim.add(animate);
 }
+function getPhoneBgShowAnim(scrollAnim) {
+    const animate = gsap.timeline({
+        defaults: {
+            ease: "none",
+            overwrite: "auto",
+        },
+    });
+    const phoneInfoItem = $(".module-show .module-body .intro-phone");
+    ScrollTrigger.saveStyles(phoneInfoItem);
+    const wrapperFirstArea = $(".module-show .module-body .wrapper-first_area");
+    ScrollTrigger.saveStyles(wrapperFirstArea);
+    animate.to(phoneInfoItem, {
+        z: 0,
+        x: () => {
+            return (
+                $(
+                    ".module-show .wrapper-sec-area .state-pos_left"
+                )[0].getBoundingClientRect().left -
+                phoneInfoItem.parent()[0].getBoundingClientRect().left
+            );
+        },
+        y: "5.5vw",
+        duration: 1,
+        width: "28vw",
+        ease: "better-elastic",
+        yoyo: true,
+    });
+    scrollAnim.add(animate);
+}
 function getWebScrollAnim() {
     const webScrollAnimate = gsap.timeline({
         paused: true,
@@ -111,7 +140,7 @@ function getWebScrollAnim() {
     );
     return webScrollAnimate;
 }
-function setInfoAnim(scrollAnim) {
+function setInfoAnim(scrollAnim, distance = "50%") {
     const $module = $(".module-show");
     let oldIndex = -1;
     const phoneWrapper = $(
@@ -202,6 +231,7 @@ function setInfoAnim(scrollAnim) {
     $module.find(".wrapper-sec-area .intro-item").each((i, dom) => {
         ScrollTrigger.saveStyles(dom);
         scrollAnim.addLabel("introItemStart" + i);
+        gsap.set(dom, { y: distance });
         switch (i) {
             case 0:
                 scrollAnim.to(dom, {
@@ -223,7 +253,7 @@ function setInfoAnim(scrollAnim) {
                 );
                 scrollAnim.to(dom, {
                     duration: 1,
-                    y: "-50%",
+                    y: "-" + distance,
                     zIndex: 0,
                 });
                 scrollAnim.to(
@@ -259,7 +289,7 @@ function setInfoAnim(scrollAnim) {
                 );
                 scrollAnim.to(dom, {
                     duration: 1,
-                    y: "-50%",
+                    y: "-" + distance,
                     zIndex: 0,
                     onUpdate() {
                         const progress = this.progress();
@@ -361,12 +391,36 @@ function smallScreen() {
     animate.to({}, { duration: 0.6 });
     getMoveInAnim(animate);
     getMiddleBgShowAnim(animate);
-    setInfoAnim(animate);
-    animate.to({}, { duration: 0.3 });
+    setInfoAnim(animate, "10%");
+    animate.to({}, { duration: 1 });
+}
+function phoneScreen() {
+    const $module = $(".module-show");
+    const animate = gsap.timeline({
+        defaults: {
+            ease: "none",
+            overwrite: "auto",
+        },
+        scrollTrigger: {
+            trigger: $module.find("#show-placeholder-2"),
+            scrub: 1,
+            start: "top bottom",
+            end: "bottom bottom",
+            pinSpacing: false,
+            pin: $module.find(".wrapper-module_content"),
+            invalidateOnRefresh: true,
+        },
+    });
+    animate.to({}, { duration: 0.6 });
+    getMoveInAnim(animate);
+    getPhoneBgShowAnim(animate);
+    setInfoAnim(animate, "10%");
+    animate.to({}, { duration: 3 });
 }
 export default function secScroll(): void {
     ScrollTrigger.matchMedia({
         "(min-width: 1069px)": bigScreen,
-        "(max-width: 1068px)": smallScreen,
+        "(min-width: 735px) and (max-width: 1068px)": smallScreen,
+        "(max-width: 734px)": phoneScreen,
     });
 }
