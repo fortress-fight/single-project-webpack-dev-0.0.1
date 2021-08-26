@@ -7,26 +7,13 @@
  */
 
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-export default function secScroll(): void {
-    const $module = $(".module-show");
-    const animate = gsap.timeline({
-        defaults: {
-            ease: "none",
-            overwrite: "auto",
-        },
-        scrollTrigger: {
-            trigger: $module.find("#show-placeholder-2"),
-            scrub: 1,
-            start: "top bottom",
-            end: "bottom bottom",
-            pinSpacing: false,
-            pin: $module.find(".wrapper-module_content"),
-        },
-    });
-    animate.to({}, { duration: 0.6 });
-    const infoItem = $(".module-show .module-body .group-col");
-    animate.to(infoItem.not(infoItem.eq(2)), {
+function getMoveInAnim(scrollAnim) {
+    const dom = $(".module-show .module-body .group-col");
+    ScrollTrigger.saveStyles(dom);
+    const animate = gsap.timeline();
+    animate.to(dom.not(dom.eq(2)), {
         z: (index) => {
             if (index >= 1 && index <= 2) {
                 return -1600;
@@ -34,19 +21,31 @@ export default function secScroll(): void {
                 return -2500;
             }
         },
+        overwrite: "auto",
         duration: 1,
         ease: "test-es",
-        // opacity: 0,
         stagger: {
             from: "edges",
         },
     });
+    animate.to(dom.not(dom.eq(2)), { opacity: 0, immediateRender: false });
+    scrollAnim.add(animate);
+}
+function getBgShowAnim(scrollAnim) {
     const bg = $(".module-show .wrapper-sec-area .state-pos_right");
+    ScrollTrigger.saveStyles(bg);
+    const animate = gsap.timeline({
+        defaults: {
+            ease: "none",
+            overwrite: "auto",
+        },
+    });
     animate.to(bg, {
         width: "50%",
         ease: "better-elastic",
     });
     const phoneInfoItem = $(".module-show .module-body .intro-phone");
+    ScrollTrigger.saveStyles(phoneInfoItem);
     animate.to(
         phoneInfoItem,
         {
@@ -55,13 +54,72 @@ export default function secScroll(): void {
         },
         "<"
     );
+    scrollAnim.add(animate);
+}
+function getMiddleBgShowAnim(scrollAnim) {
+    const animate = gsap.timeline({
+        defaults: {
+            ease: "none",
+            overwrite: "auto",
+        },
+    });
+    const phoneInfoItem = $(".module-show .module-body .intro-phone");
+    ScrollTrigger.saveStyles(phoneInfoItem);
+    const wrapperFirstArea = $(".module-show .module-body .wrapper-first_area");
+    ScrollTrigger.saveStyles(wrapperFirstArea);
+    animate.to(phoneInfoItem, {
+        z: 0,
+        x: () => {
+            return (
+                $(
+                    ".module-show .wrapper-sec-area .state-pos_left"
+                )[0].getBoundingClientRect().left -
+                phoneInfoItem.parent()[0].getBoundingClientRect().left
+            );
+        },
+        y: "-7vw",
+        duration: 1,
+        width: "23.14453125vw",
+        ease: "better-elastic",
+        yoyo: true,
+    });
+    scrollAnim.add(animate);
+}
+function getWebScrollAnim() {
+    const webScrollAnimate = gsap.timeline({
+        paused: true,
+        defaults: { ease: "none" },
+    });
+    webScrollAnimate.to($("#web-site-body"), { y: -100 });
+    webScrollAnimate.to($("#mweb-site-body"), { y: -80 }, 0);
+    webScrollAnimate.to($(".main-phone-back-card"), {
+        duration: 0.3,
+        scale: 0.8,
+    });
+    webScrollAnimate.to($(".main-phone-back-card"), {
+        duration: 0.3,
+        scale: 1,
+    });
+    webScrollAnimate.to(
+        $(".main-phone-back-card .btn-shadow"),
+        {
+            duration: 0.4,
+            opacity: 0,
+            scale: 1.8,
+        },
+        "<"
+    );
+    return webScrollAnimate;
+}
+function setInfoAnim(scrollAnim) {
+    const $module = $(".module-show");
     let oldIndex = -1;
     const phoneWrapper = $(
         ".module-show .wrapper-main_phone_imgs, .module-show .main-phone-2"
     );
     const doms = $(".module-show .slider-item");
     function setSection(currentIndex) {
-        const dir = animate.scrollTrigger.direction;
+        const dir = scrollAnim.scrollTrigger.direction;
         if (dir == 1) {
             if (currentIndex <= oldIndex) return;
         } else {
@@ -140,71 +198,49 @@ export default function secScroll(): void {
         });
         oldIndex = currentIndex;
     }
-    const webScrollAnimate = gsap.timeline({
-        paused: true,
-        defaults: { ease: "none" },
-    });
-    webScrollAnimate.to($("#web-site-body"), { y: -100 });
-    webScrollAnimate.to($("#mweb-site-body"), { y: -80 }, 0);
-    webScrollAnimate.to($(".main-phone-back-card"), {
-        duration: 0.3,
-        scale: 0.8,
-    });
-    webScrollAnimate.to($(".main-phone-back-card"), {
-        duration: 0.3,
-        scale: 1,
-    });
-    webScrollAnimate.to(
-        $(".main-phone-back-card .btn-shadow"),
-        {
-            duration: 0.4,
-            opacity: 0,
-            scale: 1.8,
-        },
-        "<"
-    );
+    const webScrollAnimate = getWebScrollAnim();
     $module.find(".wrapper-sec-area .intro-item").each((i, dom) => {
-        animate.addLabel("introItemStart" + i);
+        ScrollTrigger.saveStyles(dom);
+        scrollAnim.addLabel("introItemStart" + i);
         switch (i) {
             case 0:
-                animate.to(dom, {
+                scrollAnim.to(dom, {
                     duration: 1,
                     y: 0,
                     zIndex: 10,
-                    onUpdate() {
-                        const progress = this.progress();
-                        gsap.set(dom, {
-                            opacity: gsap.utils.normalize(0, 0.5, progress),
-                        });
-                    },
                     onComplete() {
                         setSection(i);
                     },
                 });
-                animate.to(dom, {
+                scrollAnim.to(
+                    dom,
+                    {
+                        opacity: 1,
+                        ease: "none",
+                        duration: 0.5,
+                    },
+                    "<"
+                );
+                scrollAnim.to(dom, {
                     duration: 1,
                     y: "-50%",
                     zIndex: 0,
-                    onUpdate() {
-                        const progress = this.progress();
-
-                        gsap.set(dom, {
-                            opacity: gsap.utils.normalize(0, 0.5, 1 - progress),
-                        });
-                    },
                 });
+                scrollAnim.to(
+                    dom,
+                    {
+                        opacity: 0,
+                        ease: "none",
+                        duration: 0.5,
+                    },
+                    "-=0.5"
+                );
                 break;
             case 1:
-                animate.to(dom, {
+                scrollAnim.to(dom, {
                     duration: 1,
                     y: 0,
                     zIndex: 10,
-                    onUpdate() {
-                        const progress = this.progress();
-                        gsap.set(dom, {
-                            opacity: gsap.utils.normalize(0, 0.5, progress),
-                        });
-                    },
                     onStart() {
                         setSection(i);
                     },
@@ -212,34 +248,40 @@ export default function secScroll(): void {
                         setSection(i - 1);
                     },
                 });
-                animate.to(dom, {
+                scrollAnim.to(
+                    dom,
+                    {
+                        opacity: 1,
+                        ease: "none",
+                        duration: 0.5,
+                    },
+                    "<"
+                );
+                scrollAnim.to(dom, {
                     duration: 1,
                     y: "-50%",
                     zIndex: 0,
                     onUpdate() {
                         const progress = this.progress();
-                        gsap.set(dom, {
-                            opacity: gsap.utils.normalize(0, 0.5, 1 - progress),
-                        });
                         webScrollAnimate.progress(progress);
                     },
                 });
+                scrollAnim.to(
+                    dom,
+                    {
+                        opacity: 0,
+                        ease: "none",
+                        duration: 0.5,
+                    },
+                    "-=0.5"
+                );
                 break;
 
             case 2:
-                animate.to(dom, {
+                scrollAnim.to(dom, {
                     duration: 1,
                     y: 0,
                     zIndex: 10,
-                    onUpdate() {
-                        gsap.set(dom, {
-                            opacity: gsap.utils.normalize(
-                                0,
-                                0.5,
-                                this.progress()
-                            ),
-                        });
-                    },
                     onStart() {
                         setSection(i);
                     },
@@ -247,21 +289,84 @@ export default function secScroll(): void {
                         setSection(i - 1);
                     },
                 });
+                scrollAnim.to(
+                    dom,
+                    {
+                        opacity: 1,
+                        ease: "none",
+                        duration: 0.5,
+                    },
+                    "<"
+                );
                 break;
 
             default:
                 break;
         }
-        animate.addLabel("introItemEnd" + i);
+        scrollAnim.addLabel("introItemEnd" + i);
     });
 
-    const uemoWeb = $(".module-show .wrapper-sec-area .uemo-web");
-    animate.to(
+    const uemoWeb = $(
+        ".module-show .wrapper-sec-area .uemo-web, .module-show .box-left_arrow"
+    );
+    ScrollTrigger.saveStyles(uemoWeb);
+    scrollAnim.to(
         uemoWeb,
         {
             opacity: 1,
         },
         "introItemStart0"
     );
+}
+function bigScreen() {
+    const $module = $(".module-show");
+    const animate = gsap.timeline({
+        defaults: {
+            ease: "none",
+            overwrite: "auto",
+        },
+        scrollTrigger: {
+            trigger: $module.find("#show-placeholder-2"),
+            scrub: 1,
+            start: "top bottom",
+            end: "bottom bottom",
+            pinSpacing: false,
+            pin: $module.find(".wrapper-module_content"),
+            invalidateOnRefresh: true,
+        },
+    });
+    animate.to({}, { duration: 0.6 });
+    getMoveInAnim(animate);
+    getBgShowAnim(animate);
+    setInfoAnim(animate);
     animate.to({}, { duration: 0.3 });
+}
+function smallScreen() {
+    const $module = $(".module-show");
+    const animate = gsap.timeline({
+        defaults: {
+            ease: "none",
+            overwrite: "auto",
+        },
+        scrollTrigger: {
+            trigger: $module.find("#show-placeholder-2"),
+            scrub: 1,
+            start: "top bottom",
+            end: "bottom bottom",
+            pinSpacing: false,
+            pin: $module.find(".wrapper-module_content"),
+            invalidateOnRefresh: true,
+        },
+    });
+    animate.to({}, { duration: 0.6 });
+    getMoveInAnim(animate);
+    getMiddleBgShowAnim(animate);
+    setInfoAnim(animate);
+    animate.to({}, { duration: 0.3 });
+}
+export default function secScroll(): void {
+    ScrollTrigger.matchMedia({
+        "(min-width: 1069px)": bigScreen,
+        "(max-width: 1068px)": smallScreen,
+    });
 }

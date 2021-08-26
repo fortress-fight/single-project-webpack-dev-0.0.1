@@ -261,7 +261,12 @@
 
         background-repeat-y: no-repeat;
     }
-
+    .module-show .uemo-web,
+    .module-show .uemo-web .wrapper-uemo_web,
+    .module-show .uemo-web .slider-item {
+        border-radius: 20px;
+    }
+    
 }
 
 @keyframes animatedBackground {

@@ -59,11 +59,22 @@ export default class IndexPage extends SiteManage {
                 },
             },
         });
-        const weixinBtnAnimate = gsap.to(".btn-open_QR", {
+
+        let weixinBtnAnimate = gsap.to(".btn-open_QR", {
             paused: true,
             duration: 0.36,
             ease: "Power2.easeOut",
             width: "auto",
+        });
+        $(window).on("resize", () => {
+            weixinBtnAnimate.kill();
+            $(".btn-open_QR").css({ width: "" });
+            weixinBtnAnimate = gsap.to(".btn-open_QR", {
+                paused: true,
+                duration: 0.36,
+                ease: "Power2.easeOut",
+                width: "auto",
+            });
         });
         let state = "close";
         function openWeixinCode() {

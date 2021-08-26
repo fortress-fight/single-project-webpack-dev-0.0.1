@@ -30,6 +30,7 @@ function firstScroll() {
         },
     }).fromTo($module.find(".module-header"), { opacity: 0 }, { opacity: 1 });
 
+    const $scaleDom = $module.find(".layer--scale");
     const scrollAnimate = gsap.timeline({
         defaults: {
             overwrite: "auto",
@@ -44,6 +45,16 @@ function firstScroll() {
             pinSpacing: false,
             pin: $module.find(".wrapper-module_content"),
             invalidateOnRefresh: true,
+            onRefresh() {
+                const currentLabel = scrollAnimate.currentLabel();
+                const labels = scrollAnimate.labels;
+                if (labels.layerScaleEnd <= labels[currentLabel]) {
+                    gsap.set($scaleDom[0], {
+                        height: window.outerHeight,
+                        width: window.outerHeight * scaleRota,
+                    });
+                }
+            },
         },
     });
     const dM = {
@@ -99,7 +110,6 @@ function firstScroll() {
         )
         .addLabel("descEnd");
 
-    const $scaleDom = $module.find(".layer--scale");
     const $zeroArea = $module.find(".wrapper-zero_area .wrapper-content");
     let scaleRota = $zeroArea.width() / $zeroArea.height();
     let originHeight = $scaleDom.height();
@@ -142,10 +152,10 @@ function firstScroll() {
         {
             duration: dM.layerScale,
             ease: "test-es-1",
-            height: () => window.innerHeight,
+            height: () => window.outerHeight,
             onUpdate() {
                 if (
-                    this.progress() == 1 &&
+                    (this.progress() == 1 || this.progress() == 0) &&
                     parseFloat(templateHeight.height) == originHeight
                 ) {
                     return;
@@ -158,65 +168,35 @@ function firstScroll() {
         }
     );
     scrollAnimate.add(scaleAnimate, "<+=0");
-
-    // .fromTo(
-    //     $zeroArea,
-    //     {
-    //         width: () => {
-    //             $zeroArea.css("width", "");
-    //             return $zeroArea.css("width");
-    //         },
-    //     },
-    //     {
-    //         duration: dM.layerScale,
-    //         ease: "test-es-1",
-    //         width: () => {
-    //             return (
-    //                 ($scaleDom.width() / $zeroArea.height()) *
-    //                 window.innerWidth
-    //             );
-    //         },
-    //     },
-    //     "<+=0"
-    // )
     scrollAnimate.addLabel("layerScaleEnd", ">");
-    scrollAnimate
-        .addLabel("wrapperFirstAreaScaleStart")
-        .fromTo(
-            $module.find(".wrapper-first_area"),
-            {
-                scale: 0.4,
-            },
-            {
-                scale: 1,
-                ease: "power1.inOut",
-                duration: dM.layerScale + 0.4,
-            },
-            "<"
-        )
-        .addLabel("wrapperFirstAreaScaleEnd");
-    scrollAnimate
-        .addLabel("wrapperFirstAreaStart")
-        .to(
-            $module.find(".wrapper-first_area"),
-            {
-                opacity: 1,
-                duration: dM.wrapperFirstArea,
-            },
-            "descTextEnd+=0.1"
-        )
-        .addLabel("wrapperFirstAreaEnd");
-    scrollAnimate
-        .addLabel("layerBgStart")
-        .to(
-            $module.find(".layer--bg"),
-            {
-                opacity: 1,
-                duration: dM.wrapperFirstArea,
-            },
-            "<"
-        )
-        .addLabel("layerBgEnd");
+    scrollAnimate.addLabel("wrapperFirstAreaScaleStart").fromTo(
+        $module.find(".wrapper-first_area"),
+        {
+            scale: 0.4,
+        },
+        {
+            scale: 1,
+            ease: "power1.inOut",
+            duration: dM.layerScale + 0.4,
+        },
+        "<"
+    );
+    scrollAnimate.addLabel("wrapperFirstAreaStart").to(
+        $module.find(".wrapper-first_area"),
+        {
+            opacity: 1,
+            duration: dM.wrapperFirstArea,
+        },
+        "descTextEnd+=0.1"
+    );
+    scrollAnimate.addLabel("layerBgStart").to(
+        $module.find(".layer--bg"),
+        {
+            opacity: 1,
+            duration: dM.wrapperFirstArea,
+        },
+        "<"
+    );
 }
 export default function showModuleScroll(): void {
     firstScroll();

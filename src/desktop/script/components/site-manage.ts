@@ -7,7 +7,7 @@
  */
 
 import SiteManage from "@desktop/util/site-manage-0.1.0";
-
+import { os } from "@/util/os";
 import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
 
@@ -19,46 +19,52 @@ export default class UemoCardSite extends SiteManage {
     readonly preTask = ["initVsScroll"];
     readonly defaultTask = ["initScrollNav"];
     initVsScroll(): void {
-        // const scrollContainer = $("body")[0];
-        // el: scrollContainer,
-        const locoScroll = new LocomotiveScroll({
-            el: document.querySelector("#site-page"),
-            smooth: true,
-            speed: true,
-            lerp: 0.075,
-            tablet: {
+        if (!os.isMobile) {
+            const locoScroll = new LocomotiveScroll({
+                el: document.querySelector("#site-page"),
                 smooth: true,
-            },
-            smartphone: {
-                smooth: true,
-            },
-        });
+                speed: true,
+                lerp: 0.075,
+                tablet: {
+                    smooth: true,
+                },
+                smartphone: {
+                    smooth: true,
+                },
+            });
 
-        locoScroll.on("scroll", ScrollTrigger.update);
-        ScrollTrigger.defaults({
-            scroller: document.querySelector("#site-page"),
-        });
-        ScrollTrigger.scrollerProxy("#site-page", {
-            scrollTop(value) {
-                return value
-                    ? locoScroll.scrollTo(value, 0, 0)
-                    : locoScroll.scroll.instance.scroll.y;
-            },
-            getBoundingClientRect() {
-                return {
-                    top: 0,
-                    left: 0,
-                    width: window.innerWidth,
-                    height: window.innerHeight,
-                };
-            },
-            pinType: "transform",
-        });
-        ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
-        $(window).on("resize", () => {
-            locoScroll.update();
-        });
-        this.vsScroll = locoScroll;
+            locoScroll.on("scroll", ScrollTrigger.update);
+            ScrollTrigger.defaults({
+                scroller: document.querySelector("#site-page"),
+            });
+            ScrollTrigger.scrollerProxy("#site-page", {
+                scrollTop(value) {
+                    return value
+                        ? locoScroll.scrollTo(value, 0, 0)
+                        : locoScroll.scroll.instance.scroll.y;
+                },
+                getBoundingClientRect() {
+                    return {
+                        top: 0,
+                        left: 0,
+                        width: window.innerWidth,
+                        height: window.innerHeight,
+                    };
+                },
+                pinType: "transform",
+            });
+            ScrollTrigger.addEventListener("refresh", () =>
+                locoScroll.update()
+            );
+            $(window).on("resize", () => {
+                locoScroll.update();
+            });
+            this.vsScroll = locoScroll;
+        } else {
+            $("body").css({
+                overflow: "auto",
+            });
+        }
     }
     initScrollNav(): void {
         const $navDom = $("#site-head");
