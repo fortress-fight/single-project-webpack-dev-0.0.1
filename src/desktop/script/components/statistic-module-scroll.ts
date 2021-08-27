@@ -121,6 +121,9 @@ function phoneScreen() {
     gsap.set(doms.not(doms.eq(0)), {
         opacity: 0,
     });
+    scrollAnim.to(".module-statistic .wrapper-limit_width", {
+        y: "-10vw",
+    });
     function setSection(currentIndex) {
         const dir = scrollAnim.scrollTrigger.direction;
         if (dir == 1) {
@@ -263,6 +266,7 @@ function phoneScreen() {
 export default function statisticModuleScroll(): void {
     const itemInfo = $(".module-statistic .item-info");
     ScrollTrigger.saveStyles(itemInfo);
+    ScrollTrigger.saveStyles(".module-statistic .wrapper-limit_width");
     ScrollTrigger.matchMedia({
         "(min-width: 735px)": normalScreen,
         "(max-width: 734px)": phoneScreen,

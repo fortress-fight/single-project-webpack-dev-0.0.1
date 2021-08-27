@@ -494,5 +494,48 @@
     .module-statistic .module-body .item-intro_img {
         border-radius: c(23px);
     }
+    .module-contact .group-row {
+        flex-direction: column;
+    }
+    .module-contact .wrapper-limit_width--min {
+
+        @include limit-wrapper-small-min; 
+    }
+    .module-contact .group-col:nth-child(1) {
+        font-size: 22px;
+        line-height: 21px;
+
+        margin-bottom: c(72px);
+    }
+    .module-contact .group-col:nth-child(1) .logo-pic {
+        width: 78px;
+    }
+    .module-contact .group-col:nth-child(2) .tel {
+        font-family: 'MontDemo-Heavy';
+        font-size: c(72px);
+    }
+    .module-contact .group-col {
+        width: 100%;
+    }
+    .module-contact .group-col:nth-child(3) {
+        margin-bottom: c(50px);
+        padding-bottom: c(50px);
+    }
+    .module-contact .group-col:nth-child(2) {
+        order: 3;
+    }
+    .module-contact .module-body {
+        height: 527px;
+        padding-top: 30px;
+    }
+    .module-contact .group-col:nth-child(3) .name {
+        margin-bottom: c(30px);
+    }
+    .wrapper-weixin_code .box-weixin_code {
+        width: 50%;
+        max-width: 50vw;
+
+        border-radius: 10px;
+    }
 
 }

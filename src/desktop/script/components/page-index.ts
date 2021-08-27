@@ -10,6 +10,7 @@ import { gsap } from "gsap";
 
 import SiteManage from "./site-manage";
 
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
     propagandaModuleScroll,
     getLineEnter,
@@ -229,9 +230,10 @@ export default class IndexPage extends SiteManage {
                 end: "bottom bottom",
                 pinSpacing: false,
                 pin: true,
+                invalidateOnRefresh: true,
             },
         });
-
+        ScrollTrigger.saveStyles(".module-contact .wrapper-module_body");
         animate.fromTo(
             ".module-contact .wrapper-module_body",
             {
@@ -241,6 +243,7 @@ export default class IndexPage extends SiteManage {
             { y: "-100%" }
         );
         $(".module-contact .layer-circle img").each((i, dom) => {
+            ScrollTrigger.saveStyles(dom);
             animate.fromTo(
                 dom,
                 {
@@ -255,7 +258,6 @@ export default class IndexPage extends SiteManage {
         });
     }
     statisticModule(): void {
-        if (!$(".module-statistic").length) return;
         statisticModuleScroll();
     }
     extensionModule(): void {

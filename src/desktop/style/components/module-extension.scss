@@ -47,6 +47,8 @@
     .item-extension {
 
         @include flex(c, c);
+        position: relative;
+
         flex-direction: column;
         flex: 0 0 auto;
 
