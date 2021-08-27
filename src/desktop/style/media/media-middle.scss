@@ -318,5 +318,18 @@
         font-size: cw(24);
         line-height: cw(46);
     }
-    
+    /* ---------------------------------- */
+    /*          module-extension          */
+    /* ---------------------------------- */
+    .module-extension .box-icon {
+        width: 90px;
+    }
+    .module-extension .item-desc {
+        font-size: 15px;
+        line-height: 26px;
+    }
+    .module-extension .item-head .box-index {
+        font-size: 22px;
+    }
+
 }

@@ -353,12 +353,17 @@ export default class IndexPage extends SiteManage {
         const dom = $(".module-extension .module-body .list-extension")[0];
         const domParent = $(".module-extension .module-body")[0];
         const disSize = Math.abs(dom.offsetWidth - domParent.offsetWidth);
-        new Impetus({
+        const dragger = new Impetus({
             source: dom,
             boundX: [-disSize, 0],
             update: function (x) {
                 gsap.set(dom, { x: Math.round(x) });
             },
+        });
+        $(window).on("resize", () => {
+            const disSize = Math.abs(dom.offsetWidth - domParent.offsetWidth);
+            gsap.set(dom, { x: 0 });
+            dragger.setBoundX([-disSize, 0]);
         });
         $(".module-extension .item-extension .box-icon").each((i, dom) => {
             const lottieAnimate = lottie.loadAnimation({

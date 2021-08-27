@@ -183,6 +183,33 @@
         padding-top: 0;
     }
     
+    /* ---------------------------------- */
+    /*          module-extension          */
+    /* ---------------------------------- */
+    .module-extension {
+        display: flex;
+
+        min-height: 100vh;
+        padding-top: 8.17708333333333vw;
+        padding-bottom: 11.6145833333333vw;
+
+        align-items: center;
+        .module-head {
+            margin-bottom: 7vw;
+        }
+        .module-title {
+            font-size: 4.9vw;
+            line-height: 1.22em;
+        }
+    }
+    .module-extension .item-extension {
+        width: 386px;
+        height: 341px;
+        margin-right: 38px;
+    }
+    .module-extension .item-head {
+        margin-bottom: 32px;
+    }
     
 
 }   
@@ -311,6 +338,7 @@
     .module-doc .module-doc_show {
         padding-top: 13vh;
     }
+
 
 }
 

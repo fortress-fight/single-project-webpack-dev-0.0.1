@@ -410,10 +410,17 @@ function getBeforeEnter(scrollAnimate) {
             scale: 1,
             duration: 2,
             onReverseComplete() {
-                gsap.killTweensOf($scaleDom);
+                gsap.killTweensOf($(".module-doc_show .left_area-bg"));
             },
         },
         "1.3"
+    );
+
+    scrollAnimate.fromTo(
+        $(".module-doc .module-body > .state-pos_right"),
+        { y: "100%" },
+        { y: 0, duration: 2, ease: "none" },
+        "<"
     );
 }
 function bigScreen() {

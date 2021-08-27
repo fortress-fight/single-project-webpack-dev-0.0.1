@@ -13,11 +13,16 @@
     .module-head {
         margin-bottom: 154px;
     }
+    .module-title {
+        br {
+            display: none;
+        }
+    }
     .module-desc {
         font-size: 16px;
         line-height: 28px;
 
-        width: 362px;
+        // width: 362px;
 
         color: rgb(102 102 102);
     }
@@ -51,6 +56,7 @@
         padding: 0 50px;
 
         transition: 0.36s ease;
+        transition-property: background, box-shadow;
 
         border: 1px solid rgb(241 241 241);
         border-radius: 14px;

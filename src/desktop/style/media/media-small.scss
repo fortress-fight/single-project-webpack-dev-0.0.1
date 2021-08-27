@@ -326,5 +326,69 @@
     .module-show .wrapper-first_area .group-col:nth-child(3) .intro-phone {
         transform: translate3d(0, 0, 60px);
     }
+    
+    /* ---------------------------------- */
+    /*          module-extension          */
+    /* ---------------------------------- */
+    .module-extension {
+        background-color: rgb(246 246 246);
+        .module-title {
+            font-size: c(80px);
+            line-height: c(94px);
+
+            margin-bottom: c(30px);
+            br {
+                display: initial;
+            }
+        }
+        .module-head {
+            margin-bottom: c(169px);
+        }
+        .module-desc {
+            font-size: c(24px);
+        }
+    }
+    .module-extension .item-extension {
+        display: block;
+
+        width: c(426px);
+        height: c(549px);
+        margin-right: c(38px);
+        padding: 0 c(50px);
+        padding-top: c(62px);
+
+        border-radius: c(16px);
+        background-color: rgb(255 255 255);
+    }
+    .module-extension .item-title {
+        font-size: c(36px);
+        line-height: c(64px);
+
+        margin-bottom: c(18px);
+    }
+    .module-extension .item-desc {
+        font-size: c(24px);
+        line-height: c(46px);
+
+        color: rgb(153 153 153);
+    }
+    .module-extension .box-icon {
+        width: c(100px);
+    }
+    .module-extension .item-head {
+        margin-bottom: c(50px);
+    }
+    .module-extension .list-extension {
+        padding: 0  4.5vw;
+    }
+    .module-extension .item-head .box-index {
+        font-family: arial;
+        font-size: c(24px);
+        
+        position: absolute;
+        bottom: c(52px);
+
+        color: rgb(102 102 102);
+    }
 
 }
