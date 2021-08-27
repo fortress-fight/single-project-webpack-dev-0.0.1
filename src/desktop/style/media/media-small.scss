@@ -390,5 +390,109 @@
 
         color: rgb(102 102 102);
     }
+    /* ---------------------------------- */
+    /*          module-statistic          */
+    /* ---------------------------------- */
+    .module-statistic {
+        padding: cw(234) 0 cw(120);
+        .module-title {
+            font-size: c(80px);
+            line-height: c(94px);
+
+            margin-bottom: c(35px);
+            br {
+                display: block;
+            }
+        }
+    }
+    .module-statistic .module-header {
+
+        @include limit-wrapper-small()
+    ;
+        margin-bottom: cw(150);
+
+        text-align: left;
+    }
+    .module-statistic .module-subtitle {
+        font-size: c(24px);
+        line-height: c(46px);
+
+        width: 100%;
+        margin: 0;
+    }
+    .module-statistic .module-body .wrapper-limit_width {
+        flex-direction: column-reverse;
+    }
+    .module-statistic .module-body .list-intro_img {
+        width: cw(439);
+    }
+    .module-statistic .box-intro_img .bg-circle:nth-child(3) {
+        width: cw(688);
+    }
+    .module-statistic .box-intro_img .bg-circle:nth-child(2) {
+        width: cw(570);
+    }
+    .module-statistic .box-intro_img .bg-circle:nth-child(1) {
+        width: cw(442);
+    }
+    .module-statistic .box-intro_img .box-bg {
+        transform: translateY(-10vw);
+    }
+    .module-statistic .module-body .item-info .desc {
+        font-size: c(24px);
+        line-height: c(47px);
+
+        width: 100%;
+    }
+    .module-statistic .module-body .item-info .title {
+        font-size: c(48px);
+        line-height: c(70px);
+
+        margin-bottom: 0;
+    }
+    .module-statistic .module-body .item-info .ic {
+        font-size: c(52px);
+        line-height: c(70px);
+
+        margin-right: c(46px);
+        margin-bottom: 0;
+    }
+    .module-statistic .module-body .list-info {
+        position: relative;
+
+        margin-top: c(110px);
+        padding: 0;
+    }
+    .module-statistic .module-body .item-head {
+        display: flex;
+
+        margin-bottom: c(22px);
+
+        align-items: center;
+    }
+    .module-statistic .module-body .item-info {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        margin: 0;
+        padding-bottom: c(100px);
+
+        opacity: 0;
+        &:first-child {
+            position: relative;
+            
+            // opacity: 1;
+        }
+    }
+    .module-statistic .module-body .list-intro_img {
+        top: 0;
+
+        border-radius: c(23px);
+    }
+    .module-statistic .module-body .item-intro_img {
+        border-radius: c(23px);
+    }
 
 }
