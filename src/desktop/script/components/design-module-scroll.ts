@@ -214,7 +214,6 @@ function cardMove(direction, sectionIndex) {
             ? `re${_animateName.replace(/^\S/, (s) => s.toUpperCase())}`
             : _animateName;
 
-    console.log("animateName:", animateName, oldAnimateName);
     if (animateName && oldAnimateName != animateName) {
         oldAnimateName = animateName;
         oldAnimate && oldAnimate.kill();
@@ -224,8 +223,6 @@ function cardMove(direction, sectionIndex) {
     }
 }
 export default function initDesignModuleScroll(): void {
-    // console.log("running");
-
     gsap.timeline({
         defaults: {
             ease: "none",
@@ -391,5 +388,6 @@ export default function initDesignModuleScroll(): void {
                     break;
             }
         });
+        scrollAnimate.to({}, { duration: 1 });
     }
 }

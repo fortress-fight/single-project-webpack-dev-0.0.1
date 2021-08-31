@@ -16,7 +16,6 @@ import {
     getLineEnter,
     getLineEnterEnd,
 } from "./propaganda-module";
-import Impetus from "impetus";
 import initDocModuleScroll from "./doc-module-scroll";
 import initCustomerModuleScroll from "./customer-module-scroll";
 import initShowModuleScroll from "./show-module-scroll";
@@ -91,19 +90,35 @@ export default class IndexPage extends SiteManage {
         }
         let timeout;
         const waitTime = 600;
-        this.vsScroll.on("scroll", (args) => {
-            const scrollY = args.delta.y;
-            closeWeixinCode();
-            clearTimeout(timeout);
-            if (scrollY < 10) {
-                startDisableOpen = true;
-            } else {
-                startDisableOpen = false;
-            }
-            timeout = setTimeout(() => {
-                openWeixinCode();
-            }, waitTime);
-        });
+        if (this.vsScroll) {
+            this.vsScroll.on("scroll", (args) => {
+                const scrollY = args.delta.y;
+                closeWeixinCode();
+                clearTimeout(timeout);
+                if (scrollY < 10) {
+                    startDisableOpen = true;
+                } else {
+                    startDisableOpen = false;
+                }
+                timeout = setTimeout(() => {
+                    openWeixinCode();
+                }, waitTime);
+            });
+        } else {
+            $(window).on("scroll", () => {
+                const scrollY = window.scrollY;
+                closeWeixinCode();
+                clearTimeout(timeout);
+                if (scrollY < 10) {
+                    startDisableOpen = true;
+                } else {
+                    startDisableOpen = false;
+                }
+                timeout = setTimeout(() => {
+                    openWeixinCode();
+                }, waitTime);
+            });
+        }
         let disableClick = false;
         $(".btn-open_QR").on("click", () => {
             if (disableClick) return;
@@ -219,64 +234,84 @@ export default class IndexPage extends SiteManage {
     }
     contactModule(): void {
         if (!$(".module-contact").length) return;
-        const animate = gsap.timeline({
-            defaults: {
-                ease: "none",
-            },
-            scrollTrigger: {
-                trigger: ".module-contact .wrapper-limit_width--min",
-                scrub: true,
-                start: "top bottom",
-                end: "bottom bottom",
-                pinSpacing: false,
-                pin: true,
-                invalidateOnRefresh: true,
-            },
-        });
         ScrollTrigger.saveStyles(".module-contact .wrapper-module_body");
-        animate.fromTo(
-            ".module-contact .wrapper-module_body",
-            {
-                ease: "none",
-                y: "-70%",
-            },
-            { y: "-100%" }
-        );
-        $(".module-contact .layer-circle img").each((i, dom) => {
-            ScrollTrigger.saveStyles(dom);
-            animate.fromTo(
-                dom,
-                {
-                    y: () => {
-                        return $(dom).data("speed") * 4 + "vh";
-                    },
+        ScrollTrigger.saveStyles(".module-contact .layer-circle img");
+        function normalScreen() {
+            const animate = gsap.timeline({
+                defaults: {
                     ease: "none",
                 },
-                { y: "0vh" },
-                0
+                scrollTrigger: {
+                    trigger: ".module-contact .wrapper-limit_width--min",
+                    scrub: true,
+                    start: "top bottom",
+                    end: "bottom bottom",
+                    pinSpacing: false,
+                    pin: true,
+                    pinType: "transform",
+                    invalidateOnRefresh: true,
+                },
+            });
+            animate.fromTo(
+                ".module-contact .wrapper-module_body",
+                {
+                    ease: "none",
+                    y: "-70%",
+                },
+                { y: "-100%" }
             );
+            $(".module-contact .layer-circle img").each((i, dom) => {
+                animate.fromTo(
+                    dom,
+                    {
+                        y: () => {
+                            return $(dom).data("speed") * 4 + "vh";
+                        },
+                        ease: "none",
+                    },
+                    { y: "0vh" },
+                    0
+                );
+            });
+        }
+        ScrollTrigger.matchMedia({
+            "(min-width: 735px)": normalScreen,
+            "(max-width: 734px)": normalScreen,
         });
     }
     statisticModule(): void {
+        if (!$(".module-statistic").length) return;
         statisticModuleScroll();
     }
     extensionModule(): void {
         if (!$(".module-extension").length) return;
+        const $module = $(".module-extension");
         const dom = $(".module-extension .module-body .list-extension")[0];
         const domParent = $(".module-extension .module-body")[0];
-        const disSize = Math.abs(dom.offsetWidth - domParent.offsetWidth);
-        const dragger = new Impetus({
-            source: dom,
-            boundX: [-disSize, 0],
-            update: function (x) {
-                gsap.set(dom, { x: Math.round(x) });
+
+        const scrollAnimate = gsap.timeline({
+            defaults: {
+                overwrite: "auto",
+                ease: "none",
+            },
+            scrollTrigger: {
+                start: "center center",
+                scrub: true,
+                trigger: $module.find(".wrapper-limit_width--min"),
+                pin: true,
+                invalidateOnRefresh: true,
+                pinSpacing: true,
+                end: () => `+=${dom.offsetWidth}`,
             },
         });
-        $(window).on("resize", () => {
-            const disSize = Math.abs(dom.offsetWidth - domParent.offsetWidth);
-            gsap.set(dom, { x: 0 });
-            dragger.setBoundX([-disSize, 0]);
+
+        scrollAnimate.to(".module-extension .list-extension", {
+            duration: 1,
+            x: () => {
+                return -(dom.offsetWidth - domParent.offsetWidth);
+            },
         });
+        scrollAnimate.to({}, { duration: 0.2 });
         $(".module-extension .item-extension .box-icon").each((i, dom) => {
             const lottieAnimate = lottie.loadAnimation({
                 container: dom,

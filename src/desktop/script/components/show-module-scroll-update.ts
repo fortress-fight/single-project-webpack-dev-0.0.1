@@ -11,7 +11,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 function getMoveInAnim(scrollAnim) {
     const dom = $(".module-show .module-body .group-col");
-    ScrollTrigger.saveStyles(dom);
     const animate = gsap.timeline();
     animate.to(dom.not(dom.eq(2)), {
         z: (index) => {
@@ -28,12 +27,21 @@ function getMoveInAnim(scrollAnim) {
             from: "edges",
         },
     });
-    animate.to(dom.not(dom.eq(2)), { opacity: 0, immediateRender: false });
+    const phoneInfoItem = $(".module-show .module-body .intro-phone");
+    animate.to(
+        phoneInfoItem,
+        {
+            z: 0,
+            ease: "better-elastic",
+        },
+        "-=0.3"
+    );
+    animate.to(dom.not(dom.eq(2)), { opacity: 0 });
+
     scrollAnim.add(animate);
 }
 function getBgShowAnim(scrollAnim) {
     const bg = $(".module-show .wrapper-sec-area .state-pos_right");
-    ScrollTrigger.saveStyles(bg);
     const animate = gsap.timeline({
         defaults: {
             ease: "none",
@@ -44,16 +52,6 @@ function getBgShowAnim(scrollAnim) {
         width: "50%",
         ease: "better-elastic",
     });
-    const phoneInfoItem = $(".module-show .module-body .intro-phone");
-    ScrollTrigger.saveStyles(phoneInfoItem);
-    animate.to(
-        phoneInfoItem,
-        {
-            z: 0,
-            ease: "better-elastic",
-        },
-        "<"
-    );
     scrollAnim.add(animate);
 }
 function getMiddleBgShowAnim(scrollAnim) {
@@ -64,9 +62,6 @@ function getMiddleBgShowAnim(scrollAnim) {
         },
     });
     const phoneInfoItem = $(".module-show .module-body .intro-phone");
-    ScrollTrigger.saveStyles(phoneInfoItem);
-    const wrapperFirstArea = $(".module-show .module-body .wrapper-first_area");
-    ScrollTrigger.saveStyles(wrapperFirstArea);
     animate.to(phoneInfoItem, {
         z: 0,
         x: () => {
@@ -93,9 +88,6 @@ function getPhoneBgShowAnim(scrollAnim) {
         },
     });
     const phoneInfoItem = $(".module-show .module-body .intro-phone");
-    ScrollTrigger.saveStyles(phoneInfoItem);
-    const wrapperFirstArea = $(".module-show .module-body .wrapper-first_area");
-    ScrollTrigger.saveStyles(wrapperFirstArea);
     animate.to(phoneInfoItem, {
         z: 0,
         x: () => {
@@ -229,7 +221,6 @@ function setInfoAnim(scrollAnim, distance = "50%") {
     }
     const webScrollAnimate = getWebScrollAnim();
     $module.find(".wrapper-sec-area .intro-item").each((i, dom) => {
-        ScrollTrigger.saveStyles(dom);
         scrollAnim.addLabel("introItemStart" + i);
         gsap.set(dom, { y: distance });
         switch (i) {
@@ -339,7 +330,6 @@ function setInfoAnim(scrollAnim, distance = "50%") {
     const uemoWeb = $(
         ".module-show .wrapper-sec-area .uemo-web, .module-show .box-left_arrow"
     );
-    ScrollTrigger.saveStyles(uemoWeb);
     scrollAnim.to(
         uemoWeb,
         {
@@ -369,7 +359,7 @@ function bigScreen() {
     getMoveInAnim(animate);
     getBgShowAnim(animate);
     setInfoAnim(animate);
-    animate.to({}, { duration: 0.3 });
+    animate.to({}, { duration: 0.6 });
 }
 function smallScreen() {
     const $module = $(".module-show");
@@ -418,6 +408,20 @@ function phoneScreen() {
     animate.to({}, { duration: 3 });
 }
 export default function secScroll(): void {
+    const $module = $(".module-show");
+    const dom = $(".module-show .module-body .group-col");
+    const bg = $(".module-show .wrapper-sec-area .state-pos_right");
+    const phoneInfoItem = $(".module-show .module-body .intro-phone");
+    const wrapperFirstArea = $(".module-show .module-body .wrapper-first_area");
+    const uemoWeb = $(
+        ".module-show .wrapper-sec-area .uemo-web, .module-show .box-left_arrow"
+    );
+    ScrollTrigger.saveStyles(bg);
+    ScrollTrigger.saveStyles(dom);
+    ScrollTrigger.saveStyles(uemoWeb);
+    ScrollTrigger.saveStyles(phoneInfoItem);
+    ScrollTrigger.saveStyles(wrapperFirstArea);
+    ScrollTrigger.saveStyles($module.find(".wrapper-sec-area .intro-item"));
     ScrollTrigger.matchMedia({
         "(min-width: 1069px)": bigScreen,
         "(min-width: 735px) and (max-width: 1068px)": smallScreen,

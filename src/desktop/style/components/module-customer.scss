@@ -1,8 +1,10 @@
 .module-customer {
     overflow: hidden;
 
-
     background-color: rgb(255 255 255);
+    .module-head {
+        display: none;
+    }
     .module-body {
         padding-top: 202px;
         padding-bottom: 204px;
@@ -28,6 +30,8 @@
     .module-list {
         position: relative;
         z-index: 100;
+        
+        vertical-align: top;
     }
     .module-item {
 
@@ -146,8 +150,10 @@
             
             top: 6.8%;
             left: -64%;
-            
+
             width: percent(161px, 310px);
+
+            background: rgb(24 207 141);
         }
     }
     .module-item:nth-child(5) {

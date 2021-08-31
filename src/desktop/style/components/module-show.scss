@@ -209,6 +209,11 @@
                 @include ab-cover;
                 display: flex;
             }
+            .main-phone-1 {
+                flex: 0 0 auto;
+
+                width: 100%;
+            }
             .main-phone-card {
 
                 @include image-placeholder(310px, 671px);
@@ -329,6 +334,7 @@
 
         @include image-placeholder(971px, 681px);
         position: relative;
+        z-index: 100;
         left: 263px;
 
         flex: 0 0 auto;
@@ -436,10 +442,11 @@
     position: absolute;
     z-index: 10;
     top: 50%;
-    right: 100%;
+    left: 0;
 
     width: 13.6979vw;
-    margin-top: -32px;
+
+    transform: translateY(-50%);
 
     opacity: 0;
     background-size: cover;

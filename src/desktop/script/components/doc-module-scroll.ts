@@ -392,6 +392,7 @@ function getBeforeEnter(scrollAnimate) {
         scale: 1,
         x: 0,
         y: 0,
+        ease: "expo.inOut",
         onComplete() {
             gsap.to(".module-doc .layer-cover .user-oper_bar", {
                 overwrite: "auto",

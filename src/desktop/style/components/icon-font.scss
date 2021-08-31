@@ -1,9 +1,9 @@
 @font-face {
     font-family: 'iconfont'; /* Project id 2715885 */
 
-    src: url('https://at.alicdn.com/t/font_2715885_grcqn9f2jhe.woff2?t=1629438726729') format('woff2'),
-        url('https://at.alicdn.com/t/font_2715885_grcqn9f2jhe.woff?t=1629438726729') format('woff'),
-        url('https://at.alicdn.com/t/font_2715885_grcqn9f2jhe.ttf?t=1629438726729') format('truetype');
+    src: url('https://at.alicdn.com/t/font_2715885_s9e3b1u8hv.woff2?t=1630408763440') format('woff2'),
+        url('https://at.alicdn.com/t/font_2715885_s9e3b1u8hv.woff?t=1630408763440') format('woff'),
+        url('https://at.alicdn.com/t/font_2715885_s9e3b1u8hv.ttf?t=1630408763440') format('truetype');
 }
 .iconfont {
     font-family: 'iconfont' !important;
@@ -12,6 +12,30 @@
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+.icon-dizhi::before {
+    content: '\e627';
+}
+.icon-haibao2::before {
+    content: '\e63d';
+}
+.icon-shipin::before {
+    content: '\e60e';
+}
+.icon-weizhi::before {
+    content: '\e7f8';
+}
+.icon-zuojiantou::before {
+    content: '\e65e';
+}
+.icon-icon-test7::before {
+    content: '\e63c';
+}
+.icon-iconzhi01::before {
+    content: '\e600';
+}
+.icon-wechat_pay::before {
+    content: '\e601';
 }
 .icon-mima::before {
     content: '\e789';

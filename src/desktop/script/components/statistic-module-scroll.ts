@@ -19,8 +19,8 @@ function normalScreen() {
         end: "bottom bottom",
         endTrigger: ".module-statistic",
         pin: true,
-        invalidateOnRefresh: true,
     });
+
     let oldIndex = -1;
     const doms = $(".module-statistic .item-intro_img");
     gsap.set(doms.not(doms.eq(0)), {

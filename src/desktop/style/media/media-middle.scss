@@ -200,6 +200,10 @@
 
         width: 100%;
     }
+    .module-show .box-left_arrow {
+        right: 100%;
+        left: auto;
+    }
 
     /* ---------------------------------- */
     /*             module-doc             */
@@ -379,6 +383,21 @@
     .module-statistic .module-subtitle {
         font-size: 15px;
         line-height: 2.8vw;
+    }
+    .module-contact .group-row {
+        flex-wrap: wrap;
+    }
+    .module-contact .group-col:nth-child(1) {
+        flex: 0 0 auto;
+
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    .module-contact .group-col:nth-child(2) {
+        padding-left: 20px;
+    }
+    .module-contact .group-col:nth-child(3) {
+        padding-right: 20px;
     }
 
 }

@@ -424,7 +424,11 @@
         flex-direction: column-reverse;
     }
     .module-statistic .module-body .list-intro_img {
+        top: 0;
+
         width: cw(439);
+
+        border-radius: c(23px);
     }
     .module-statistic .box-intro_img .bg-circle:nth-child(3) {
         width: cw(688);
@@ -486,25 +490,25 @@
             // opacity: 1;
         }
     }
-    .module-statistic .module-body .list-intro_img {
-        top: 0;
-
-        border-radius: c(23px);
-    }
     .module-statistic .module-body .item-intro_img {
         border-radius: c(23px);
     }
     .module-contact .group-row {
         flex-direction: column;
+
+        flex-wrap: initial;
     }
     .module-contact .wrapper-limit_width--min {
 
-        @include limit-wrapper-small-min; 
+        @include limit-wrapper-small; 
     }
     .module-contact .group-col:nth-child(1) {
         font-size: 22px;
         line-height: 21px;
 
+        flex: initial;
+
+        width: auto;
         margin-bottom: c(72px);
     }
     .module-contact .group-col:nth-child(1) .logo-pic {
@@ -519,9 +523,12 @@
     }
     .module-contact .group-col:nth-child(3) {
         margin-bottom: c(50px);
+        padding-right: 0;
         padding-bottom: c(50px);
     }
     .module-contact .group-col:nth-child(2) {
+        padding-left: 0;
+
         order: 3;
     }
     .module-contact .module-body {
@@ -536,6 +543,79 @@
         max-width: 50vw;
 
         border-radius: 10px;
+    }
+    /* ---------------------------------- */
+    /*           module-customer          */
+    /* ---------------------------------- */
+    .module-customer .module-head {
+        font-size: c(80px);
+        font-weight: 900;
+        line-height: c(88px);
+
+        display: block;
+
+        margin-bottom: c(176px);
+    } 
+    .module-customer .module-body {
+        padding: 0;
+
+        transform: none;
+    }
+    .module-customer .wrapper-module_list::after,
+    .module-customer .module-item::after,
+    .module-customer .module-item .state-pos_left,
+    .module-customer .module-item .cover-img {
+        display: none;
+    }
+    .module-customer .module-item {
+        margin-right: c(70px);
+    }
+    .module-customer .wrapper-module_list {
+
+        @include limit-wrapper-small-min; 
+    }
+    .module-customer .module-item .main-img {
+        width: c(322px);
+        
+        border-width: c(6px);
+        border-radius: c(20px);
+        box-shadow: 0 50px 100px 0 rgb(0 2 85 / 0.3);
+    }
+    .module-customer {
+        padding-top: c(226px);
+        .module-list {
+            margin-bottom: c(100px);
+        }
+        .item-info-wrapper.state-clone {
+            position: relative;
+
+            padding-bottom: c(176px);
+            .item-info {
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                opacity: 0;
+                &:first-child {
+                    position: relative;
+
+                    opacity: 1;
+                }
+            }
+            .item-head {
+                font-size: c(48px);
+                font-weight: 900;
+                line-height: c(86px);
+
+                margin-bottom: c(20px);
+            }
+            .item-desc {
+                font-size: c(24px);
+                line-height: c(46px);
+
+                color: rgb(102 102 102);
+            }
+        }
     }
 
 }

@@ -43,6 +43,23 @@ a {
 .ic {
     font-size: inherit;
 }
+*[x-apple-data-detectors],
+  
+.x-gmail-data-detectors,
+    
+.x-gmail-data-detectors *,
+.aBn {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+
+    cursor: default !important;
+    text-decoration: none !important;
+
+    color: inherit !important;
+    border-bottom: 0 !important;
+}
 /* ---------------------------------- */
 /*                size                */
 /* ---------------------------------- */
@@ -172,9 +189,28 @@ a {
 
     transition: transform 0.42s ease;
     .site-logo {
-        height: 40px;
+        font-size: 30px;
+
+        position: relative;
+
+        width: 60px;
+        height: 60px !important;
+
+        color: rgb(255 255 255);
+        border-radius: 50%;
+        background: rgb(86 58 225);
         img {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            // display: none;
+            visibility: hidden;
+
+            width: 100%;
             height: 100%;
+
+            opacity: 0;
         }
     }
     &[data-size='mini'] {

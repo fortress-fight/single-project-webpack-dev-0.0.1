@@ -25,12 +25,9 @@ export default class UemoCardSite extends SiteManage {
                 smooth: true,
                 speed: true,
                 lerp: 0.075,
-                tablet: {
-                    smooth: true,
-                },
-                smartphone: {
-                    smooth: true,
-                },
+                getDirection: true,
+                tablet: { smooth: true },
+                smartphone: { smooth: true },
             });
 
             locoScroll.on("scroll", ScrollTrigger.update);
@@ -68,16 +65,37 @@ export default class UemoCardSite extends SiteManage {
     }
     initScrollNav(): void {
         const $navDom = $("#site-head");
-        function setNavState($dom, scrollY, condition = 20) {
+        // const oldScrollTop = 0;
+        function setNavState($dom, dir) {
             const oldSize = $dom.attr("data-size");
-            if (scrollY >= condition) {
-                oldSize != "mini" && $dom.attr("data-size", "mini");
-            } else {
+            if (dir == "up") {
                 oldSize != "normal" && $dom.attr("data-size", "normal");
+            } else {
+                oldSize != "mini" && $dom.attr("data-size", "mini");
             }
         }
-        this.vsScroll.on("scroll", (args) => {
-            setNavState($navDom, args.delta.y);
-        });
+
+        if (this.vsScroll) {
+            this.vsScroll.on("scroll", (args) => {
+                requestAnimationFrame(() =>
+                    setNavState($navDom, args.direction)
+                );
+            });
+        } else {
+            let oldScrollTop = window.scrollY;
+            $(window).on("scroll", () => {
+                requestAnimationFrame(() => {
+                    if (window.scrollY <= 0) {
+                        setNavState($navDom, "up");
+                    } else {
+                        setNavState(
+                            $navDom,
+                            window.scrollY > oldScrollTop ? "down" : "up"
+                        );
+                    }
+                    oldScrollTop = window.scrollY;
+                });
+            });
+        }
     }
 }

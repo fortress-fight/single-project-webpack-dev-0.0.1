@@ -7,6 +7,8 @@
 
     text-align: center;
     white-space: nowrap;
+
+    will-change: transform;
     .inner-wrapper {
         display: inline-block;
     }
@@ -38,6 +40,8 @@
 }
 .wrapper-propaganda_intro {
     text-align: center;
+
+    will-change: transform;
     .inner-wrapper {
         position: relative;
 
@@ -157,8 +161,8 @@
             margin: 0 auto;
 
             border-radius: 15px;
-            background: rgb(89 102 232);
-            box-shadow: 0 15px 31px 0 rgb(0 20 191 / 0.46);
+            background: rgb(86 58 225);
+            box-shadow: 0 15px 31px 0 rgb(86 58 225 / 50%);
         }
         video {
             position: absolute;

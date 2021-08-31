@@ -6,12 +6,13 @@
  * @LastEditors: F-Stone
  */
 .module-extension {
-    padding-top: 157px;
-    padding-bottom: 223px;
-
     background-color: rgb(255 255 255);
+    .module-body {
+        padding-bottom: 157px;
+    }
     .module-head {
         margin-bottom: 154px;
+        padding-top: 157px;
     }
     .module-title {
         br {
