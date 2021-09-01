@@ -131,7 +131,7 @@
         top: c(63px);
     }
     .module-design .bg-body .list-card--left .list-card-box {
-        transform: translateX(c(1068px));
+        transform: translateX(c(1058px));
     }
     .module-design .bg-body > .state-pos_right,
     .module-design .module-body > .state-pos_right {
@@ -616,6 +616,9 @@
                 color: rgb(102 102 102);
             }
         }
+    }
+    .ae-pointer {
+        width: 40px;
     }
 
 }

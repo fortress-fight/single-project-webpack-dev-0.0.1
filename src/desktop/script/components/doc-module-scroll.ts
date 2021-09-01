@@ -436,6 +436,7 @@ function bigScreen() {
             endTrigger: "#placeholder-doc_scroll",
             pinSpacing: false,
             pin: true,
+            anticipatePin: 1,
             invalidateOnRefresh: true,
         },
     });

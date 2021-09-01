@@ -5,6 +5,14 @@
 
 
 @media only screen and (--normal-viewport) {
+    .wrapper-limit_width {
+
+        @include limit-wrapper-normal;
+    }
+    .module-extension .wrapper-limit_width--min {
+
+        @include limit-wrapper-normal;
+    }
     /* ---------------------------------- */
     /*               public               */
     /* ---------------------------------- */
@@ -18,7 +26,7 @@
         width: 55px;
     }
     .footer_layer--fixed .text {
-        padding: 0 30px 0 23px;
+        padding: 0 6px 0 23px;
     }
     /* ---------------------------------- */
     /*              顶部导航               */
@@ -77,6 +85,12 @@
     .module-design .bg-body .list-card--left,
     .module-design .bg-body .list-card--right {
         top: 69px;
+    }
+    .module-design .bg-body .list-card--left {
+        padding-right: 36px;
+    }
+    .module-design .bg-body .list-card--right {
+        padding-left: 36px;
     }
     .module-design .item-card {
         width: 216px;
@@ -187,13 +201,13 @@
     /*          module-extension          */
     /* ---------------------------------- */
     .module-extension {
-        display: flex;
+        // display: flex;
 
         min-height: 100vh;
         padding-top: 8.17708333333333vw;
         padding-bottom: 11.6145833333333vw;
 
-        align-items: center;
+        // align-items: center;
         .module-head {
             margin-bottom: 7vw;
         }
@@ -219,7 +233,7 @@
         max-width: 70vw;
     }
     .module-statistic .module-body .list-intro_img {
-        width: 24vw;
+        width: 32vw;
         margin: 0 auto;
     }
     .module-statistic .box-intro_img .bg-circle:nth-child(1) {
@@ -286,6 +300,10 @@
     }
     .wrapper-propaganda_intro .inner-wrapper {
         width: 100%;
+        max-width: none;
+    }
+    .module-propaganda {
+        padding-top: 23vh;
     }
     .wrapper-propaganda_text {
         padding-bottom: 60px;
@@ -397,6 +415,10 @@
     .module-doc .module-doc_show {
         padding-top: 13vh;
     }
+    .module-contact .group-col:nth-child(1) .logo-pic {
+        width: 73px;
+    }
+
 
 }
 

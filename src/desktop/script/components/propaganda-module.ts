@@ -146,14 +146,27 @@ export function propagandaModuleScroll(): void {
     ScrollTrigger.matchMedia({
         "(min-width: 735px)": function () {
             gsap.timeline({
+                defaults: {
+                    ease: "none",
+                },
                 scrollTrigger: {
                     trigger: ".module-propaganda",
                     start: "top top",
                     end: "bottom top",
                     scrub: true,
+                    invalidateOnRefresh: true,
                 },
             })
-                .to(textWrapper, { y: "60vh", duration: 1 }, 0)
+                .to(
+                    textWrapper,
+                    {
+                        y: () => {
+                            return window.innerWidth >= 1068 ? "60vh" : "50vh";
+                        },
+                        duration: 1,
+                    },
+                    0
+                )
                 .to(IntroWrapper, { y: "20vh", duration: 1 }, 0)
                 .to(secHand, { x: "0", y: "0", duration: 0.5 }, 0)
                 .to(secHand, { x: "0", y: "0", duration: 0.5 }, ">");

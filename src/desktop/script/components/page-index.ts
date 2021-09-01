@@ -39,6 +39,14 @@ export default class IndexPage extends SiteManage {
     weixinCode(): void {
         let startDisableOpen;
         let endDisableOpen;
+
+        const pointerBox = $(".ae-pointer")[0];
+        const pointerAe = lottie.loadAnimation({
+            container: pointerBox,
+            renderer: "svg",
+            autoplay: false,
+            path: $(pointerBox).data("ae-icon"),
+        });
         gsap.to(".footer_layer--fixed", {
             opacity: 0,
             onStart() {
@@ -65,6 +73,9 @@ export default class IndexPage extends SiteManage {
             duration: 0.36,
             ease: "Power2.easeOut",
             width: "auto",
+            onReverseComplete() {
+                pointerAe.pause();
+            },
         });
         $(window).on("resize", () => {
             weixinBtnAnimate.kill();
@@ -80,6 +91,7 @@ export default class IndexPage extends SiteManage {
         function openWeixinCode() {
             if (startDisableOpen || endDisableOpen) return;
             if (state == "open") return;
+            pointerAe.play();
             state = "open";
             weixinBtnAnimate.play();
         }
@@ -90,8 +102,13 @@ export default class IndexPage extends SiteManage {
         }
         let timeout;
         const waitTime = 600;
+        let isFirst = true;
         if (this.vsScroll) {
             this.vsScroll.on("scroll", (args) => {
+                if (isFirst) {
+                    isFirst = false;
+                    return;
+                }
                 const scrollY = args.delta.y;
                 closeWeixinCode();
                 clearTimeout(timeout);
@@ -119,6 +136,7 @@ export default class IndexPage extends SiteManage {
                 }, waitTime);
             });
         }
+        openWeixinCode();
         let disableClick = false;
         $(".btn-open_QR").on("click", () => {
             if (disableClick) return;
@@ -297,10 +315,10 @@ export default class IndexPage extends SiteManage {
             scrollTrigger: {
                 start: "center center",
                 scrub: true,
-                trigger: $module.find(".wrapper-limit_width--min"),
-                pin: true,
+                trigger: $module,
+                pin: $module.find(".wrapper-limit_width--min .pin-wrapper"),
                 invalidateOnRefresh: true,
-                pinSpacing: true,
+                anticipatePin: 1,
                 end: () => `+=${dom.offsetWidth}`,
             },
         });

@@ -122,6 +122,7 @@ function getCardAnimate(cardIndex) {
         defaults: {
             ease: "power2.out",
             duration: 1.2,
+            overwrite: "auto",
         },
         onStart: () => {
             otherAnimate(param, cardIndex);
@@ -252,6 +253,7 @@ export default function initDesignModuleScroll(): void {
                     start: "top top",
                     end: "+=300%",
                     pin: true,
+                    anticipatePin: 1,
                     onRefresh() {
                         setSection(scrollAnimate, scrollAnimate.currentLabel());
                     },
@@ -281,6 +283,7 @@ export default function initDesignModuleScroll(): void {
                     start: "top top",
                     end: "+=300%",
                     pin: true,
+                    anticipatePin: 1,
                     onRefresh() {
                         setSection(scrollAnimate, scrollAnimate.currentLabel());
                     },
@@ -386,6 +389,6 @@ export default function initDesignModuleScroll(): void {
                     break;
             }
         });
-        scrollAnimate.to({}, { duration: 1 });
+        scrollAnimate.to({}, { duration: 0.5 });
     }
 }

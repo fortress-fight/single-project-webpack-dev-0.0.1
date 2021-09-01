@@ -2,7 +2,8 @@
 
 @media only screen and (--middle-viewport) {
     .wrapper-limit_width {
-        max-width: 88vw;
+
+        @include limit-wrapper-normal;
     }
     .footer_layer--fixed .icon-weixin_code {
         width: 50px;
@@ -14,7 +15,7 @@
         width: 50px;
     }
     .footer_layer--fixed .text {
-        padding: 0 30px 0 23px;
+        padding: 0 0 0 23px;
     }
     /* ---------------------------------- */
     /*              顶部导航               */
@@ -48,20 +49,39 @@
     /* ---------------------------------- */
     /*          module-propaganda         */
     /* ---------------------------------- */
-    .box-text_effect {
-        height: 16vw;
-    }
     .box-text_effect .effect-line-1 {
         font-size: 7.5vw;
     }
-    .wrapper-propaganda_text {
-        padding-bottom: 5.6vw;
-    }
-    .module-propaganda {
-        padding-top: 266px;
-    }
     .wrapper-propaganda_intro .layer-hand-center .wrapper-card {
         border-radius: 8px;
+    }
+    .wrapper-propaganda_intro .inner-wrapper {
+        position: relative;
+        left: 50%;
+        
+        width: 1240px;
+        max-width: none;
+
+        transform: translateX(-50%);
+    }
+    .module-propaganda {
+        padding-top: 210px;
+        .box-text_effect {
+            height: 270px;
+        }
+        .effect-line-1 {
+            font-size: c(188px);
+            font-weight: 600;
+            line-height: 1.17em;
+
+            margin-bottom: 20px;
+            br {
+                display: initial;
+            }
+        }
+        .wrapper-propaganda_text {
+            padding-bottom: 70px;
+        }
     }
     /* ---------------------------------- */
     /*            module-design           */
@@ -79,7 +99,7 @@
         width: 242px;
     }
     .module-design .bg-body .list-card--left .list-card-box {
-        transform: translateX(665px);
+        transform: translateX(657px);
     }
     .module-design .bg-body .list-card--left {
         padding-right: 28px;
@@ -90,7 +110,7 @@
     .module-design .bg-body > .state-pos_right,
     .module-design .module-body > .state-pos_right {
         padding-top: 92px;
-        padding-left: 60px;
+        padding-left: 0;
     }
     .module-design .item-intro .title {
         font-size: 113px;
@@ -118,6 +138,18 @@
     /* ---------------------------------- */
     /*             module-show            */
     /* ---------------------------------- */
+    .module-show {
+        .module-title {
+            font-size: 74px;
+            font-weight: 600;
+            line-height: 78px;
+            
+            margin-bottom: 28px;
+            br {
+                display: block;
+            }
+        }
+    }
     .module-show .wrapper-zero_area .layer--scale {
         border-radius: 60px;
     }
@@ -208,49 +240,15 @@
     /* ---------------------------------- */
     /*             module-doc             */
     /* ---------------------------------- */
-    // .module-doc .intro-img--fake,
-    // .module-doc .intro-img {
-    //     width: 40vw;
-    // }
-    // .module-doc .left_area-bg {
-    //     top: 15%;
-    // }
-    // .module-doc .wrapper-main_phone {
-    //     left: 19.8%;
-
-    //     width: 60.210453%;
-    // }
-    // .module-doc .module-body > .state-pos_right {
-    //     padding: 0 2vw 0 7vw;
-    // }
-    // .module-doc .item-intro .desc {
-    //     font-size: 15px;
-    //     line-height: 30px;
-
-    //     width: auto;
-    //     margin-bottom: 30px;
-    // }
-    // .module-doc .item-intro .title {
-    //     font-size: 46px;
-
-    //     margin-bottom: 19px;
-    // }
-    // .module-doc .module-doc_show {
-    //     padding-top: 15vh;
-    // }
-    // .module-doc .intro-img--fake .main-phone-lock {
-    //     top: 25%;
-
-    //     width: 28%;
-    // }
-    // .module-doc .item-intro .box-img img {
-    //     height: 70px;
-    // }
     .module-doc .item-intro .box-img {
         display: none;
     }
     .module-doc .module-body {
-        display: block; 
+        display: flex;
+        flex-direction: column;
+
+        align-items: initial;
+        justify-content: center;
     }
     .module-doc .module-body > .state-pos_left,
     .module-doc .module-body > .state-pos_right {
@@ -287,6 +285,10 @@
     .module-doc .module-body > .state-pos_right {
         position: relative;
         z-index: 1111;
+        
+        flex: 1 1 auto;
+
+        height: 100%;
 
         background-color: rgb(255 255 255);
     }
@@ -297,7 +299,7 @@
     }
     .module-doc  .list-intro {
 
-        @include limit-wrapper-small-min; 
+        @include limit-wrapper-normal; 
     }
     .module-doc .module-doc_show {
         padding-top: 10vw;
@@ -313,20 +315,36 @@
         padding-top: 3vw;
     }
     .module-doc .item-intro .title {
-        font-size: cw(40);
-        line-height: cw(62);
+        font-size: 4.3396vw;
+        line-height: 1.533em;
 
-        margin-bottom: cw(19);
+        margin-bottom: 16px;
     }
     .module-doc .item-intro .subtitle {
-        font-size: cw(24);
-        line-height: cw(46);
+        font-size: 15px;
+        line-height: 1.866em;
     }
     /* ---------------------------------- */
     /*          module-extension          */
     /* ---------------------------------- */
+    .module-extension {
+        .module-title {
+            font-size: 74px;
+            font-weight: 600;
+            line-height: 78px;
+            
+            margin-bottom: 28px;
+            br {
+                display: initial;
+            }
+        }
+    }
     .module-extension .box-icon {
         width: 90px;
+    }
+    .module-extension .wrapper-limit_width--min {
+
+        @include limit-wrapper-normal;
     }
     .module-extension .item-desc {
         font-size: 15px;
@@ -335,14 +353,41 @@
     .module-extension .item-head .box-index {
         font-size: 22px;
     }
+    .module-extension .item-extension {
+        width: 300px;
+        height: 451px;
+        margin-right: 38px;
+        padding: 0 40px;
+        padding-bottom: 90px;
+    }
+    .module-extension .item-head .box-index {
+        font-size: 22px;
+
+        position: absolute;
+        bottom: 60px;
+    }
+    .module-extension .item-desc {
+        height: 78px;
+    }
     /* ---------------------------------- */
     /*          module-statistic          */
     /* ---------------------------------- */
     .module-statistic {
         padding: 16.1vw 0;
+        .module-title {
+            font-size: 74px;
+            font-weight: 600;
+            line-height: 78px;
+            
+            margin-bottom: 28px;
+            br {
+                display: initial;
+            }
+        }
     }
     .module-statistic .module-body .wrapper-limit_width {
-        max-width: 76vw;
+
+        @include limit-wrapper-normal; 
     }
     .module-statistic .module-body .item-info .ic {
         font-size: 52px;
@@ -353,7 +398,7 @@
         font-size: 40px;
     }
     .module-statistic .module-body .list-intro_img {
-        width: 28vw;
+        width: 40vw;
         margin: 0 auto;
     }
     .module-statistic .box-intro_img .bg-circle:nth-child(1) {
@@ -375,11 +420,6 @@
         font-size: 4.8689vw;
         line-height: 0.96em;
     }
-    .module-statistic .module-title {
-        font-size: 4.8689vw;
-
-        margin-bottom: 8px;
-    }
     .module-statistic .module-subtitle {
         font-size: 15px;
         line-height: 2.8vw;
@@ -393,11 +433,29 @@
         width: 100%;
         margin-bottom: 50px;
     }
-    .module-contact .group-col:nth-child(2) {
-        padding-left: 20px;
+    // .module-contact .group-col:nth-child(2) {
+    //     padding-left: 20px;
+    // }
+    // .module-contact .group-col:nth-child(3) {
+    //     padding-right: 20px;
+    // }
+    .module-contact .layer-circle {
+        visibility: hidden;
+
+        opacity: 0;
     }
-    .module-contact .group-col:nth-child(3) {
-        padding-right: 20px;
+    .ae-pointer {
+        width: 45px;
+    }
+    .module-statistic .module-header {
+
+        @include limit-wrapper-normal;
+        margin-bottom: 16vw;
+
+        text-align: left;
+        .module-subtitle {
+            width: 100%;
+        }
     }
 
 }

@@ -53,9 +53,6 @@ export default class UemoCardSite extends SiteManage {
             ScrollTrigger.addEventListener("refresh", () =>
                 locoScroll.update()
             );
-            $(window).on("resize", () => {
-                locoScroll.update();
-            });
             this.vsScroll = locoScroll;
         } else {
             $("body").css({

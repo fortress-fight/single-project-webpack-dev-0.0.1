@@ -48,6 +48,11 @@
     }
     .bg-body,
     .module-body {
+        .box-preview_layout {
+    
+            @include image-placeholder(322px, 697px)
+            ;
+        }
         &>.state-pos_left,
         &>.state-pos_right {
             width: 50%;
@@ -58,11 +63,6 @@
         &>.state-pos_right {
             padding-top: 130px;
             padding-left: 87px;
-        }
-        .box-preview_layout {
-
-            @include image-placeholder(322px, 697px)
-        ;
         }
     }
     .bg-body {
@@ -77,11 +77,19 @@
         img {
             width: 100%;
         }
-        .box-preview_layout {
+        .box-card {
+            position: absolute;
+            z-index: 9;
+            top: 0;
 
-            @include image-placeholder(322px, 697px)
-        ;
+            width: 100%;
+        }
+        .box-preview_layout {
+            position: relative;
             .box-img {
+                position: relative;
+                z-index: 10;
+
                 overflow: hidden;
 
                 border: 6px solid rgb(255 255 255);
@@ -171,6 +179,8 @@
 
                 width: percent(930px, 1125px);
                 margin: 0 auto;
+
+                transform: translate3d(0, 0, 0);
 
                 border-radius: 8px;
                 box-shadow: rgb(31 54 29 / 68%) 0 17px 34px 0;

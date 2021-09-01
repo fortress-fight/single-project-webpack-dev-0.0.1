@@ -1,5 +1,6 @@
 @custom-media --big-viewport (max-width: 1960px);
 
+
 /* ---------------------------------- */
 /*               public               */
 /* ---------------------------------- */
@@ -15,18 +16,29 @@
     padding-bottom: 80px;
 }
 .module-propaganda {
+    display: flex;
+
+    min-height: 100vh;
     padding-top: 246px;
+
+    align-items: flex-end;
     .effect-line-1 {
         br {
             display: none;
         }
     }
     .module-body {
+        width: 100%;
+
         transform: translateY(30px);
     }
 }
 .wrapper-propaganda_intro .layer-hand-ahead {
     transform: translate3d(5vh, 10vh, 0);
+}
+.wrapper-propaganda_intro .inner-wrapper {
+    width: 1402px;
+    max-width: 73%;
 }
 /* ---------------------------------- */
 /*            module-design           */
@@ -48,11 +60,15 @@
 /* ---------------------------------- */
 /*             module-doc             */
 /* ---------------------------------- */
-.module-doc .module-body > .state-pos_right {
-    padding-top: 0;
+.module-doc .module-body {
+    min-height: 100vh;
 
     align-items: center;
-}
+    & > .state-pos_right {
+        padding-top: 0;
+
+        align-items: center;
+    }}
 .module-doc .item-intro {
     margin: 0;
     padding-top: 2vw;
