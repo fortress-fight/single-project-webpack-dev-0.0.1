@@ -251,7 +251,8 @@ export default function initDesignModuleScroll(): void {
                     trigger: ".module-design .module-inner_wrapper",
                     scrub: true,
                     start: "top top",
-                    end: "+=300%",
+                    end: () => Math.min(window.innerWidth * 4, 1920 * 3),
+                    invalidateOnRefresh: true,
                     pin: true,
                     anticipatePin: 1,
                     onRefresh() {
@@ -281,7 +282,8 @@ export default function initDesignModuleScroll(): void {
                     trigger: ".module-design .module-inner_wrapper",
                     scrub: true,
                     start: "top top",
-                    end: "+=300%",
+                    end: () => window.innerWidth * 4,
+                    invalidateOnRefresh: true,
                     pin: true,
                     anticipatePin: 1,
                     onRefresh() {

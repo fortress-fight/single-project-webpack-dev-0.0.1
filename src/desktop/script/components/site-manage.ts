@@ -20,6 +20,7 @@ export default class UemoCardSite extends SiteManage {
     readonly defaultTask = ["initScrollNav"];
     initVsScroll(): void {
         if (!os.isMobile) {
+            window.navDistance = window.outerHeight - window.innerHeight;
             const locoScroll = new LocomotiveScroll({
                 el: document.querySelector("#site-page"),
                 smooth: true,
@@ -30,7 +31,9 @@ export default class UemoCardSite extends SiteManage {
                 smartphone: { smooth: true },
             });
 
-            locoScroll.on("scroll", ScrollTrigger.update);
+            locoScroll.on("scroll", () => {
+                ScrollTrigger.update();
+            });
             ScrollTrigger.defaults({
                 scroller: document.querySelector("#site-page"),
             });
@@ -57,6 +60,17 @@ export default class UemoCardSite extends SiteManage {
         } else {
             $("body").css({
                 overflow: "auto",
+            });
+            window.navDistance = window.outerHeight - window.innerHeight;
+
+            $(window).on("resize", () => {
+                const distance = Math.abs(
+                    window.outerHeight - window.innerHeight
+                );
+                if (window.navDistance > distance) {
+                    window.navDistance = distance;
+                    ScrollTrigger.refresh();
+                }
             });
         }
     }

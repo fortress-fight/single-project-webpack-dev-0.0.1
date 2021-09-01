@@ -39,19 +39,26 @@ function firstScroll() {
         scrollTrigger: {
             trigger: $module.find(".module-body .wrapper-zero_area"),
             scrub: true,
-            start: "center center",
+            start: () => {
+                return `center ${
+                    (window.outerHeight - window.navDistance) / 2
+                }`;
+            },
             end: "bottom bottom",
             endTrigger: "#show-placeholder",
             pinSpacing: false,
             pin: $module.find(".wrapper-module_content"),
+            anticipatePin: 1,
             invalidateOnRefresh: true,
             onRefresh() {
                 const currentLabel = scrollAnimate.currentLabel();
                 const labels = scrollAnimate.labels;
                 if (labels.layerScaleEnd <= labels[currentLabel]) {
                     gsap.set($scaleDom[0], {
-                        height: window.outerHeight,
-                        width: window.outerHeight * scaleRota,
+                        height: window.outerHeight - window.navDistance,
+                        width:
+                            (window.outerHeight - window.navDistance) *
+                            scaleRota,
                     });
                 }
             },
@@ -130,6 +137,7 @@ function firstScroll() {
             ease: "test-es-1",
             boxShadow: "15px 20px 30px 0px rgba(0,0,0,0)",
             borderRadius: 0,
+            force3D: true,
             duration: dM.layerScale,
         },
         "descTextEnd"
@@ -152,7 +160,7 @@ function firstScroll() {
         {
             duration: dM.layerScale,
             ease: "test-es-1",
-            height: () => window.outerHeight,
+            height: () => window.outerHeight - window.navDistance,
             onUpdate() {
                 if (
                     (this.progress() == 1 || this.progress() == 0) &&
@@ -160,6 +168,7 @@ function firstScroll() {
                 ) {
                     return;
                 }
+                $(".console").text(templateHeight.height);
                 gsap.set($scaleDom[0], {
                     height: templateHeight.height,
                     width: parseFloat(templateHeight.height) * scaleRota,

@@ -181,7 +181,11 @@
     .module-show .wrapper-intro .button-link {
         padding: 0 2.7958vw;
     }
+    .module-show .wrapper-sec-area .state-pos_left {
+        padding-left: 6vw;
 
+        justify-content: flex-start; 
+    }
     /* ---------------------------------- */
     /*             module-doc             */
     /* ---------------------------------- */
@@ -387,6 +391,7 @@
     .module-show .uemo-web .slider-item {
         border-radius: 20px;
     }
+
     /* ---------------------------------- */
     /*             module-doc             */
     /* ---------------------------------- */
@@ -418,7 +423,6 @@
     .module-contact .group-col:nth-child(1) .logo-pic {
         width: 73px;
     }
-
 
 }
 

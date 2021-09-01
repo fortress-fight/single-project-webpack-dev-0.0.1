@@ -28,9 +28,9 @@
 
         align-items: center;
         justify-content: center;
-        &>.container {
-            min-height: 100vh;
-        }
+        // &>.container {
+        //     min-height: 100vh;
+        // }
         .item-intro {
             overflow: hidden;
 
@@ -65,9 +65,13 @@
             width: 100%;
             height: 100%;
 
+            transform: translate3d(0, 0, 0);
+
             border-radius: 50px;
             background-color: rgb(90 96 238);
             box-shadow: 15px 20px 30px 0 rgb(0 0 0 / 13%);
+
+            will-change: width;
         }
         .layer--bg {
 

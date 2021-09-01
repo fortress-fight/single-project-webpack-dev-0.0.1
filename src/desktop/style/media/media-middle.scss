@@ -55,14 +55,20 @@
     .wrapper-propaganda_intro .layer-hand-center .wrapper-card {
         border-radius: 8px;
     }
+    .wrapper-propaganda_intro {
+        display: flex;
+        
+        width: 100%;
+
+        justify-content: center;
+    }
     .wrapper-propaganda_intro .inner-wrapper {
         position: relative;
-        left: 50%;
-        
+
+        flex: 0 0 auto;
+
         width: 1240px;
         max-width: none;
-
-        transform: translateX(-50%);
     }
     .module-propaganda {
         padding-top: 210px;
