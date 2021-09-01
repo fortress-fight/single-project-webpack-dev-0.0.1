@@ -15,6 +15,7 @@
         <title>好看智能名片</title>
     </head>
     <body class="state-prevent_scroll">
+        <%- require("./components/header.ejs")({IMG_PATH}) %>
         <div
             id="site-page"
             class="site-page"
@@ -22,14 +23,12 @@
             date-page-name="index-page"
             data-scroll-container
         >
-            <%- require("./components/header.ejs")({IMG_PATH}) %>
-            <!--  -->
             <%- require("./components/module-propaganda.ejs")({IMG_PATH}) %>
             <!--  -->
             <%- require("./components/module-design.ejs")({IMG_PATH}) %>
             <!--  -->
             <!-- <div
-                data-scroll-section
+               
                 style="height: 100vh; background: #fff"
             ></div> -->
             <%- require("./components/module-show.ejs")({IMG_PATH}) %>
@@ -42,7 +41,7 @@
             <%- require("./components/module-statistic.ejs")({IMG_PATH}) %>
             <!--  -->
             <!-- <div
-                data-scroll-section
+               
                 style="height: 100vh; background: #fff"
             ></div> -->
             <%- require("./components/module-customer.ejs")({IMG_PATH}) %>
@@ -79,4 +78,14 @@
             </div>
         </div>
     </body>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src =
+                "https://hm.baidu.com/hm.js?5506622b19fd2e17bf687517ce2274c3";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 </html>

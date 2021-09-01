@@ -250,6 +250,7 @@ export default function initDesignModuleScroll(): void {
                     trigger: ".module-design .module-inner_wrapper",
                     scrub: true,
                     start: "top top",
+                    end: "+=300%",
                     pin: true,
                     onRefresh() {
                         setSection(scrollAnimate, scrollAnimate.currentLabel());
@@ -278,6 +279,7 @@ export default function initDesignModuleScroll(): void {
                     trigger: ".module-design .module-inner_wrapper",
                     scrub: true,
                     start: "top top",
+                    end: "+=300%",
                     pin: true,
                     onRefresh() {
                         setSection(scrollAnimate, scrollAnimate.currentLabel());
@@ -322,7 +324,6 @@ export default function initDesignModuleScroll(): void {
                         dom,
                         {
                             opacity: 0,
-                            ease: "none",
                             duration: 0.3,
                         },
                         "-=0.3"
@@ -343,7 +344,6 @@ export default function initDesignModuleScroll(): void {
                         dom,
                         {
                             opacity: 1,
-                            ease: "none",
                             duration: 0.3,
                         },
                         "<"
@@ -355,7 +355,6 @@ export default function initDesignModuleScroll(): void {
                         dom,
                         {
                             opacity: 0,
-                            ease: "none",
                             duration: 0.3,
                         },
                         "-=0.3"
@@ -377,7 +376,6 @@ export default function initDesignModuleScroll(): void {
                         dom,
                         {
                             opacity: 1,
-                            ease: "none",
                             duration: 0.3,
                         },
                         "<"

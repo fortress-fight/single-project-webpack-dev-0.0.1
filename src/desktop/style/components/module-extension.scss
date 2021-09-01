@@ -28,12 +28,7 @@
         color: rgb(102 102 102);
     }
     .list-extension {
-        cursor: grab;
-
         flex-wrap: nowrap;
-        &:active {
-            cursor: grabbing;
-        }
     }
     .box-icon {
 
