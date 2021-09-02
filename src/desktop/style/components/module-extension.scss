@@ -6,6 +6,9 @@
  * @LastEditors: F-Stone
  */
 .module-extension {
+    position: relative;
+    z-index: 10;
+
     background-color: rgb(255 255 255);
     .module-body {
         padding-bottom: 157px;

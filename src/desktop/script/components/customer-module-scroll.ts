@@ -128,7 +128,7 @@ function smallScreen() {
             ease: "none",
         },
         scrollTrigger: {
-            trigger: ".module-customer .wrapper-limit_width",
+            trigger: ".module-customer .wrapper-limit_width .module-body",
             start: () => {
                 return `center ${
                     (window.outerHeight - window.navDistance) / 2

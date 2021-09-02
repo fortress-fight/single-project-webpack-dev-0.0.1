@@ -46,7 +46,7 @@
         width: auto;
     }
     .wrapper-propaganda_text .item-serve {
-        font-size: c(24px);
+        font-size: c(26px);
 
         padding: 0 c(20px);
         &:first-child {
@@ -65,7 +65,11 @@
     .wrapper-propaganda_intro .inner-wrapper {
         flex: 0 0 auto;
 
-        width: 592px;
+        // width: 592px;
+        width: 720px;
+    }
+    .module-propaganda .box-text_effect {
+        height: 200px;
     }
     .wrapper-propaganda_intro {
         display: flex;
@@ -149,7 +153,7 @@
         line-height: c(110px);
     }
     .module-design .item-intro .desc {
-        font-size: c(24px);
+        font-size: c(26px);
         line-height: c(40px);
 
         width: auto;
@@ -177,7 +181,7 @@
         line-height: 23.5px;
     }
     .footer-index-nav {
-        font-size: c(24px);
+        font-size: c(26px);
 
         position: absolute;
         right: 0;
@@ -228,7 +232,7 @@
             }
         }
         .module-subtitle {
-            font-size: c(24px);
+            font-size: c(28px);
             line-height: c(48px);
 
             margin: 0;
@@ -253,7 +257,7 @@
         padding-top: 0;
     }
     .module-show .box-desc .subtitle {
-        font-size: c(24px);
+        font-size: c(26px);
     }
     .module-show .box-desc .ic {
         font-size: c(30px);
@@ -333,7 +337,7 @@
         line-height: c(47px);
     }
     .module-show .wrapper-intro .desc {
-        font-size: c(24px);
+        font-size: c(26px);
         line-height: c(47px);
     }
     .module-show .wrapper-intro {
@@ -345,7 +349,27 @@
     .module-show .wrapper-first_area .group-col:nth-child(3) .intro-phone {
         transform: translate3d(0, 0, 60px);
     }
-    
+    .module-show .wrapper-zero_area .wrapper-content {
+
+        @include image-placeholder(560px, 120px);
+    }
+    .module-show .wrapper-zero_area .target-box-size {
+
+        @include image-placeholder(560px, 120px);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        width: calc((100vh + 50px) / 120 * 560);
+        
+        transform: translate3d(-50%, -50%, 0);
+    }
+    .module-show .box-desc > .state-pos_right {
+        padding: 0 30px 0 24px;
+    }
+    .module-show .box-desc > .state-pos_left {
+        padding: 0 24px 0 30px;
+    }
     /* ---------------------------------- */
     /*          module-extension          */
     /* ---------------------------------- */
@@ -353,24 +377,24 @@
         background-color: rgb(246 246 246);
         .module-title {
             font-size: c(80px);
-            line-height: c(94px);
+            line-height: c(95px);
 
-            margin-bottom: c(30px);
+            margin-bottom: c(28px);
             br {
                 display: initial;
             }
         }
         .module-head {
-            margin-bottom: c(169px);
+            margin-bottom: c(140px);
         }
         .module-desc {
-            font-size: c(24px);
+            font-size: c(28px);
         }
     }
     .module-extension .item-extension {
         display: block;
 
-        width: c(426px);
+        width: c(506px);
         height: c(549px);
         margin-right: c(38px);
         padding: 0 c(50px);
@@ -386,7 +410,7 @@
         margin-bottom: c(18px);
     }
     .module-extension .item-desc {
-        font-size: c(24px);
+        font-size: c(26px);
         line-height: c(46px);
 
         color: rgb(153 153 153);
@@ -402,7 +426,7 @@
     }
     .module-extension .item-head .box-index {
         font-family: arial;
-        font-size: c(24px);
+        font-size: c(26px);
         
         position: absolute;
         bottom: c(52px);
@@ -433,7 +457,7 @@
         text-align: left;
     }
     .module-statistic .module-subtitle {
-        font-size: c(24px);
+        font-size: c(28px);
         line-height: c(46px);
 
         width: 100%;
@@ -462,7 +486,7 @@
         transform: translateY(-10vw);
     }
     .module-statistic .module-body .item-info .desc {
-        font-size: c(24px);
+        font-size: c(26px);
         line-height: c(47px);
 
         width: 100%;
@@ -522,20 +546,22 @@
         @include limit-wrapper-small; 
     }
     .module-contact .group-col:nth-child(1) {
-        font-size: 22px;
-        line-height: 21px;
+        font-size: 18px;
+        line-height: 1em;
 
         flex: initial;
 
         width: auto;
-        margin-bottom: c(72px);
+        margin-bottom: c(120px);
     }
     .module-contact .group-col:nth-child(1) .logo-pic {
-        width: 78px;
+        width: 68px;
     }
     .module-contact .group-col:nth-child(2) .tel {
         font-family: 'MontDemo-Heavy';
         font-size: c(72px);
+
+        margin-bottom: 0;
     }
     .module-contact .group-col {
         width: 100%;
@@ -551,15 +577,17 @@
         order: 3;
     }
     .module-contact .module-body {
-        height: 527px;
+        height: 557px;
         padding-top: 30px;
     }
     .module-contact .group-col:nth-child(3) .name {
-        margin-bottom: c(30px);
+        font-size: c(40px);
+
+        margin-bottom: c(20px);
     }
     .wrapper-weixin_code .box-weixin_code {
-        width: 50%;
-        max-width: 50vw;
+        width: 58%;
+        max-width: 58vw;
 
         border-radius: 10px;
     }
@@ -608,7 +636,7 @@
         .item-info-wrapper.state-clone {
             position: relative;
 
-            padding-bottom: c(176px);
+            padding-bottom: c(0);
             .item-info {
                 position: absolute;
                 top: 0;
@@ -629,7 +657,7 @@
                 margin-bottom: c(20px);
             }
             .item-desc {
-                font-size: c(24px);
+                font-size: c(26px);
                 line-height: c(46px);
 
                 color: rgb(102 102 102);

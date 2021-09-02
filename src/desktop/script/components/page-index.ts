@@ -41,14 +41,85 @@ export default class IndexPage extends SiteManage {
     weixinCode(): void {
         let startDisableOpen;
         let endDisableOpen;
+        if (!os.isPhone) {
+            const pointerBox = $(".ae-pointer")[0];
+            const pointerAe = lottie.loadAnimation({
+                container: pointerBox,
+                renderer: "svg",
+                autoplay: false,
+                path: $(pointerBox).data("ae-icon"),
+            });
 
-        const pointerBox = $(".ae-pointer")[0];
-        const pointerAe = lottie.loadAnimation({
-            container: pointerBox,
-            renderer: "svg",
-            autoplay: false,
-            path: $(pointerBox).data("ae-icon"),
-        });
+            let weixinBtnAnimate = gsap.to(".btn-open_QR", {
+                paused: true,
+                duration: 0.36,
+                ease: "Power2.easeOut",
+                width: "auto",
+                onReverseComplete() {
+                    pointerAe.pause();
+                },
+            });
+            $(window).on("resize", () => {
+                weixinBtnAnimate.kill();
+                $(".btn-open_QR").css({ width: "" });
+                weixinBtnAnimate = gsap.to(".btn-open_QR", {
+                    paused: true,
+                    duration: 0.36,
+                    ease: "Power2.easeOut",
+                    width: "auto",
+                });
+            });
+            let state = "close";
+            const openWeixinCode = () => {
+                if (startDisableOpen || endDisableOpen) return;
+                if (state == "open") return;
+                pointerAe.play();
+                state = "open";
+                weixinBtnAnimate.play();
+            };
+            const closeWeixinCode = () => {
+                if (state == "close") return;
+                state = "close";
+                weixinBtnAnimate.reverse();
+            };
+            let timeout;
+            const waitTime = 600;
+            let isFirst = true;
+            if (this.vsScroll) {
+                this.vsScroll.on("scroll", (args) => {
+                    if (isFirst) {
+                        isFirst = false;
+                        return;
+                    }
+                    const scrollY = args.delta.y;
+                    closeWeixinCode();
+                    clearTimeout(timeout);
+                    if (scrollY < 10) {
+                        startDisableOpen = true;
+                    } else {
+                        startDisableOpen = false;
+                    }
+                    timeout = setTimeout(() => {
+                        openWeixinCode();
+                    }, waitTime);
+                });
+            } else {
+                $(window).on("scroll", () => {
+                    const scrollY = window.scrollY;
+                    closeWeixinCode();
+                    clearTimeout(timeout);
+                    if (scrollY < 10) {
+                        startDisableOpen = true;
+                    } else {
+                        startDisableOpen = false;
+                    }
+                    timeout = setTimeout(() => {
+                        openWeixinCode();
+                    }, waitTime);
+                });
+            }
+            openWeixinCode();
+        }
         gsap.to(".footer_layer--fixed", {
             opacity: 0,
             onStart() {
@@ -70,76 +141,6 @@ export default class IndexPage extends SiteManage {
                 },
             },
         });
-
-        let weixinBtnAnimate = gsap.to(".btn-open_QR", {
-            paused: true,
-            duration: 0.36,
-            ease: "Power2.easeOut",
-            width: "auto",
-            onReverseComplete() {
-                pointerAe.pause();
-            },
-        });
-        $(window).on("resize", () => {
-            weixinBtnAnimate.kill();
-            $(".btn-open_QR").css({ width: "" });
-            weixinBtnAnimate = gsap.to(".btn-open_QR", {
-                paused: true,
-                duration: 0.36,
-                ease: "Power2.easeOut",
-                width: "auto",
-            });
-        });
-        let state = "close";
-        function openWeixinCode() {
-            if (startDisableOpen || endDisableOpen) return;
-            if (state == "open") return;
-            pointerAe.play();
-            state = "open";
-            weixinBtnAnimate.play();
-        }
-        function closeWeixinCode() {
-            if (state == "close") return;
-            state = "close";
-            weixinBtnAnimate.reverse();
-        }
-        let timeout;
-        const waitTime = 600;
-        let isFirst = true;
-        if (this.vsScroll) {
-            this.vsScroll.on("scroll", (args) => {
-                if (isFirst) {
-                    isFirst = false;
-                    return;
-                }
-                const scrollY = args.delta.y;
-                closeWeixinCode();
-                clearTimeout(timeout);
-                if (scrollY < 10) {
-                    startDisableOpen = true;
-                } else {
-                    startDisableOpen = false;
-                }
-                timeout = setTimeout(() => {
-                    openWeixinCode();
-                }, waitTime);
-            });
-        } else {
-            $(window).on("scroll", () => {
-                const scrollY = window.scrollY;
-                closeWeixinCode();
-                clearTimeout(timeout);
-                if (scrollY < 10) {
-                    startDisableOpen = true;
-                } else {
-                    startDisableOpen = false;
-                }
-                timeout = setTimeout(() => {
-                    openWeixinCode();
-                }, waitTime);
-            });
-        }
-        openWeixinCode();
         let disableClick = false;
         $(".btn-open_QR").on("click", () => {
             if (disableClick) return;
