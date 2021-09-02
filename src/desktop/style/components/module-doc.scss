@@ -7,8 +7,6 @@
  */
 .module-doc {
     overflow: hidden;
-
-    // padding-top: 189px;
     &>.wrapper-limit_width {
         position: relative;
         z-index: 10;
@@ -24,10 +22,6 @@
             padding-top: 280px;
         }
     }
-    // .scale-placeholder {
-    //     margin-top: calc(100vh - 289px);
-    //     padding-top: 200vh;
-    // }
     .module-doc_show {
         position: relative;
 
@@ -188,8 +182,6 @@
         top: 0;
         left: 0;
 
-        margin-bottom: 40vh;
-
         opacity: 0;
         &:last-child {
             margin-bottom: 0;
@@ -215,3 +207,6 @@
         }
     }
 }
+// .placeholder-doc_scroll {
+//     height: 1000px;
+// }

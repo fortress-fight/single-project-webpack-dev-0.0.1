@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 营销文档
  * @Author: F-Stone
@@ -213,13 +214,13 @@ function parallax() {
         scrollTrigger: {
             trigger: "#placeholder-doc_scroll",
             scrub: true,
-            start: "bottom bottom",
-            end: "bottom top",
+            start: "top bottom",
             invalidateOnRefresh: true,
+            end: () => `+=${window.innerHeight}`,
         },
     }).to(".module-doc .module-body", {
         ease: "none",
-        y: "20vh",
+        y: () => window.innerHeight * 0.3,
     });
 }
 function getDocCover() {
@@ -233,6 +234,7 @@ function getDocCover() {
                 .getBoundingClientRect();
             return `center ${headPosition.bottom - position.top}px`;
         },
+        force3D: true,
         x: () => {
             const position = $scaleDom[0].getBoundingClientRect();
             return window.innerWidth / 2 - (position.left + position.width / 2);
@@ -249,7 +251,7 @@ function getDocCover() {
         },
     });
 }
-function getInfoAnim(scrollAnimate, distance = "50%", type = "normal") {
+function getInfoAnim(scrollAnimate, distance = "30%", type = "normal") {
     const $module = $(".module-doc");
     let oldIndex = -1;
     let phoneAnimate = gsap.timeline({
@@ -432,9 +434,7 @@ function bigScreen() {
             trigger: ".module-doc .wrapper-limit_width",
             scrub: true,
             start: "top top",
-            end: "bottom bottom",
-            endTrigger: "#placeholder-doc_scroll",
-            pinSpacing: false,
+            end: "+=5000",
             pin: true,
             anticipatePin: 1,
             invalidateOnRefresh: true,
@@ -443,6 +443,7 @@ function bigScreen() {
     getBeforeEnter(scrollAnimate);
     getInfoAnim(scrollAnimate);
     scrollAnimate.to({}, { duration: 1 });
+    parallax();
 }
 function smallScreen() {
     getDocCover();
@@ -452,9 +453,7 @@ function smallScreen() {
             trigger: ".module-doc .wrapper-limit_width",
             scrub: true,
             start: "top top",
-            end: "bottom bottom",
-            endTrigger: "#placeholder-doc_scroll",
-            pinSpacing: false,
+            end: "+=5000",
             pin: true,
             invalidateOnRefresh: true,
         },
@@ -462,6 +461,7 @@ function smallScreen() {
     getBeforeEnter(scrollAnimate);
     getInfoAnim(scrollAnimate, "10%", "smallScreen");
     scrollAnimate.to({}, { duration: 1 });
+    parallax();
 }
 // function phoneScreen() {
 //     //
@@ -470,10 +470,13 @@ export default function initDocModuleScroll(): void {
     const $module = $(".module-doc");
     const $scaleDom = $module.find(".intro-img");
     ScrollTrigger.saveStyles($scaleDom);
+    ScrollTrigger.saveStyles($module.find(".module-body .item-intro"));
+    ScrollTrigger.saveStyles(".module-doc .module-body");
+    ScrollTrigger.saveStyles($(".module-doc_show .left_area-bg"));
+    ScrollTrigger.saveStyles($(".module-doc .module-body > .state-pos_right"));
     ScrollTrigger.matchMedia({
         "(min-width: 1069px)": bigScreen,
         "(min-width: 735px) and (max-width: 1068px)": smallScreen,
         "(max-width: 734px)": smallScreen,
     });
-    parallax();
 }

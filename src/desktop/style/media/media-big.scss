@@ -61,14 +61,18 @@
 /*             module-doc             */
 /* ---------------------------------- */
 .module-doc .module-body {
-    min-height: 100vh;
+    // min-height: 100vh;
 
     align-items: center;
     & > .state-pos_right {
         padding-top: 0;
 
         align-items: center;
-    }}
+    }
+}
+.module-doc .module-doc_show {
+    padding-top: 77px; 
+}
 .module-doc .item-intro {
     margin: 0;
     padding-top: 2vw;
