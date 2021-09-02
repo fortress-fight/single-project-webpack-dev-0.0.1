@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 营销文档
  * @Author: F-Stone
@@ -216,11 +215,11 @@ function parallax() {
             scrub: true,
             start: "top bottom",
             invalidateOnRefresh: true,
-            end: () => `+=${window.innerHeight}`,
+            end: () => `+=${window.outerHeight - window.navDistance}`,
         },
     }).to(".module-doc .module-body", {
         ease: "none",
-        y: () => window.innerHeight * 0.3,
+        y: () => (window.outerHeight - window.navDistance) * 0.3,
     });
 }
 function getDocCover() {
@@ -461,7 +460,6 @@ function smallScreen() {
     getBeforeEnter(scrollAnimate);
     getInfoAnim(scrollAnimate, "10%", "smallScreen");
     scrollAnimate.to({}, { duration: 1 });
-    parallax();
 }
 // function phoneScreen() {
 //     //

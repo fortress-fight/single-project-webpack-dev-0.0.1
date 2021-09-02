@@ -27,6 +27,7 @@ function firstScroll() {
             scrub: true,
             end: "bottom bottom",
             endTrigger: $module.find(".module-body .wrapper-zero_area"),
+            invalidateOnRefresh: true,
         },
     }).fromTo($module.find(".module-header"), { opacity: 0 }, { opacity: 1 });
 
@@ -48,7 +49,6 @@ function firstScroll() {
             endTrigger: "#show-placeholder",
             pinSpacing: false,
             pin: $module.find(".wrapper-module_content"),
-            anticipatePin: 1,
             invalidateOnRefresh: true,
             onRefresh() {
                 const currentLabel = scrollAnimate.currentLabel();

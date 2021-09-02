@@ -60,8 +60,15 @@
 /* ---------------------------------- */
 /*             module-doc             */
 /* ---------------------------------- */
+.module-doc .module-doc_show { 
+    height: calc(578px * 1.2);
+    padding-top: 0;
+}
+.module-doc .left_area-bg {
+    top: 4%;
+}
 .module-doc .module-body {
-    // min-height: 100vh;
+    min-height: 100vh;
 
     align-items: center;
     & > .state-pos_right {
@@ -70,8 +77,8 @@
         align-items: center;
     }
 }
-.module-doc .module-doc_show {
-    padding-top: 77px; 
+.module-doc .intro-img--fake .main-phone-lock {
+    top: 24%;
 }
 .module-doc .item-intro {
     margin: 0;
@@ -80,7 +87,9 @@
         display: none;
     }
 }
-
+.module-doc .wrapper-main_phone {
+    top: 0.8%;
+}
 
 @media only screen and (--big-viewport) {
     .module-show .wrapper-first_area .group-col:nth-child(1),

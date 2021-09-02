@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 首页的执行类
  * @Author: F-Stone
@@ -10,6 +11,7 @@ import { gsap } from "gsap";
 
 import SiteManage from "./site-manage";
 
+import { os } from "@/util/os";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
     propagandaModuleScroll,
@@ -60,6 +62,7 @@ export default class IndexPage extends SiteManage {
                 scrub: true,
                 start: "top bottom",
                 end: "bottom bottom",
+                pinType: "transform",
                 onUpdate({ progress }) {
                     gsap.set(".footer_layer--fixed", {
                         y: -progress * $(".module-contact").height(),
@@ -270,31 +273,37 @@ export default class IndexPage extends SiteManage {
                     invalidateOnRefresh: true,
                 },
             });
-            animate.fromTo(
-                ".module-contact .wrapper-module_body",
-                {
-                    ease: "none",
-                    y: "-70%",
-                },
-                { y: "-100%" }
-            );
-            $(".module-contact .layer-circle img").each((i, dom) => {
+
+            if (!os.isMobile) {
                 animate.fromTo(
-                    dom,
+                    ".module-contact .wrapper-module_body",
                     {
-                        y: () => {
-                            return $(dom).data("speed") * 4 + "vh";
-                        },
                         ease: "none",
+                        y: "-70%",
                     },
-                    { y: "0vh" },
-                    0
+                    { y: "-100%" }
                 );
-            });
+                $(".module-contact .layer-circle img").each((i, dom) => {
+                    animate.fromTo(
+                        dom,
+                        {
+                            y: () => {
+                                return $(dom).data("speed") * 4 + "vh";
+                            },
+                            ease: "none",
+                        },
+                        { y: "0vh" },
+                        0
+                    );
+                });
+            } else {
+                animate.set(".module-contact .wrapper-module_body", {
+                    y: "-100%",
+                });
+            }
         }
         ScrollTrigger.matchMedia({
             "(min-width: 735px)": normalScreen,
-            "(max-width: 734px)": normalScreen,
         });
     }
     statisticModule(): void {
@@ -313,7 +322,11 @@ export default class IndexPage extends SiteManage {
                 ease: "none",
             },
             scrollTrigger: {
-                start: "center center",
+                start: () => {
+                    return `center ${
+                        (window.outerHeight - window.navDistance) / 2
+                    }`;
+                },
                 scrub: true,
                 trigger: $module,
                 pin: $module.find(".wrapper-limit_width--min .pin-wrapper"),

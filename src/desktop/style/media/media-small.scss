@@ -160,6 +160,22 @@
     .module-design .module-body > .state-pos_left {
         position: relative;
     }
+    .module-doc .wrapper-main_phone .doc-show-4 {
+        border-radius: 6px;
+    }
+    .module-doc .intro-img--fake {
+        top: 18%;
+    }
+    .module-doc .item-intro .title {
+        font-size: 24px;
+        line-height: 35px;
+
+        margin-bottom: 0;
+    }
+    .module-doc .item-intro .desc {
+        font-size: 12px;
+        line-height: 23.5px;
+    }
     .footer-index-nav {
         font-size: c(24px);
 

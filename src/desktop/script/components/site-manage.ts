@@ -62,15 +62,42 @@ export default class UemoCardSite extends SiteManage {
                 overflow: "auto",
             });
             window.navDistance = window.outerHeight - window.innerHeight;
+            // gsap.set(".module-propaganda", {
+            //     minHeight: window.outerHeight - window.navDistance,
+            // });
+            let orientation = null;
 
+            if (window.innerWidth > window.innerHeight) {
+                orientation = "row";
+            }
+
+            if (window.innerWidth < window.innerHeight) {
+                orientation = "col";
+            }
             $(window).on("resize", () => {
-                const distance = Math.abs(
-                    window.outerHeight - window.innerHeight
-                );
-                if (window.navDistance > distance) {
-                    window.navDistance = distance;
-                    ScrollTrigger.refresh();
-                }
+                requestAnimationFrame(() => {
+                    const distance = Math.abs(
+                        window.outerHeight - window.innerHeight
+                    );
+                    if (window.innerWidth > window.innerHeight) {
+                        if (orientation != "row") {
+                            window.location.reload();
+                        }
+                    } else if (window.innerWidth < window.innerHeight) {
+                        if (orientation != "col") {
+                            window.location.reload();
+                        }
+                    }
+                    if (window.navDistance > distance) {
+                        window.navDistance = distance;
+                        ScrollTrigger.refresh();
+                        // gsap.set(".module-propaganda", {
+                        //     minHeight: window.outerHeight - window.navDistance,
+                        // });
+                    }
+
+                    ScrollTrigger.update();
+                });
             });
         }
     }

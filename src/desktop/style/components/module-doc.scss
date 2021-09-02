@@ -28,9 +28,10 @@
         padding-top: 8vh;
     }
     .list-intro {
+        position: relative;
             
-        @include image-placeholder(466px, 420px);
-        width: auto;
+        // @include image-placeholder(466px, 420px);
+        width: 410px;
     }
     .wrapper-main_phone {
 

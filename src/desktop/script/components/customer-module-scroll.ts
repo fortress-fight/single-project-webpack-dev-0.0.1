@@ -37,7 +37,11 @@ function normalScreen() {
         scrollTrigger: {
             trigger: ".module-customer .wrapper-limit_width .module-body",
             scrub: true,
-            start: "center center",
+            start: () => {
+                return `center ${
+                    (window.outerHeight - window.navDistance) / 2
+                }`;
+            },
             pin: true,
             end: () =>
                 `+=${
@@ -125,7 +129,11 @@ function smallScreen() {
         },
         scrollTrigger: {
             trigger: ".module-customer .wrapper-limit_width",
-            start: "center center",
+            start: () => {
+                return `center ${
+                    (window.outerHeight - window.navDistance) / 2
+                }`;
+            },
             scrub: true,
             pin: true,
             end: () =>

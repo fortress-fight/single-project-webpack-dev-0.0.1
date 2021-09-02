@@ -15,9 +15,17 @@ function normalScreen() {
     ScrollTrigger.create({
         trigger: ".module-statistic .box-intro_img",
         scrub: true,
-        start: "center center",
-        end: "bottom bottom",
-        endTrigger: ".module-statistic",
+        start: () => {
+            return `center ${(window.outerHeight - window.navDistance) / 2}`;
+        },
+        end: () => {
+            return (
+                "+=" +
+                ($module.find(".list-info").outerHeight() -
+                    $(".module-statistic .box-intro_img").outerHeight() / 2)
+            );
+        },
+        invalidateOnRefresh: true,
         pin: true,
     });
 
@@ -110,8 +118,15 @@ function phoneScreen() {
         scrollTrigger: {
             trigger: ".module-statistic .state-pos_right",
             scrub: true,
-            start: "center center",
-            end: () => "+=" + window.outerHeight * (itemInfo.length / 2),
+            start: () => {
+                return `center ${
+                    (window.outerHeight - window.navDistance) / 2
+                }`;
+            },
+            end: () =>
+                "+=" +
+                (window.outerHeight - window.navDistance) *
+                    (itemInfo.length / 2),
             pin: ".module-statistic .module-body",
             invalidateOnRefresh: true,
         },
