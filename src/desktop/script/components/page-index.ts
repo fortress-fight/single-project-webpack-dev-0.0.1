@@ -82,7 +82,7 @@ export default class IndexPage extends SiteManage {
                 weixinBtnAnimate.reverse();
             };
             let timeout;
-            const waitTime = 600;
+            const waitTime = 2000;
             let isFirst = true;
             if (this.vsScroll) {
                 this.vsScroll.on("scroll", (args) => {
