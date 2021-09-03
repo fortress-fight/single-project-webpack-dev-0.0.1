@@ -93,23 +93,38 @@ function normalScreen() {
             },
         });
     });
-    gsap.fromTo(
-        $module.find(".bg-circle"),
-        {
-            opacity: 0,
-            scale: 0.4,
-        },
-        {
-            opacity: 1,
-            scale: 1,
-            stagger: 0.1,
+    gsap.timeline({
+        default: {
             ease: "Power2.easeOut",
-            scrollTrigger: {
-                trigger: $module.find(".box-bg"),
-                start: "center bottom",
+        },
+        scrollTrigger: {
+            trigger: $module.find(".box-bg"),
+            start: "center bottom",
+        },
+    })
+        .fromTo(
+            $module.find(".bg-circle"),
+            {
+                opacity: 0,
+                scale: 0.4,
             },
-        }
-    );
+            {
+                opacity: 1,
+                scale: 1,
+                stagger: 0.1,
+            }
+        )
+        .fromTo(
+            $module.find(".list-intro_img"),
+            {
+                opacity: 0,
+                scale: 0.6,
+            },
+            {
+                opacity: 1,
+                scale: 1,
+            }
+        );
 }
 function phoneScreen() {
     const $module = $(".module-statistic");
@@ -120,7 +135,7 @@ function phoneScreen() {
             scrub: true,
             start: () => {
                 return `center ${
-                    (window.outerHeight - window.navDistance) / 2
+                    (window.outerHeight - window.navDistance) / 2 - 30
                 }`;
             },
             end: "+=" + 5000,
@@ -257,23 +272,38 @@ function phoneScreen() {
         }
     });
     scrollAnim.to({}, { duration: 1 });
-    gsap.fromTo(
-        $module.find(".bg-circle"),
-        {
-            opacity: 0,
-            scale: 0.4,
-        },
-        {
-            opacity: 1,
-            scale: 1,
-            stagger: 0.1,
+    gsap.timeline({
+        default: {
             ease: "Power2.easeOut",
-            scrollTrigger: {
-                trigger: ".module-statistic .state-pos_right",
-                start: "center center",
+        },
+        scrollTrigger: {
+            trigger: ".module-statistic .state-pos_right",
+            start: "center center",
+        },
+    })
+        .fromTo(
+            $module.find(".bg-circle"),
+            {
+                opacity: 0,
+                scale: 0.4,
             },
-        }
-    );
+            {
+                opacity: 1,
+                scale: 1,
+                stagger: 0.1,
+            }
+        )
+        .fromTo(
+            $module.find(".list-intro_img"),
+            {
+                opacity: 0,
+                scale: 0.6,
+            },
+            {
+                opacity: 1,
+                scale: 1,
+            }
+        );
 }
 export default function statisticModuleScroll(): void {
     const itemInfo = $(".module-statistic .item-info");
