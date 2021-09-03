@@ -225,6 +225,24 @@ function parallax() {
 function getDocCover() {
     const $module = $(".module-doc");
     const $scaleDom = $module.find(".intro-img");
+    const getScale = () => {
+        const targetDom1 = $(".placeholder-doc_preview");
+        const targetDom2 = $(".placeholder-doc_preview--row");
+        const phoneWidth = $module.find(".main-phone").width();
+        const scale1 = targetDom1.width() / phoneWidth;
+        const scale2 = targetDom2.width() / phoneWidth;
+        if (scale1 > scale2) {
+            return {
+                scale: scale1,
+                select: targetDom1,
+            };
+        } else {
+            return {
+                scale: scale2,
+                select: targetDom2,
+            };
+        }
+    };
     gsap.set($scaleDom, {
         transformOrigin: () => {
             const position = $scaleDom[0].getBoundingClientRect();
@@ -234,25 +252,32 @@ function getDocCover() {
             return `center ${headPosition.bottom - position.top}px`;
         },
         force3D: true,
+        scale: () => {
+            return getScale().scale;
+        },
         x: () => {
             const position = $scaleDom[0].getBoundingClientRect();
-            return window.innerWidth / 2 - (position.left + position.width / 2);
+            const select = getScale().select;
+            const targetPos = select[0].getBoundingClientRect();
+            return (
+                targetPos.left +
+                targetPos.width / 2 -
+                (position.left + position.width / 2)
+            );
         },
         y: () => {
             const modulePosition = $module[0].getBoundingClientRect();
+
             const headPosition = $module
                 .find(".main-phone_head")[0]
                 .getBoundingClientRect();
             return -(headPosition.bottom - modulePosition.top);
         },
-        scale: () => {
-            return window.innerWidth / $module.find(".main-phone").width();
-        },
     });
 }
+let oldIndex = -1;
 function getInfoAnim(scrollAnimate, distance = "30%", type = "normal") {
     const $module = $(".module-doc");
-    let oldIndex = -1;
     let phoneAnimate = gsap.timeline({
         paused: true,
         defaults: {
@@ -426,9 +451,23 @@ function getBeforeEnter(scrollAnimate) {
     );
 }
 function bigScreen() {
-    getDocCover();
+    const $module = $(".module-doc");
+    const $scaleDom = $module.find(".intro-img");
+    ScrollTrigger.create({
+        trigger: ".module-doc .wrapper-limit_width",
+        start: "top bottom+=10",
+        onEnter() {
+            gsap.set($scaleDom, {
+                transformOrigin: "center center",
+                scale: 1,
+                x: 0,
+                y: 0,
+            });
+            getDocCover();
+        },
+    });
     const scrollAnimate = gsap.timeline({
-        defaults: { ease: "none" },
+        defaults: { ease: "none", overwrite: true },
         scrollTrigger: {
             trigger: ".module-doc .wrapper-limit_width",
             scrub: true,
@@ -446,8 +485,23 @@ function bigScreen() {
 }
 function smallScreen() {
     getDocCover();
+    const $module = $(".module-doc");
+    const $scaleDom = $module.find(".intro-img");
+    ScrollTrigger.create({
+        trigger: ".module-doc .wrapper-limit_width",
+        start: "top bottom+=10",
+        onEnter() {
+            gsap.set($scaleDom, {
+                transformOrigin: "center center",
+                scale: 1,
+                x: 0,
+                y: 0,
+            });
+            getDocCover();
+        },
+    });
     const scrollAnimate = gsap.timeline({
-        defaults: { ease: "none" },
+        defaults: { ease: "none", overwrite: true },
         scrollTrigger: {
             trigger: ".module-doc .wrapper-limit_width",
             scrub: true,

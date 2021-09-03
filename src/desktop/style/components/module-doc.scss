@@ -208,6 +208,34 @@
         }
     }
 }
+.module-doc {
+    position: relative;
+}
+.placeholder-doc_preview {
+
+    @include image-placeholder(345px, 654px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 100vw;
+
+    transform: translate3d(-50%, -50%, 0);
+    pointer-events: none;
+}
+.placeholder-doc_preview--row {
+    // 654.9375px
+
+    @include image-placeholder(345px, 654px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: calc(100vh / 654 * 345);
+
+    transform: translate3d(-50%, -50%, 0);
+    pointer-events: none;
+}
 // .placeholder-doc_scroll {
 //     height: 1000px;
 // }
