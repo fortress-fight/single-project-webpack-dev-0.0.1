@@ -242,6 +242,9 @@
             @include limit-wrapper-small;
             width: 100%;
         }
+        .show-placeholder {
+            height: 6000px;
+        }
     }
     .module-show .box-desc {
         height: c(154px);
@@ -604,7 +607,7 @@
         margin-bottom: c(176px);
     } 
     .module-customer .module-body {
-        padding: 0;
+        padding: 30px 0;
 
         transform: none;
     }
@@ -666,6 +669,9 @@
     }
     .ae-pointer {
         width: 40px;
+    }
+    .footer_layer--fixed .wrapper-limit_width {
+        max-width: 94vw;
     }
 
 }

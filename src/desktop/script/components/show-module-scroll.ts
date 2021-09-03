@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description: 展示模块的滚动效果
  * @Author: F-Stone
@@ -392,6 +391,7 @@ function scrollAnim(screenSize) {
             end: "bottom bottom+=10",
             endTrigger: "#show-placeholder",
             pinSpacing: false,
+            anticipatePin: 1,
             pin: $module.find(".wrapper-module_content"),
             invalidateOnRefresh: true,
         },
@@ -533,8 +533,8 @@ function scrollAnim(screenSize) {
         scrollAnimate.to({}, { duration: 0.6 });
         getMoveInAnim(scrollAnimate);
         getPhoneBgShowAnim(scrollAnimate);
-        setInfoAnim(scrollAnimate, "10%");
-        scrollAnimate.to({}, { duration: 3 });
+        setInfoAnim(scrollAnimate, "15px");
+        scrollAnimate.to({}, { duration: 0.6 });
     }
 }
 export default function showModuleScroll(): void {

@@ -244,14 +244,9 @@
         top: 0;
         left: 0;
 
-        // margin-bottom: 164px;
-        transform: translateY(50%);
-
         opacity: 0;
         &:first-child {
             position: relative;
-
-            transform: translateY(0%);
 
             opacity: 1;
         }

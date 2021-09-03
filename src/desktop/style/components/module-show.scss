@@ -448,6 +448,13 @@
         
         transform: translate3d(-50%, -50%, 0);
     }
+    /* ---------------------------------- */
+    /*                other               */
+    /* ---------------------------------- */
+    .show-placeholder { 
+        height: 600vw;
+        max-height: 6000px;
+    }
 }
 // .module-show .wrapper-module_content {
 //     transform: translateZ(0) !important;

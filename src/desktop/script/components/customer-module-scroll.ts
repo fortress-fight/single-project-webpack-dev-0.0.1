@@ -138,13 +138,14 @@ function smallScreen() {
             pin: true,
             end: () =>
                 `+=${
-                    $(".module-customer .module-list")[0].offsetWidth +
-                    window.innerWidth
+                    $(".module-customer .module-list .module-item").length *
+                    1000
                 }`,
+            anticipatePin: 1,
             invalidateOnRefresh: true,
         },
     });
-    const distance = "30%";
+    const distance = "15px";
     $newItemInfo.find(".item-info").each((i, dom) => {
         gsap.set(dom, { y: distance });
         if (i == 0) {
@@ -208,7 +209,7 @@ function smallScreen() {
         },
         0
     );
-    scrollAnimate.to({}, { duration: 1 });
+    scrollAnimate.to({}, { duration: 0.5 });
     return () => {
         $newItemInfo.remove();
     };

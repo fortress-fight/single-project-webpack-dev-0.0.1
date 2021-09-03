@@ -282,7 +282,7 @@ export default function initDesignModuleScroll(): void {
                     trigger: ".module-design .module-inner_wrapper",
                     scrub: true,
                     start: "top top",
-                    end: () => window.innerWidth * 4,
+                    end: 3200,
                     invalidateOnRefresh: true,
                     pin: true,
                     anticipatePin: 1,
@@ -306,7 +306,7 @@ export default function initDesignModuleScroll(): void {
                 );
                 oldIndex = currentIndex;
             }
-            itemIntroScrollAnimate(scrollAnimate, setSection, "30%");
+            itemIntroScrollAnimate(scrollAnimate, setSection, "15px");
         },
     });
     function itemIntroScrollAnimate(
@@ -314,6 +314,15 @@ export default function initDesignModuleScroll(): void {
         setSection,
         distance = "50%"
     ) {
+        gsap.set($(".module-design .list-intro .item-intro"), {
+            y: (index) => {
+                if (index != 0) {
+                    return distance;
+                } else {
+                    return "0";
+                }
+            },
+        });
         $(".module-design .list-intro .item-intro").each((i, dom) => {
             ScrollTrigger.saveStyles(dom);
             switch (i) {

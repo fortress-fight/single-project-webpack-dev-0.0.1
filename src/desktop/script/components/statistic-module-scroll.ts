@@ -123,10 +123,7 @@ function phoneScreen() {
                     (window.outerHeight - window.navDistance) / 2
                 }`;
             },
-            end: () =>
-                "+=" +
-                (window.outerHeight - window.navDistance) *
-                    (itemInfo.length / 2),
+            end: "+=" + 5000,
             pin: ".module-statistic .module-body",
             invalidateOnRefresh: true,
         },
@@ -166,7 +163,7 @@ function phoneScreen() {
         });
         oldIndex = currentIndex;
     }
-    const distance = "10%";
+    const distance = "15px";
     itemInfo.each((i, dom) => {
         gsap.set(dom, { y: distance });
         if (i == 0) {
@@ -259,7 +256,7 @@ function phoneScreen() {
             );
         }
     });
-    scrollAnim.to({}, { duration: 2 });
+    scrollAnim.to({}, { duration: 1 });
     gsap.fromTo(
         $module.find(".bg-circle"),
         {

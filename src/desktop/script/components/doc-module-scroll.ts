@@ -458,7 +458,7 @@ function smallScreen() {
         },
     });
     getBeforeEnter(scrollAnimate);
-    getInfoAnim(scrollAnimate, "10%", "smallScreen");
+    getInfoAnim(scrollAnimate, "15px", "smallScreen");
     scrollAnimate.to({}, { duration: 1 });
 }
 // function phoneScreen() {
