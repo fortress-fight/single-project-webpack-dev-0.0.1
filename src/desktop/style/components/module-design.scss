@@ -178,7 +178,7 @@
             }
             .img-wrapper {
 
-                @include image-placeholder(256px, 386.84px);
+                @include image-placeholder(256px, 386px);
                 overflow: hidden;
 
                 width: percent(930px, 1125px);
