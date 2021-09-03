@@ -121,7 +121,14 @@
         width: c(355px);
     }
     .module-design .bg-body .box-preview_layout .box-img {
-        border-radius: c(40px);
+        border-radius: c(30px);
+    }
+    .module-design .bg-body .box-preview_layout .box-img,
+    .module-design .module-body .box-preview_layout {
+        border-width: 3px;
+    }
+    .module-design .box-phone .card-item .img-wrapper {
+        border-radius: 6px;
     }
     .module-design .bg-body .list-card--left {
         padding-right: c(44px);
@@ -172,13 +179,16 @@
     }
     .module-doc .item-intro .title {
         font-size: 24px;
-        line-height: 35px;
+        line-height: 1;
 
         margin-bottom: 0;
+        margin-bottom: 12px;
     }
     .module-doc .item-intro .desc {
         font-size: 12px;
         line-height: 23.5px;
+
+        margin: 0;
     }
     .footer-index-nav {
         font-size: c(26px);
@@ -200,6 +210,8 @@
             color: rgb(255 255 255);
         }
         .divide {
+            position: relative;
+
             display: block;
             flex: 1 1 auto;
 
@@ -208,8 +220,38 @@
 
             background-color: rgb(255 255 255 / 0.22);
         }
+        .divide-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 0;
+            height: 100%;
+
+            background-color: rgb(255 255 255);
+        }
     }
-    
+    .module-doc .module-body > .state-pos_left {
+        flex: 1 1 auto;
+    }
+    .module-doc .module-body > .state-pos_right {
+        flex: 1 0 auto;
+    }
+    .module-doc .item-intro {
+        padding-top: 30px;
+        padding-bottom: 40px;
+    }
+    .module-doc .module-doc_show {
+        display: flex;
+
+        padding-top: 70px;
+
+        align-items: flex-end;
+    }
+    .module-doc .intro-img--fake,
+    .module-doc .intro-img {
+        width: 78vw;
+    }
     /* ---------------------------------- */
     /*             module-show            */
     /* ---------------------------------- */
@@ -333,11 +375,11 @@
         border-radius: cw(14);
     }
     .module-show .wrapper-intro .title {
-        margin-bottom: c(26px);
+        margin-bottom: c(24px);
     }
     .module-show .wrapper-intro .title .text {
         font-size: c(48px);
-        line-height: c(47px);
+        line-height: 1;
     }
     .module-show .wrapper-intro .desc {
         font-size: c(26px);
@@ -672,6 +714,9 @@
     }
     .footer_layer--fixed .wrapper-limit_width {
         max-width: 94vw;
+    }
+    .footer_layer--fixed .btn-open_QR {
+        border-width: 3px;
     }
 
 }

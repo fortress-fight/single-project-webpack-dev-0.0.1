@@ -278,6 +278,11 @@ export default function initDesignModuleScroll(): void {
                 defaults: {
                     ease: "none",
                 },
+                onUpdate() {
+                    gsap.set(".module-design .divide-inner", {
+                        width: scrollAnimate.progress() * 100 + "%",
+                    });
+                },
                 scrollTrigger: {
                     trigger: ".module-design .module-inner_wrapper",
                     scrub: true,

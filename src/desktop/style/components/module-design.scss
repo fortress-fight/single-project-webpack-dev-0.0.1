@@ -171,9 +171,14 @@
             flex: 0 0 auto;
 
             width: 100%;
+            &:nth-child(3) {
+                .img-wrapper {
+                    background-color: rgb(17 196 133);
+                }
+            }
             .img-wrapper {
 
-                @include image-placeholder(256px, 384px);
+                @include image-placeholder(256px, 386.84px);
                 overflow: hidden;
 
                 width: percent(930px, 1125px);
