@@ -22,6 +22,7 @@ import initCustomerModuleScroll from "./customer-module-scroll";
 import initShowModuleScroll from "./show-module-scroll";
 import initDesignModuleScroll from "./design-module-scroll";
 import statisticModuleScroll from "./statistic-module-scroll";
+import moduleCase from "./module-case";
 import lottie from "lottie-web";
 
 export default class IndexPage extends SiteManage {
@@ -36,6 +37,7 @@ export default class IndexPage extends SiteManage {
         "customerModule",
         "contactModule",
         "weixinCode",
+        "caseModule",
     ];
     weixinCode(): void {
         let startDisableOpen;
@@ -368,5 +370,8 @@ export default class IndexPage extends SiteManage {
     customerModule(): void {
         if (!$(".module-customer").length) return;
         initCustomerModuleScroll();
+    }
+    caseModule(): void {
+        moduleCase().init();
     }
 }

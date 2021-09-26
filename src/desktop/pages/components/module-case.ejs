@@ -1,0 +1,51 @@
+<% const {moduleList} = require("../data/module-case") %>
+<div class="module module-case">
+    <div class="wrapper-limit_width--min">
+        <div class="module-head flex flex-y-c flex-x-sb">
+            <div class="state-pos_left">
+                <div class="subtitle">
+                    <span class="text">好看智能名片</span>
+                </div>
+                <div class="title">
+                    <span class="text">丰富的应用场景</span>
+                </div>
+                <div class="desc">
+                    <span class="text"
+                        >扫描右方二维码，进入微信小程序开始使用</span
+                    >
+                </div>
+            </div>
+            <div class="state-pos_center">
+                <div class="box-arrow flex flex-y-c">
+                    <div class="line"></div>
+                    <div class="arrow"></div>
+                </div>
+            </div>
+            <div class="state-pos_right">
+                <div class="box--weixin_code">
+                    <img src="<%= IMG_PATH %>weixin-code.png" alt="" />
+                </div>
+            </div>
+        </div>
+        <div class="module-body">
+            <div class="module-list flex-inline">
+                <% moduleList.forEach(item => { %>
+                <div class="module-item">
+                    <div class="thumb">
+                        <img src="<%= IMG_PATH + item.img %>" alt="" />
+                    </div>
+                    <div class="info flex flex-d-c flex-c-c">
+                        <div class="bg"></div>
+                        <div class="title">
+                            <span class="text"><%= item.title %></span>
+                        </div>
+                        <div class="subtitle">
+                            <span class="text"><%= item.subtitle %></span>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
