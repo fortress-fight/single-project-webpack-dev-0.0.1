@@ -11,7 +11,12 @@ window.addEventListener('touchmove', function() {});
 export default class Impetus {
     constructor({
         source: sourceEl = document,
+        start: startCallback,
+        end: endCallback,
         update: updateCallback,
+        complete: completeCallback,
+        startDecelerate: startDecelerateCallback,
+        endDecelerate: endDecelerateCallback,
         multiplier = 1,
         friction = 0.92,
         initialValues,
@@ -174,12 +179,47 @@ export default class Impetus {
           document.addEventListener('mousemove', onMove, getPassiveSupported() ? { passive: false } : false);
           document.addEventListener('mouseup', onUp);
         }
+        
+        /**
+         * Executes the update function
+         */
+         function callStartCallback() {
+            startCallback && startCallback.call(sourceEl, targetX, targetY);
+        }
+
+        /**
+         * Executes the update function
+         */
+         function callEndCallback() {
+            endCallback && endCallback.call(sourceEl, targetX, targetY);
+        }
+
+        /**
+         * Executes the update function
+         */
+         function callStartDecelerateCallback() {
+            startDecelerateCallback && startDecelerateCallback.call(sourceEl, targetX, targetY);
+        }
 
         /**
          * Executes the update function
          */
         function callUpdateCallback() {
             updateCallback.call(sourceEl, targetX, targetY);
+        }
+
+        /**
+         * Executes the update function
+         */
+        function callEndDecelerateCallback() {
+            endDecelerateCallback && endDecelerateCallback.call(sourceEl, targetX, targetY);
+        }
+
+        /**
+         * Executes the update function
+         */
+        function callCompleteCallback() {
+            completeCallback && completeCallback.call(sourceEl, targetX, targetY);
         }
 
         /**
@@ -211,6 +251,7 @@ export default class Impetus {
         function onDown(ev) {
             var event = normalizeEvent(ev);
             if (!pointerActive && !paused) {
+                callStartCallback();
                 pointerActive = true;
                 decelerating = false;
                 pointerId = event.id;
@@ -248,6 +289,7 @@ export default class Impetus {
             var event = normalizeEvent(ev);
 
             if (pointerActive && event.id === pointerId) {
+                callEndCallback();
                 stopTracking();
             }
         }
@@ -387,7 +429,10 @@ export default class Impetus {
 
             if ((Math.abs(decVelX) > 1 || Math.abs(decVelY) > 1) || !diff.inBounds){
                 decelerating = true;
+                callStartDecelerateCallback();
                 requestAnimFrame(stepDecelAnim);
+            } else {
+                callCompleteCallback()
             }
         }
 
@@ -452,13 +497,13 @@ export default class Impetus {
 
                 requestAnimFrame(stepDecelAnim);
             } else {
+                callEndDecelerateCallback();
+                callCompleteCallback()
                 decelerating = false;
             }
         }
     }
 }
-
-
 
 /**
  * @see http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
