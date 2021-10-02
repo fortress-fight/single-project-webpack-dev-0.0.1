@@ -19,7 +19,6 @@ export default function moduleCase(): {
         loopList() {
             // autoplay config
             const groupSize = 3;
-            const space = 30;
             let targetPos = 0;
             let autoplay = false;
             let pointerEnter = false;
@@ -36,6 +35,7 @@ export default function moduleCase(): {
             // get size
             const $items = $section.find(".module-item");
             let itemWidth = $items.width();
+            let space = Number(gsap.getProperty($items[0], "marginRight"));
 
             let wrapperWidth = (itemWidth + space) * $items.length;
             const groupWidth = wrapperWidth / groupSize;
@@ -45,6 +45,7 @@ export default function moduleCase(): {
                     x: (i) => {
                         return i * (itemWidth + space) + targetPos;
                     },
+                    overwrite: true,
                     force3D: true,
                     modifiers: {
                         x: (x) => {
@@ -94,11 +95,18 @@ export default function moduleCase(): {
                     animControl.pause();
                 },
             });
-            $list.on("pointerenter", () => {
+            const enterEventName = window.PointerEvent
+                ? "pointerenter"
+                : "mouseenter";
+            $list.on(enterEventName, () => {
                 pointerEnter = true;
                 animControl.pause();
             });
-            $list.on("pointerleave", () => {
+
+            const leaveEventName = window.PointerEvent
+                ? "pointerleave"
+                : "mouseleave";
+            $list.on(leaveEventName, () => {
                 pointerEnter = false;
                 !isDragging && animControl.start();
             });
@@ -126,6 +134,7 @@ export default function moduleCase(): {
             // resize handler
             function refresh() {
                 itemWidth = $items.width();
+                space = Number(gsap.getProperty($items[0], "marginRight"));
                 wrapperWidth = (itemWidth + space) * $items.length;
             }
             $(window).on("resize", refresh);

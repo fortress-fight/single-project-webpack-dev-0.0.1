@@ -472,4 +472,46 @@
         display: none;
     }
 
+    /* ---------------------------------- */
+    /*             module-case            */
+    /* ---------------------------------- */
+    .module-case .module-head .desc {
+        font-size: 16px;
+        line-height: 28px;
+    }
+    .module-case .module-head .box-arrow .line {
+        width: 11.97vw;
+    }
+    .module-case .module-item .thumb {
+        // width: 36.832vw;
+        width: 380px;
+    }
+    .module-case .module-head {
+        margin-bottom: 16.574vw;
+    }
+    .module-case {
+        min-height: initial;
+        padding-top: 16.574vw;
+        padding-bottom: 16.574vw;
+    }
+    .module-case .module-head .title {
+        font-size: 74px;
+        font-weight: 600;
+        line-height: 78px;
+
+        margin-bottom: 28px;
+        br {
+            display: initial;
+        }
+    }
+    .module-case .module-head .subtitle {
+        font-size: 28px;
+        line-height: 2.2;
+
+        margin-bottom: 0;
+    }
+    .module-case .module-head .box--weixin_code {
+        width: 260px;
+    }
+
 }

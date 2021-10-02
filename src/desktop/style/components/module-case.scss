@@ -77,6 +77,8 @@
         display: inline-block;
         overflow: hidden;
 
+        margin-right: 30px;
+
         cursor: grab;
 
         border-radius: 10px;
@@ -108,7 +110,9 @@
             }
         }
         .thumb {
-            transition: 0.46s ease;
+
+            @include image-placeholder(400px, 280px) ;
+            transition: filter 0.46s ease;
         }
         .info {
 
