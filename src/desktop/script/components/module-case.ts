@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Impetus from "@/desktop/lib/Impetus";
@@ -8,7 +7,6 @@ export default function moduleCase(): {
     loopList: () => void;
 } {
     const $section = $(".module-case");
-    const $box = $section.find(".module-body");
     const $list = $section.find(".module-list");
 
     return {
@@ -35,7 +33,9 @@ export default function moduleCase(): {
             // get size
             const $items = $section.find(".module-item");
             let itemWidth = $items.width();
-            let space = Number(gsap.getProperty($items[0], "marginRight"));
+            let space = Number(
+                gsap.getProperty($items[0], "marginRight") || "0"
+            );
 
             let wrapperWidth = (itemWidth + space) * $items.length;
             const groupWidth = wrapperWidth / groupSize;
@@ -119,12 +119,12 @@ export default function moduleCase(): {
                     }
                     isDragging = true;
                 },
-                update(x, y) {
+                update(x) {
                     currentPost =
                         targetPos + ((x - draggerStartPos) % wrapperWidth);
                     setPos(currentPost);
                 },
-                complete(x) {
+                complete() {
                     isDragging = false;
                     targetPos = currentPost;
                     !pointerEnter && animControl.start();
@@ -134,7 +134,9 @@ export default function moduleCase(): {
             // resize handler
             function refresh() {
                 itemWidth = $items.width();
-                space = Number(gsap.getProperty($items[0], "marginRight"));
+                space = Number(
+                    gsap.getProperty($items[0], "marginRight") || "0"
+                );
                 wrapperWidth = (itemWidth + space) * $items.length;
             }
             $(window).on("resize", refresh);

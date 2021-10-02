@@ -288,6 +288,9 @@
     /* ---------------------------------- */
     /*           module-case           */
     /* ---------------------------------- */
+    .module-case {
+        min-height: initial;
+    }
     .module-case .module-head .title {
         font-size: 4.9vw;
         line-height: 1.22em;

@@ -34,7 +34,7 @@
             date-page-name="index-page"
             data-scroll-container
         >
-            <div style="height: 1000px; background: #fff"></div>
+            <div style="height: 400px; background: #fff"></div>
             <% require("./components/module-propaganda.ejs")({IMG_PATH}) %>
             <!--  -->
             <% require("./components/module-design.ejs")({IMG_PATH}) %>
@@ -43,17 +43,19 @@
             <!--  -->
             <% require("./components/module-doc.ejs")({IMG_PATH}) %>
             <!--  -->
-            <%- require("./components/module-extension.ejs")({IMG_PATH,
+            <% require("./components/module-extension.ejs")({IMG_PATH,
             PUB_PATH}) %>
             <!--  -->
             <% require("./components/module-statistic.ejs")({IMG_PATH}) %>
             <!--  -->
             <% require("./components/module-customer.ejs")({IMG_PATH}) %>
             <!--  -->
-            <%- require("./components/module-case.ejs")({IMG_PATH}) %>
+            <%- require("./components/module-share.ejs")({IMG_PATH}) %>
             <!--  -->
-            <%- require("./components/module-contact.ejs")({IMG_PATH}) %>
-            <!-- <div style="height: 1000px; background: #fff"></div> -->
+            <% require("./components/module-case.ejs")({IMG_PATH}) %>
+            <!--  -->
+            <% require("./components/module-contact.ejs")({IMG_PATH}) %>
+            <div style="height: 1000px; background: #fff"></div>
         </div>
         <div class="footer_layer--fixed">
             <div class="wrapper-limit_width">

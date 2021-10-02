@@ -23,6 +23,7 @@ import initShowModuleScroll from "./show-module-scroll";
 import initDesignModuleScroll from "./design-module-scroll";
 import statisticModuleScroll from "./statistic-module-scroll";
 import moduleCase from "./module-case";
+import moduleShare from "./module-share";
 import lottie from "lottie-web";
 
 export default class IndexPage extends SiteManage {
@@ -37,6 +38,7 @@ export default class IndexPage extends SiteManage {
         "customerModule",
         "contactModule",
         "weixinCode",
+        "shareModule",
         "caseModule",
     ];
     weixinCode(): void {
@@ -371,7 +373,12 @@ export default class IndexPage extends SiteManage {
         if (!$(".module-customer").length) return;
         initCustomerModuleScroll();
     }
+    shareModule(): void {
+        if (!$(".module-share").length) return;
+        moduleShare().init();
+    }
     caseModule(): void {
+        if (!$(".module-case").length) return;
         moduleCase().init();
     }
 }
