@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description:
  * @Author: F-Stone
@@ -11,6 +12,7 @@ import { gsap } from "gsap";
 export default function moduleShare(): {
     init: () => void;
     setUserList: () => gsap.core.Timeline;
+    scaleVideo: () => gsap.core.Timeline;
 } {
     const $section = $(".module-share");
     const $pinContent = $section.find(".module_content-box");
@@ -22,13 +24,15 @@ export default function moduleShare(): {
                     ease: "none",
                 },
                 scrollTrigger: {
+                    invalidateOnRefresh: true,
                     trigger: $pinContent,
                     scrub: true,
                     pin: true,
-                    pinSpacing: "2000px",
+                    pinSpacing: "12000px",
                 },
             });
             scrollAnim.add(this.setUserList());
+            scrollAnim.add(this.scaleVideo());
         },
         setUserList() {
             const userListAnim = gsap.timeline();
@@ -43,13 +47,22 @@ export default function moduleShare(): {
             $list.html(itemHTML.repeat(groupSize));
             const $items = $section.find(".user-item");
 
-            // get size
-            let space =
-                Number(gsap.getProperty($items[1], "marginBottom")) || 0;
-            let itemHeight = $items.height();
-            const itemSize = itemHeight + space;
-            let wrapperHeight = (itemHeight + space) * $items.length;
-            const groupHeight = wrapperHeight / groupSize;
+            // set size var
+            let space = 0;
+            let itemHeight = 0;
+            let wrapperHeight = 0;
+            let groupHeight = 0;
+            let itemSize = 0;
+
+            function calcSize() {
+                space =
+                    Number(gsap.getProperty($items[1], "marginBottom")) || 0;
+                itemHeight = $items.height();
+                itemSize = itemHeight + space;
+                wrapperHeight = itemSize * $items.length;
+                groupHeight = wrapperHeight / groupSize;
+            }
+            calcSize();
 
             const $countBox = $(".count-num .text");
             let currentNumber = parseInt($countBox.text());
@@ -134,14 +147,147 @@ export default function moduleShare(): {
 
             // resize handler
             function refresh() {
-                itemHeight = $items.width();
-                space = Number(
-                    gsap.getProperty($items[0], "marginRight") || "0"
-                );
-                wrapperHeight = (itemHeight + space) * $items.length;
+                calcSize();
             }
             $(window).on("resize", refresh);
             return userListAnim;
+        },
+        scaleVideo() {
+            const scaleVideoAnim = gsap.timeline({
+                defaults: {
+                    ease: "none",
+                },
+            });
+
+            // doms
+            const $section = $(".module-share");
+            const $opacityDoms = $section.find(
+                ".module-header, .module-body>.state-pos_left, .module-body>.state-pos_right, .module-arrow"
+            );
+
+            // hide other opacity doms
+            scaleVideoAnim.to($opacityDoms, {
+                opacity: 0,
+            });
+
+            // dom
+            const $previewImage = $section.find(
+                ".preview-image .preview-image-box"
+            );
+
+            // size
+            scaleVideoAnim.addLabel("scaleBigStart");
+            scaleVideoAnim.to(
+                $previewImage,
+                {
+                    borderRadius: 0,
+                    width: () => window.innerWidth,
+                    height: () => window.innerHeight,
+                    x: () => {
+                        return -$previewImage[0].getBoundingClientRect().left;
+                    },
+                    y: () => {
+                        const imgTop =
+                            $previewImage[0].getBoundingClientRect().top;
+                        const coverTop = $(
+                            ".layer-cover--share"
+                        )[0].getBoundingClientRect().top;
+                        return coverTop - imgTop;
+                    },
+                },
+                0
+            );
+            scaleVideoAnim.addLabel("scaleBigEnd");
+
+            // play btn
+            scaleVideoAnim.to(
+                $section.find(".video-btn"),
+                {
+                    scale: 4,
+                    opacity: 0,
+                },
+                0
+            );
+            scaleVideoAnim.to(
+                $section.find(".video-btn-arrow"),
+                { opacity: 0 },
+                0
+            );
+
+            // text-content
+            scaleVideoAnim.to(
+                $section.find(".layer-cover--share"),
+                { opacity: 1 },
+                "scaleBigEnd"
+            );
+            scaleVideoAnim.to(
+                $section.find(".layer-cover--share"),
+                { opacity: 1 },
+                "scaleBigEnd"
+            );
+            scaleVideoAnim.to(
+                $section.find(".desc-content"),
+                { opacity: 1 },
+                "scaleBigEnd"
+            );
+            scaleVideoAnim.to(
+                $section.find(".wrapper-pos--center"),
+                { y: 0 },
+                "scaleBigEnd"
+            );
+
+            // scale min
+            scaleVideoAnim.to($section.find(".desc-content, .wrapper-phone"), {
+                opacity: 0,
+            });
+
+            // dom
+            const $minVideoBox = $(".layer-cover--share .video-box");
+
+            // min size
+            let minBoxSize = $minVideoBox[0].getBoundingClientRect();
+            let currentPreviewSize = $previewImage[0].getBoundingClientRect();
+            scaleVideoAnim.call(() => {
+                minBoxSize = $minVideoBox[0].getBoundingClientRect();
+                currentPreviewSize = $previewImage[0].getBoundingClientRect();
+            });
+            // const countWidth = gsap.to($previewImage.find(".image"), {
+            //     pause: true,
+            //     immediateRender: false,
+            //     width: () => minBoxSize.width,
+            //     height: () => minBoxSize.height,
+            // });
+            scaleVideoAnim.to($previewImage, {
+                borderRadius: () => {
+                    return parseInt($minVideoBox.css("borderRadius"));
+                },
+                x: () => {
+                    return "+=" + (minBoxSize.left - currentPreviewSize.left);
+                },
+                y: () => {
+                    return "+=" + (minBoxSize.top - currentPreviewSize.top);
+                },
+                snap: { x: 1, y: 1 },
+                width: () => minBoxSize.width,
+                height: () => minBoxSize.height,
+            });
+            // scaleVideoAnim.add(
+            //     gsap.to($previewImage.find(".image"), {
+            //         borderRadius: 20,
+            //         x: () => minBoxSize.left,
+            //         y: () => minBoxSize.top,
+            //         width: () => minBoxSize.width,
+            //         height: () => minBoxSize.height,
+            //         startAt: {
+            //             width: "100%",
+            //             height: "100%",
+            //         },
+            //         onUpdate() {
+            //             console.log(this.progress());
+            //         },
+            //     })
+            // );
+            return scaleVideoAnim;
         },
     };
 }
