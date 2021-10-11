@@ -260,7 +260,9 @@
             border-radius: 20px;
             // width: 100%;
         }
-        .desc-content { grid-area: 2 / 3 / 3 / 5; }
+        .desc-content {
+            grid-area: 2 / 3 / 3 / 5;
+        }
         .video-box { 
             grid-area: 2 / 5 / 3 / 6;
         }

@@ -161,6 +161,7 @@ export default function moduleShare(): {
 
             // doms
             const $section = $(".module-share");
+            const $moduleSharePhone = $section.find(".module-share_phone");
             const $opacityDoms = $section.find(
                 ".module-header, .module-body>.state-pos_left, .module-body>.state-pos_right, .module-arrow"
             );
@@ -171,24 +172,24 @@ export default function moduleShare(): {
             });
 
             // dom
-            const $previewImage = $section.find(
-                ".preview-image .preview-image-box"
-            );
+            const $previewImageBox =
+                $moduleSharePhone.find(".preview-image-box");
 
             // size
             scaleVideoAnim.addLabel("scaleBigStart");
             scaleVideoAnim.to(
-                $previewImage,
+                $previewImageBox,
                 {
                     borderRadius: 0,
                     width: () => window.innerWidth,
                     height: () => window.innerHeight,
                     x: () => {
-                        return -$previewImage[0].getBoundingClientRect().left;
+                        return -$previewImageBox[0].getBoundingClientRect()
+                            .left;
                     },
                     y: () => {
                         const imgTop =
-                            $previewImage[0].getBoundingClientRect().top;
+                            $previewImageBox[0].getBoundingClientRect().top;
                         const coverTop = $(
                             ".layer-cover--share"
                         )[0].getBoundingClientRect().top;
@@ -226,7 +227,7 @@ export default function moduleShare(): {
                 "scaleBigEnd"
             );
             scaleVideoAnim.to(
-                $section.find(".desc-content"),
+                $moduleSharePhone.find(".desc-content"),
                 { opacity: 1 },
                 "scaleBigEnd"
             );
@@ -237,19 +238,24 @@ export default function moduleShare(): {
             );
 
             // scale min
-            scaleVideoAnim.to($section.find(".desc-content, .wrapper-phone"), {
-                opacity: 0,
-            });
+            scaleVideoAnim.to(
+                $moduleSharePhone.find(".desc-content, .wrapper-phone"),
+                {
+                    opacity: 0,
+                }
+            );
 
             // dom
             const $minVideoBox = $(".layer-cover--share .video-box");
 
             // min size
             let minBoxSize = $minVideoBox[0].getBoundingClientRect();
-            let currentPreviewSize = $previewImage[0].getBoundingClientRect();
+            let currentPreviewSize =
+                $previewImageBox[0].getBoundingClientRect();
             scaleVideoAnim.call(() => {
                 minBoxSize = $minVideoBox[0].getBoundingClientRect();
-                currentPreviewSize = $previewImage[0].getBoundingClientRect();
+                currentPreviewSize =
+                    $previewImageBox[0].getBoundingClientRect();
             });
             // const countWidth = gsap.to($previewImage.find(".image"), {
             //     pause: true,
@@ -257,7 +263,7 @@ export default function moduleShare(): {
             //     width: () => minBoxSize.width,
             //     height: () => minBoxSize.height,
             // });
-            scaleVideoAnim.to($previewImage, {
+            scaleVideoAnim.to($previewImageBox, {
                 borderRadius: () => {
                     return parseInt($minVideoBox.css("borderRadius"));
                 },
