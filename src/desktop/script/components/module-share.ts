@@ -13,6 +13,10 @@ export default function moduleShare(): {
     init: () => void;
     setUserList: () => gsap.core.Timeline;
     scaleVideo: () => gsap.core.Timeline;
+    canvasVideo: () => {
+        anim: gsap.core.Tween;
+        render: () => void;
+    };
 } {
     const $section = $(".module-share");
     const $pinContent = $section.find(".module_content-box");
@@ -28,14 +32,19 @@ export default function moduleShare(): {
                     trigger: $pinContent,
                     scrub: true,
                     pin: true,
-                    pinSpacing: "12000px",
+                    end: "4000px",
                 },
             });
-            scrollAnim.add(this.setUserList());
-            scrollAnim.add(this.scaleVideo());
+            scrollAnim.add(this.setUserList().play());
+            scrollAnim.add(this.scaleVideo().play());
         },
         setUserList() {
-            const userListAnim = gsap.timeline();
+            const userListAnim = gsap.timeline({
+                paused: true,
+                defaults: {
+                    ease: "none",
+                },
+            });
             const $list = $section.find(".user-list");
 
             // config
@@ -154,10 +163,10 @@ export default function moduleShare(): {
         },
         scaleVideo() {
             const scaleVideoAnim = gsap.timeline({
-                defaults: {
-                    ease: "none",
-                },
+                paused: true,
+                defaults: { ease: "none" },
             });
+            const videoControl = this.canvasVideo();
 
             // doms
             const $section = $(".module-share");
@@ -194,6 +203,9 @@ export default function moduleShare(): {
                             ".layer-cover--share"
                         )[0].getBoundingClientRect().top;
                         return coverTop - imgTop;
+                    },
+                    onUpdate() {
+                        videoControl.render();
                     },
                 },
                 0
@@ -237,6 +249,12 @@ export default function moduleShare(): {
                 "scaleBigEnd"
             );
 
+            // video play
+            scaleVideoAnim.add(
+                videoControl.anim.timeScale(0.5).play(),
+                "scaleBigEnd"
+            );
+
             // scale min
             scaleVideoAnim.to(
                 $moduleSharePhone.find(".desc-content, .wrapper-phone"),
@@ -257,12 +275,6 @@ export default function moduleShare(): {
                 currentPreviewSize =
                     $previewImageBox[0].getBoundingClientRect();
             });
-            // const countWidth = gsap.to($previewImage.find(".image"), {
-            //     pause: true,
-            //     immediateRender: false,
-            //     width: () => minBoxSize.width,
-            //     height: () => minBoxSize.height,
-            // });
             scaleVideoAnim.to($previewImageBox, {
                 borderRadius: () => {
                     return parseInt($minVideoBox.css("borderRadius"));
@@ -276,24 +288,112 @@ export default function moduleShare(): {
                 snap: { x: 1, y: 1 },
                 width: () => minBoxSize.width,
                 height: () => minBoxSize.height,
+                onUpdate() {
+                    console.log("2");
+                    videoControl.render();
+                },
             });
-            // scaleVideoAnim.add(
-            //     gsap.to($previewImage.find(".image"), {
-            //         borderRadius: 20,
-            //         x: () => minBoxSize.left,
-            //         y: () => minBoxSize.top,
-            //         width: () => minBoxSize.width,
-            //         height: () => minBoxSize.height,
-            //         startAt: {
-            //             width: "100%",
-            //             height: "100%",
-            //         },
-            //         onUpdate() {
-            //             console.log(this.progress());
-            //         },
-            //     })
-            // );
             return scaleVideoAnim;
+        },
+        canvasVideo() {
+            const canvas = document.getElementById(
+                "hero-lightpass"
+            ) as HTMLCanvasElement;
+            const context = canvas.getContext("2d");
+
+            const frameCount = 106;
+            const currentFrame = (index) =>
+                `${
+                    ENV.IMG_PATH
+                }video-fps/pexels-shvets-production-7547661${index
+                    .toString()
+                    .padStart(4, "0")}.jpg`;
+
+            const imgCount = { index: 0 };
+
+            const imageLoadPromises = [];
+            for (let i = 0; i < frameCount; i++) {
+                const img = new Image();
+                img.src = currentFrame(i);
+                imageLoadPromises.push(
+                    new Promise((res, rej) => {
+                        if (img.complete) {
+                            res(img);
+                        } else {
+                            img.onload = () => {
+                                res(img);
+                            };
+                            img.onerror = () => {
+                                rej(img);
+                            };
+                        }
+                    }).then()
+                );
+            }
+
+            const renderPromise = renderImg(0);
+            function renderImg(index) {
+                return imageLoadPromises[index].then((img) => {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    drawImageScaled(img, context);
+                });
+            }
+            function drawImageScaled(
+                img: HTMLImageElement,
+                ctx: CanvasRenderingContext2D
+            ) {
+                const canvas = ctx.canvas;
+                const size = canvas.parentElement.getBoundingClientRect();
+                canvas.width = size.width;
+                canvas.height = size.height;
+                const cw = size.width;
+                const ch = size.height;
+                const iw = img.naturalWidth;
+                const ih = img.naturalHeight;
+                let dw = cw;
+                let dh = (ih / iw) * dw;
+                let ratio = 1;
+                if (dh < ch) {
+                    ratio = ch / dh;
+                    dw *= ratio;
+                    dh *= ratio;
+                }
+
+                const centerShift_x = (cw - dw) / 2;
+                const centerShift_y = (ch - dh) / 2;
+                ctx.drawImage(
+                    img,
+                    0,
+                    0,
+                    iw,
+                    ih,
+                    centerShift_x,
+                    centerShift_y,
+                    dw,
+                    dh
+                );
+            }
+            return {
+                anim: gsap.to(imgCount, {
+                    ease: "none",
+                    paused: true,
+                    index: frameCount - 1,
+                    snap: { index: 1 },
+                    startAt: { index: 0 },
+                    onUpdate() {
+                        const currentIndex = imgCount.index;
+                        console.log("currentIndex:", currentIndex);
+                        renderPromise.then(() => {
+                            return renderImg(currentIndex);
+                        });
+                    },
+                }),
+                render: () => {
+                    renderPromise.then(() => {
+                        return renderImg(imgCount.index);
+                    });
+                },
+            };
         },
     };
 }

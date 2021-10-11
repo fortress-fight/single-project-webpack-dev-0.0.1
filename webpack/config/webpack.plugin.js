@@ -15,6 +15,7 @@ const webpack = require("webpack");
 const {
     PROJECT_NAME,
     NODE_ENV,
+    PUBLIC_PATH,
     OUT_PUT_PATH,
     IS_DEV_MODEL,
     WORKSPACE_FOLDER,
@@ -84,6 +85,11 @@ const DEV_WEBPACK_PLUGIN = [
     // 默认浏览器环境下 process.env 会通过 webpack.mode 进行取值
     new webpack.DefinePlugin({
         NODE_ENV: JSON.stringify(NODE_ENV),
+        ENV: {
+            PROJECT_NAME,
+            PUB_PATH: `${PUBLIC_PATH}`,
+            IMG_PATH: `${PUBLIC_PATH}image/`,
+        },
     }),
     // 拷贝文件
     new CopyPlugin({
