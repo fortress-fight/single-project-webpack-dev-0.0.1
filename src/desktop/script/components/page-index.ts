@@ -33,13 +33,13 @@ export default class IndexPage extends SiteManage {
         "designModule",
         "showModule",
         "docModule",
+        "shareModule",
         "extensionModule",
         "statisticModule",
         "customerModule",
+        "caseModule",
         "contactModule",
         "weixinCode",
-        "shareModule",
-        "caseModule",
     ];
     weixinCode(): void {
         let startDisableOpen;

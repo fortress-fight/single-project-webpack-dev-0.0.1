@@ -90,35 +90,30 @@ export default function moduleShare(): {
                 });
             }
             function updateOpacity() {
-                gsap.set($items, {
-                    opacity(i) {
-                        const movePos = parseFloat(
-                            String(gsap.getProperty($items[i], "y"))
-                        );
+                $items.each((i, dom) => {
+                    const movePos = parseFloat(
+                        String(gsap.getProperty(dom, "y"))
+                    );
 
-                        let itemOpacity = gsap.utils.clamp(
-                            0,
-                            1,
-                            gsap.utils.normalize(
-                                0,
-                                itemSize * 2,
-                                Math.abs(movePos)
-                            )
-                        );
-                        itemOpacity = gsap.utils.clamp(
-                            0,
-                            1,
-                            Math.abs(itemOpacity - 1)
-                        );
-                        if (itemOpacity >= 0.9) {
-                            const targetCount = $items.eq(i).data("counter");
-                            if (currentNumber != targetCount) {
-                                currentNumber = targetCount;
-                                updateCount(currentNumber);
-                            }
+                    let percent = gsap.utils.clamp(
+                        0,
+                        1,
+                        gsap.utils.normalize(0, itemSize * 2, Math.abs(movePos))
+                    );
+                    percent = Math.abs(percent - 1);
+                    const itemOpacity = percent;
+                    const itemScale = 0.85 + percent * 0.15;
+                    if (percent >= 0.9) {
+                        const targetCount = $(dom).data("counter");
+                        if (currentNumber != targetCount) {
+                            currentNumber = targetCount;
+                            updateCount(currentNumber);
                         }
-                        return itemOpacity;
-                    },
+                    }
+                    gsap.set(dom, {
+                        opacity: itemOpacity,
+                        scale: itemScale,
+                    });
                 });
             }
             function setPos(targetPos) {
@@ -202,8 +197,9 @@ export default function moduleShare(): {
                         const coverTop = $(
                             ".layer-cover--share"
                         )[0].getBoundingClientRect().top;
-                        return coverTop - imgTop;
+                        return coverTop - imgTop + 1;
                     },
+                    snap: { x: 1, y: 1 },
                     onUpdate() {
                         videoControl.render();
                     },
@@ -217,13 +213,9 @@ export default function moduleShare(): {
                 $section.find(".video-btn"),
                 {
                     scale: 4,
+                    duration: 0.25,
                     opacity: 0,
                 },
-                0
-            );
-            scaleVideoAnim.to(
-                $section.find(".video-btn-arrow"),
-                { opacity: 0 },
                 0
             );
 
@@ -289,7 +281,6 @@ export default function moduleShare(): {
                 width: () => minBoxSize.width,
                 height: () => minBoxSize.height,
                 onUpdate() {
-                    console.log("2");
                     videoControl.render();
                 },
             });
@@ -382,7 +373,6 @@ export default function moduleShare(): {
                     startAt: { index: 0 },
                     onUpdate() {
                         const currentIndex = imgCount.index;
-                        console.log("currentIndex:", currentIndex);
                         renderPromise.then(() => {
                             return renderImg(currentIndex);
                         });

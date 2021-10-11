@@ -1,4 +1,6 @@
 .module-share {
+    overflow: hidden;
+
     background: rgb(255 255 255);
     .module_content-box {
         min-height: 100vh;
@@ -62,6 +64,8 @@
 
             width: 100%;
             margin-bottom: 76px;
+            
+            transform-origin: right;
             &:nth-child(1) {
                 position: relative;
 
@@ -124,26 +128,17 @@
         .video-btn {
             
             @include move-center();
+            font-size: 18px;
             
             width: 46px;
             height: 46px;
 
-            opacity: 0.502;
+            color: rgb(255 255 255);
             border-radius: 50%;
-            background-color: rgb(0 0 0);
-        }
-        .video-btn-arrow {
-
-            @include move-center();
-            display: block;
-
-            width: 0;
-            height: 0;
-            margin-right: -2px;
-
-            border-width: 7.5px 0 7.5px 12px;
-            border-style: solid;
-            border-color: transparent transparent transparent rgb(255 255 255);
+            background-color: rgb(0 0 0 / 50.2%);
+            &::before {
+                margin-right: -3px;
+            }
         }
         .placeholder-phone_top {
 
