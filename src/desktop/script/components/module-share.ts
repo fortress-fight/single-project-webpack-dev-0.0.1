@@ -243,16 +243,15 @@ export default function moduleShare(): {
 
             // video play
             scaleVideoAnim.add(
-                videoControl.anim.timeScale(0.5).play(),
+                videoControl.anim.timeScale(0.2).play(),
                 "scaleBigEnd"
             );
 
             // scale min
             scaleVideoAnim.to(
                 $moduleSharePhone.find(".desc-content, .wrapper-phone"),
-                {
-                    opacity: 0,
-                }
+                { opacity: 0 },
+                "-=0.5"
             );
 
             // dom
