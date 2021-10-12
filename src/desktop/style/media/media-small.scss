@@ -720,3 +720,72 @@
     }
 
 }
+
+/* ---------------------------------- */
+/*             module-case            */
+/* ---------------------------------- */
+
+@media only screen and (--small-viewport) {
+    .module-case {
+        .module-head {
+         
+            @include limit-wrapper-small;
+        }
+    }
+    .module-case .state-pos_center,
+    .module-case .state-pos_right {
+        display: none;
+    }   
+    .module-case .module-list {
+        margin-right: -3vw;
+        &::after {
+            display: block;
+            clear: both;
+
+            content: '';
+        }
+    }
+    .module-case .module-item {
+        position: relative;
+
+        float: left;
+
+        width: calc(50% - 3vw);
+        margin-right: 3vw;
+        margin-bottom: 3vw;
+
+        border-radius: 4px;
+    }
+    .module-case .module-item .thumb {
+        width: 100%;
+    }
+    .module-case .module-head {
+        margin-bottom: 50px;
+    }
+    .module-case .module-head .title {
+        font-size: 40px;
+        font-weight: 900;
+        line-height: 44px;
+
+        display: block;
+
+        margin-bottom: 22px;
+    }
+    .module-case .module-head .subtitle {
+        font-size: 26px;
+        line-height: 2;
+    }
+    .module-case .module-head .desc {
+        font-size: 14px;
+        line-height: 1.2;
+    }
+    .module-case .module-item .title {
+        font-size: 24px;
+
+        margin-bottom: 0;
+    }
+    .module-case .module-item .subtitle {
+        font-size: 12px;
+    }
+
+}
