@@ -456,3 +456,68 @@
     }
 
 }
+
+/* ---------------------------------- */
+/*            module-share            */
+/* ---------------------------------- */
+
+@media only screen and (--normal-viewport) {
+    .module-share {
+        .wrapper-module_content {
+            max-width: 94vw;
+        }
+        .module-body > .state-pos_center {
+            margin-right: 114px;
+        }
+        .module-body .user-list {
+            margin-right: 38px;
+        }
+    }
+
+}
+
+@media only screen and (--normal-min-viewport) {
+    .module-share .module-share_phone {
+        width: 272px;
+    }   
+    .module-share .module-body .user-list {
+        width: 222px;
+        margin-right: 18px;
+    }
+    .module-share .module-body .user-item {
+        margin-bottom: 40px;
+    }
+    .module-share .count-num {
+        font-size: 90px;
+    
+        width: 180px;
+    }
+    .module-share .num-desc {
+        font-size: 15px;
+        line-height: 1.55;
+
+        padding-left: 8px;
+    }
+    .module-share .module-title {
+        font-size: 58px;
+
+        margin-bottom: 14px;
+    }
+    .module-share .module-desc {
+        font-size: 15px;
+        line-height: 1.75;
+    }
+    .module-share .layer-cover--share .box-item {
+        width: 280px;
+
+        border-radius: 14px;
+    }
+    .module-share .layer-cover--share .desc-content img {
+        width: 100%;
+    }
+    .module-share .layer-cover--share .share-case {
+        grid-column-gap: 26px;
+        grid-row-gap: 26px;
+    }
+
+}

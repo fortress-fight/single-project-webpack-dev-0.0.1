@@ -6,7 +6,7 @@
  * @LastEditors: F-Stone
  */
 import { gsap } from "gsap";
-// import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function moduleShare(): {
     init: () => void;
@@ -142,10 +142,15 @@ export default function moduleShare(): {
             }
             const showCount = 3;
             userListAnim.to(process, {
-                y: -itemSize * (showCount - 1),
+                y() {
+                    return -itemSize * (showCount - 1);
+                },
                 onUpdate() {
                     setPos(process.y);
                 },
+            });
+            ScrollTrigger.addEventListener("refresh", () => {
+                setPos(process.y);
             });
             setPos(0);
 
@@ -181,8 +186,16 @@ export default function moduleShare(): {
 
             // size
             scaleVideoAnim.addLabel("scaleBigStart");
-            scaleVideoAnim.to(
+            scaleVideoAnim.fromTo(
                 $previewImageBox,
+                {
+                    width: () => {
+                        return $previewImageBox.parent().width();
+                    },
+                    height: () => {
+                        return $previewImageBox.parent().height();
+                    },
+                },
                 {
                     ease: "power3.inOut",
                     duration: 0.8,
@@ -199,7 +212,7 @@ export default function moduleShare(): {
                         const coverTop = $(
                             ".layer-cover--share"
                         )[0].getBoundingClientRect().top;
-                        return coverTop - imgTop + 1;
+                        return coverTop - imgTop;
                     },
                     snap: { x: 1, y: 1 },
                 },
@@ -269,25 +282,28 @@ export default function moduleShare(): {
 
             // dom
             const $minVideoBox = $(".layer-cover--share .video-box");
+            const $originImgBox = $previewImageBox.parent();
 
             // min size
-            let minBoxSize = $minVideoBox[0].getBoundingClientRect();
-            let currentPreviewSize =
-                $previewImageBox[0].getBoundingClientRect();
-            scaleVideoAnim.call(() => {
+            let minBoxSize;
+            let originBoxSize;
+            function updateSize() {
                 minBoxSize = $minVideoBox[0].getBoundingClientRect();
-                currentPreviewSize =
-                    $previewImageBox[0].getBoundingClientRect();
-            });
+                originBoxSize = $originImgBox[0].getBoundingClientRect();
+            }
+            updateSize();
+            scaleVideoAnim.call(updateSize);
+            $(window).on("resize", updateSize);
+
             scaleVideoAnim.to($previewImageBox, {
                 borderRadius: () => {
                     return parseInt($minVideoBox.css("borderRadius"));
                 },
                 x: () => {
-                    return "+=" + (minBoxSize.left - currentPreviewSize.left);
+                    return minBoxSize.left - originBoxSize.left;
                 },
                 y: () => {
-                    return "+=" + (minBoxSize.top - currentPreviewSize.top);
+                    return minBoxSize.top - originBoxSize.top;
                 },
                 snap: { x: 1, y: 1 },
                 width: () => minBoxSize.width,
@@ -295,6 +311,9 @@ export default function moduleShare(): {
                 onUpdate() {
                     videoControl.render();
                 },
+            });
+            ScrollTrigger.addEventListener("refresh", () => {
+                videoControl.render();
             });
             return scaleVideoAnim;
         },
