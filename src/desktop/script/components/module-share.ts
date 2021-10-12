@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description:
  * @Author: F-Stone
@@ -20,6 +19,7 @@ export default function moduleShare(): {
 } {
     const $section = $(".module-share");
     const $pinContent = $section.find(".module_content-box");
+    const renderProgress = { scale: 2 };
     return {
         init() {
             const scrollAnim = gsap.timeline({
@@ -184,6 +184,8 @@ export default function moduleShare(): {
             scaleVideoAnim.to(
                 $previewImageBox,
                 {
+                    ease: "power3.inOut",
+                    duration: 0.8,
                     borderRadius: 0,
                     width: () => window.innerWidth,
                     height: () => window.innerHeight,
@@ -200,11 +202,21 @@ export default function moduleShare(): {
                         return coverTop - imgTop + 1;
                     },
                     snap: { x: 1, y: 1 },
+                },
+                0
+            );
+
+            scaleVideoAnim.to(
+                renderProgress,
+                {
+                    ease: "power3.inOut",
+                    scale: 1,
+                    duration: 0.8,
                     onUpdate() {
                         videoControl.render();
                     },
                 },
-                0
+                "<"
             );
             scaleVideoAnim.addLabel("scaleBigEnd");
 
@@ -212,8 +224,9 @@ export default function moduleShare(): {
             scaleVideoAnim.to(
                 $section.find(".video-btn"),
                 {
-                    scale: 4,
-                    duration: 0.25,
+                    ease: "expo.inOut",
+                    scale: 2,
+                    duration: 0.4,
                     opacity: 0,
                 },
                 0
@@ -332,6 +345,7 @@ export default function moduleShare(): {
                 img: HTMLImageElement,
                 ctx: CanvasRenderingContext2D
             ) {
+                const { scale } = renderProgress;
                 const canvas = ctx.canvas;
                 const size = canvas.parentElement.getBoundingClientRect();
                 canvas.width = size.width;
@@ -342,12 +356,12 @@ export default function moduleShare(): {
                 const ih = img.naturalHeight;
                 let dw = cw;
                 let dh = (ih / iw) * dw;
-                let ratio = 1;
+                let ratio = scale;
                 if (dh < ch) {
-                    ratio = ch / dh;
-                    dw *= ratio;
-                    dh *= ratio;
+                    ratio = (ch / dh) * scale;
                 }
+                dw *= ratio;
+                dh *= ratio;
 
                 const centerShift_x = (cw - dw) / 2;
                 const centerShift_y = (ch - dh) / 2;
