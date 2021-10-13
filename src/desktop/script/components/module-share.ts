@@ -26,8 +26,14 @@ function getRect(dom: HTMLElement) {
 }
 export default function moduleShare(): {
     init: () => void;
-    setUserList: () => gsap.core.Timeline;
-    scaleVideo: () => gsap.core.Timeline;
+    setUserList: () => {
+        anim: gsap.core.Timeline;
+        destroy: () => void;
+    };
+    scaleVideo: () => {
+        anim: gsap.core.Timeline;
+        destroy: () => void;
+    };
     canvasVideo: () => {
         anim: gsap.core.Tween;
         render: () => void;
@@ -35,14 +41,18 @@ export default function moduleShare(): {
 } {
     // public doms
     const $section = $(".module-share");
-    const renderProgress = {
-        scale: 2,
-        t: 0,
-        l: 0,
-        w: 0,
-        h: 0,
-        r: 0,
-    };
+    let renderProgress;
+    function initRenderProgress() {
+        renderProgress = {
+            scale: 2,
+            t: 0,
+            l: 0,
+            w: 0,
+            h: 0,
+            r: 0,
+        };
+    }
+    initRenderProgress();
 
     const $layerVideoPlay = $section.find(".layer--video-play");
     const $videoDesc = $layerVideoPlay.find(".desc-content");
@@ -78,19 +88,33 @@ export default function moduleShare(): {
     return {
         init() {
             const $pinContent = $section.find(".module_content-box");
-            const scrollAnim = gsap.timeline({
-                paused: true,
-                defaults: { ease: "none" },
-                scrollTrigger: {
-                    invalidateOnRefresh: true,
-                    trigger: $pinContent,
-                    scrub: true,
-                    pin: true,
-                    end: "4000px",
+            ScrollTrigger.matchMedia({
+                "(min-width: 735px)": () => {
+                    const scrollAnim = gsap.timeline({
+                        paused: true,
+                        defaults: { ease: "none" },
+                        scrollTrigger: {
+                            invalidateOnRefresh: true,
+                            trigger: $pinContent,
+                            scrub: true,
+                            pin: true,
+                            end: "4000px",
+                        },
+                    });
+                    const scaleVideoControl = this.scaleVideo();
+                    const setUserListControl = this.setUserList();
+                    scrollAnim.add(setUserListControl.anim.play());
+                    scrollAnim.add(scaleVideoControl.anim.play());
+                    return function () {
+                        setUserListControl.destroy();
+                        scaleVideoControl.destroy();
+                        initRenderProgress();
+                    };
+                },
+                "(max-width: 734px)": function () {
+                    //
                 },
             });
-            scrollAnim.add(this.setUserList().play());
-            scrollAnim.add(this.scaleVideo().play());
         },
         setUserList() {
             const userListAnim = gsap.timeline({
@@ -133,13 +157,11 @@ export default function moduleShare(): {
             /*        更新 user-list 进程          */
             /* ---------------------------------- */
             const updateCount = userListCount();
-            updateItemPos(0);
-            ScrollTrigger.addEventListener("refresh", () => {
-                updateItemPos(process.y);
-            });
+            updateItemPos();
+            ScrollTrigger.addEventListener("refresh", updateItemPos);
             userListAnim.to(process, {
                 y: () => -itemSize * (groupSize - 1),
-                onUpdate: () => updateItemPos(process.y),
+                onUpdate: () => updateItemPos(),
             });
 
             function updateOpacity() {
@@ -164,7 +186,8 @@ export default function moduleShare(): {
                     });
                 });
             }
-            function updateItemPos(targetPos) {
+            function updateItemPos() {
+                const targetPos = process.y;
                 gsap.set($items, {
                     y: (i) => i * itemSize + targetPos,
                     overwrite: true,
@@ -183,7 +206,18 @@ export default function moduleShare(): {
                 });
             }
 
-            return userListAnim;
+            return {
+                anim: userListAnim,
+                destroy() {
+                    ScrollTrigger.removeEventListener("refresh", updateItemPos);
+                    $(window).off("resize", updateSize);
+                    gsap.set($items, {
+                        y: 0,
+                        scale: 1,
+                        opacity: 1,
+                    });
+                },
+            };
         },
         scaleVideo() {
             const scaleVideoAnim = gsap.timeline({
@@ -313,10 +347,16 @@ export default function moduleShare(): {
                     videoControl.render();
                 },
             });
-            ScrollTrigger.addEventListener("refresh", () => {
-                videoControl.render();
-            });
-            return scaleVideoAnim;
+            ScrollTrigger.addEventListener("refresh", videoControl.render);
+            return {
+                anim: scaleVideoAnim,
+                destroy() {
+                    ScrollTrigger.removeEventListener(
+                        "refresh",
+                        videoControl.render
+                    );
+                },
+            };
         },
         canvasVideo() {
             // dom
