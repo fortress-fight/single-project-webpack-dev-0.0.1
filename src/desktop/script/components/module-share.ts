@@ -9,7 +9,19 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { stringify } from "querystring";
-
+const drawRoundRect = function (ctx, x, y, w, h, r) {
+    const min_size = Math.min(w, h);
+    if (r > min_size / 2) r = min_size / 2;
+    // 开始绘制
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+    return ctx;
+};
 export default function moduleShare(): {
     init: () => void;
     setUserList: () => gsap.core.Timeline;
@@ -21,12 +33,21 @@ export default function moduleShare(): {
 } {
     const $section = $(".module-share");
     const $pinContent = $section.find(".module_content-box");
-    const renderProgress = { scale: 2 };
+    const renderProgress = {
+        scale: 2,
+        t: 0,
+        l: 0,
+        w: 0,
+        h: 0,
+        r: 0,
+    };
 
     const $playground = $section.find(".wrapper-module_content");
+    const $layerVideoPlay = $section.find(".layer--video-play");
     const $videoPlayBox = $section.find(".video-play-box");
-    const $videoDesc = $videoPlayBox.find(".desc-content");
+    const $videoDesc = $layerVideoPlay.find(".desc-content");
     const $videoTargetBox = $section.find(".preview-image-box");
+    const $layerCoverShare = $section.find(".layer-cover--share");
 
     const $moduleSharePhone = $section.find(".module-share_phone");
     const $previewImageBox = $moduleSharePhone.find(".preview-image-box");
@@ -34,33 +55,34 @@ export default function moduleShare(): {
 
     // init-pos
     function setVideoPos() {
-        const playgroundSize = $playground[0].getBoundingClientRect();
         const targetBoxSize = $videoTargetBox[0].getBoundingClientRect();
-        gsap.set($videoPlayBox, {
-            top: () => {
-                return targetBoxSize.top - playgroundSize.top - 5;
-            },
-            left: () => {
-                return targetBoxSize.left - playgroundSize.left - 5;
-            },
-            width: targetBoxSize.width + 10,
-            height: targetBoxSize.height + 10,
-            borderRadius: () => {
-                return String(
-                    gsap.getProperty($videoTargetBox[0], "borderRadius")
-                );
-            },
-            snap: {
-                top: 1,
-                left: 1,
-                width: 1,
-                height: 1,
-                borderRadius: 1,
-            },
-        });
-        $videoPlayBox.data({
-            w: targetBoxSize.width + 10,
-            h: targetBoxSize.height + 10,
+        const layerCoverShareSize = $layerCoverShare[0].getBoundingClientRect();
+        const targetRadius = String(
+            gsap.getProperty($videoTargetBox[0], "borderRadius")
+        );
+        const targetTop = targetBoxSize.top - layerCoverShareSize.top;
+        const targetLeft = targetBoxSize.left - layerCoverShareSize.left;
+
+        // gsap.set($videoPlayBox, {
+        //     top: targetTop,
+        //     left: targetLeft,
+        //     width: targetBoxSize.width,
+        //     height: targetBoxSize.height,
+        //     borderRadius: targetRadius,
+        //     snap: {
+        //         top: 1,
+        //         left: 1,
+        //         width: 1,
+        //         height: 1,
+        //         borderRadius: 1,
+        //     },
+        // });
+        gsap.set(renderProgress, {
+            t: targetTop,
+            l: targetLeft,
+            w: targetBoxSize.width,
+            h: targetBoxSize.height,
+            r: targetRadius,
         });
     }
 
@@ -247,9 +269,8 @@ export default function moduleShare(): {
                     y: () => {
                         const imgTop =
                             $originImgBox[0].getBoundingClientRect().top;
-                        const coverTop = $(
-                            ".layer-cover--share"
-                        )[0].getBoundingClientRect().top;
+                        const coverTop =
+                            $layerCoverShare[0].getBoundingClientRect().top;
                         return coverTop - imgTop;
                     },
                     snap: { x: 1, y: 1 },
@@ -285,16 +306,8 @@ export default function moduleShare(): {
             );
 
             // text-content
-            scaleVideoAnim.to(
-                $section.find(".layer-cover--share"),
-                { opacity: 1 },
-                "scaleBigEnd"
-            );
-            scaleVideoAnim.to(
-                $section.find(".layer-cover--share"),
-                { opacity: 1 },
-                "scaleBigEnd"
-            );
+            scaleVideoAnim.to($layerCoverShare, { opacity: 1 }, "scaleBigEnd");
+            scaleVideoAnim.to($layerCoverShare, { opacity: 1 }, "scaleBigEnd");
             scaleVideoAnim.to($videoDesc, { opacity: 1 }, "scaleBigEnd");
             scaleVideoAnim.to(
                 $section.find(".wrapper-pos--center"),
@@ -400,38 +413,49 @@ export default function moduleShare(): {
                 img: HTMLImageElement,
                 ctx: CanvasRenderingContext2D
             ) {
-                const { scale } = renderProgress;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
 
-                const cw = $videoPlayBox.data("w");
-                const ch = $videoPlayBox.data("h");
-
+                const {
+                    scale,
+                    w: cw,
+                    h: ch,
+                    t: dt,
+                    l: dl,
+                    r: dr,
+                } = renderProgress;
                 const iw = 1920;
                 const ih = 1080;
-
                 let dw = cw;
                 let dh = (ih / iw) * dw;
+
+                // draw clip box
+                let clipW = dw;
+                let clipH = dh;
+                if (dh < ch) {
+                    clipH *= ch / dh;
+                }
+                if (dw < cw) {
+                    clipW *= cw / dw;
+                }
+                drawRoundRect(ctx, dl, dt, cw, ch, dr || 0);
+                context.clip();
+
+                // draw image
                 let ratio = scale;
+                let dImgL = dl,
+                    dImgT = dt;
                 if (dh < ch) {
                     ratio = (ch / dh) * scale;
                 }
+                if (dw < cw) {
+                    ratio = (cw / dw) * scale;
+                }
                 dw *= ratio;
                 dh *= ratio;
-
-                const centerShift_x = (cw - dw) / 2;
-                const centerShift_y = (ch - dh) / 2;
-                canvas.width = cw;
-                canvas.height = ch;
-                ctx.drawImage(
-                    img,
-                    0,
-                    0,
-                    iw,
-                    ih,
-                    centerShift_x,
-                    centerShift_y,
-                    dw,
-                    dh
-                );
+                dImgL -= (dw - clipW) / 2;
+                dImgT -= (dh - clipH) / 2;
+                ctx.drawImage(img, 0, 0, iw, ih, dImgL, dImgT, dw, dh);
             }
             return {
                 anim: gsap.to(imgCount, {
