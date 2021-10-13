@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description:
  * @Author: F-Stone
@@ -7,6 +8,7 @@
  */
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { stringify } from "querystring";
 
 export default function moduleShare(): {
     init: () => void;
@@ -20,6 +22,48 @@ export default function moduleShare(): {
     const $section = $(".module-share");
     const $pinContent = $section.find(".module_content-box");
     const renderProgress = { scale: 2 };
+
+    const $playground = $section.find(".wrapper-module_content");
+    const $videoPlayBox = $section.find(".video-play-box");
+    const $videoDesc = $videoPlayBox.find(".desc-content");
+    const $videoTargetBox = $section.find(".preview-image-box");
+
+    const $moduleSharePhone = $section.find(".module-share_phone");
+    const $previewImageBox = $moduleSharePhone.find(".preview-image-box");
+    const $originImgBox = $previewImageBox.parent();
+
+    // init-pos
+    function setVideoPos() {
+        const playgroundSize = $playground[0].getBoundingClientRect();
+        const targetBoxSize = $videoTargetBox[0].getBoundingClientRect();
+        gsap.set($videoPlayBox, {
+            top: () => {
+                return targetBoxSize.top - playgroundSize.top - 5;
+            },
+            left: () => {
+                return targetBoxSize.left - playgroundSize.left - 5;
+            },
+            width: targetBoxSize.width + 10,
+            height: targetBoxSize.height + 10,
+            borderRadius: () => {
+                return String(
+                    gsap.getProperty($videoTargetBox[0], "borderRadius")
+                );
+            },
+            snap: {
+                top: 1,
+                left: 1,
+                width: 1,
+                height: 1,
+                borderRadius: 1,
+            },
+        });
+        $videoPlayBox.data({
+            w: targetBoxSize.width + 10,
+            h: targetBoxSize.height + 10,
+        });
+    }
+
     return {
         init() {
             const scrollAnim = gsap.timeline({
@@ -35,6 +79,7 @@ export default function moduleShare(): {
                     end: "4000px",
                 },
             });
+            setVideoPos();
             scrollAnim.add(this.setUserList().play());
             scrollAnim.add(this.scaleVideo().play());
         },
@@ -169,8 +214,6 @@ export default function moduleShare(): {
             const videoControl = this.canvasVideo();
 
             // doms
-            const $section = $(".module-share");
-            const $moduleSharePhone = $section.find(".module-share_phone");
             const $opacityDoms = $section.find(
                 ".module-header, .module-body>.state-pos_left, .module-body>.state-pos_right, .module-arrow"
             );
@@ -180,20 +223,16 @@ export default function moduleShare(): {
                 opacity: 0,
             });
 
-            // dom
-            const $previewImageBox =
-                $moduleSharePhone.find(".preview-image-box");
-
             // size
             scaleVideoAnim.addLabel("scaleBigStart");
             scaleVideoAnim.fromTo(
                 $previewImageBox,
                 {
                     width: () => {
-                        return $previewImageBox.parent().width();
+                        return $originImgBox.width();
                     },
                     height: () => {
-                        return $previewImageBox.parent().height();
+                        return $originImgBox.height();
                     },
                 },
                 {
@@ -201,14 +240,13 @@ export default function moduleShare(): {
                     duration: 0.8,
                     borderRadius: 0,
                     width: () => window.innerWidth,
-                    height: () => window.innerHeight,
+                    height: () => window.outerHeight - window.navDistance,
                     x: () => {
-                        return -$previewImageBox[0].getBoundingClientRect()
-                            .left;
+                        return -$originImgBox[0].getBoundingClientRect().left;
                     },
                     y: () => {
                         const imgTop =
-                            $previewImageBox[0].getBoundingClientRect().top;
+                            $originImgBox[0].getBoundingClientRect().top;
                         const coverTop = $(
                             ".layer-cover--share"
                         )[0].getBoundingClientRect().top;
@@ -226,6 +264,7 @@ export default function moduleShare(): {
                     scale: 1,
                     duration: 0.8,
                     onUpdate() {
+                        setVideoPos();
                         videoControl.render();
                     },
                 },
@@ -256,11 +295,7 @@ export default function moduleShare(): {
                 { opacity: 1 },
                 "scaleBigEnd"
             );
-            scaleVideoAnim.to(
-                $moduleSharePhone.find(".desc-content"),
-                { opacity: 1 },
-                "scaleBigEnd"
-            );
+            scaleVideoAnim.to($videoDesc, { opacity: 1 }, "scaleBigEnd");
             scaleVideoAnim.to(
                 $section.find(".wrapper-pos--center"),
                 { y: 0 },
@@ -275,19 +310,19 @@ export default function moduleShare(): {
 
             // scale min
             scaleVideoAnim.to(
-                $moduleSharePhone.find(".desc-content, .wrapper-phone"),
+                $moduleSharePhone.find(".wrapper-phone").add($videoDesc),
                 { opacity: 0 },
                 "-=0.5"
             );
 
             // dom
             const $minVideoBox = $(".layer-cover--share .video-box");
-            const $originImgBox = $previewImageBox.parent();
 
             // min size
             let minBoxSize;
             let originBoxSize;
             function updateSize() {
+                setVideoPos();
                 minBoxSize = $minVideoBox[0].getBoundingClientRect();
                 originBoxSize = $originImgBox[0].getBoundingClientRect();
             }
@@ -309,6 +344,7 @@ export default function moduleShare(): {
                 width: () => minBoxSize.width,
                 height: () => minBoxSize.height,
                 onUpdate() {
+                    setVideoPos();
                     videoControl.render();
                 },
             });
@@ -318,8 +354,9 @@ export default function moduleShare(): {
             return scaleVideoAnim;
         },
         canvasVideo() {
+            // dom
             const canvas = document.getElementById(
-                "hero-lightpass"
+                "video-play-canvas"
             ) as HTMLCanvasElement;
             const context = canvas.getContext("2d");
 
@@ -353,10 +390,9 @@ export default function moduleShare(): {
                 );
             }
 
-            const renderPromise = renderImg(0);
+            renderImg(0);
             function renderImg(index) {
-                return imageLoadPromises[index].then((img) => {
-                    context.clearRect(0, 0, canvas.width, canvas.height);
+                imageLoadPromises[index].then((img) => {
                     drawImageScaled(img, context);
                 });
             }
@@ -365,14 +401,13 @@ export default function moduleShare(): {
                 ctx: CanvasRenderingContext2D
             ) {
                 const { scale } = renderProgress;
-                const canvas = ctx.canvas;
-                const size = canvas.parentElement.getBoundingClientRect();
-                canvas.width = size.width;
-                canvas.height = size.height;
-                const cw = size.width;
-                const ch = size.height;
-                const iw = img.naturalWidth;
-                const ih = img.naturalHeight;
+
+                const cw = $videoPlayBox.data("w");
+                const ch = $videoPlayBox.data("h");
+
+                const iw = 1920;
+                const ih = 1080;
+
                 let dw = cw;
                 let dh = (ih / iw) * dw;
                 let ratio = scale;
@@ -384,6 +419,8 @@ export default function moduleShare(): {
 
                 const centerShift_x = (cw - dw) / 2;
                 const centerShift_y = (ch - dh) / 2;
+                canvas.width = cw;
+                canvas.height = ch;
                 ctx.drawImage(
                     img,
                     0,
@@ -404,16 +441,11 @@ export default function moduleShare(): {
                     snap: { index: 1 },
                     startAt: { index: 0 },
                     onUpdate() {
-                        const currentIndex = imgCount.index;
-                        renderPromise.then(() => {
-                            return renderImg(currentIndex);
-                        });
+                        renderImg(imgCount.index);
                     },
                 }),
                 render: () => {
-                    renderPromise.then(() => {
-                        return renderImg(imgCount.index);
-                    });
+                    renderImg(imgCount.index);
                 },
             };
         },
