@@ -228,14 +228,18 @@ export default function moduleShare(): {
                 {
                     ease: "power3.inOut",
                     duration: 0.8,
-                    borderRadius: "0px",
+                    r: 0,
                     scale: 1,
                     w: () => window.innerWidth,
-                    h: () => window.outerHeight - window.navDistance,
+                    h: () => window.innerHeight,
                     l: 0,
                     t: 0,
                     onUpdate() {
                         videoControl.render();
+                        gsap.set($section.find(".video-btn"), {
+                            x: renderProgress.l + renderProgress.w / 2,
+                            y: renderProgress.t + renderProgress.h / 2,
+                        });
                     },
                 },
                 0
