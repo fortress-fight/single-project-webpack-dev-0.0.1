@@ -8,7 +8,6 @@
  */
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { stringify } from "querystring";
 const drawRoundRect = function (ctx, x, y, w, h, r) {
     const min_size = Math.min(w, h);
     if (r > min_size / 2) r = min_size / 2;
@@ -22,6 +21,9 @@ const drawRoundRect = function (ctx, x, y, w, h, r) {
     ctx.closePath();
     return ctx;
 };
+function getRect(dom: HTMLElement) {
+    return dom.getBoundingClientRect();
+}
 export default function moduleShare(): {
     init: () => void;
     setUserList: () => gsap.core.Timeline;
@@ -31,8 +33,8 @@ export default function moduleShare(): {
         render: () => void;
     };
 } {
+    // public doms
     const $section = $(".module-share");
-    const $pinContent = $section.find(".module_content-box");
     const renderProgress = {
         scale: 2,
         t: 0,
@@ -42,57 +44,49 @@ export default function moduleShare(): {
         r: 0,
     };
 
-    const $playground = $section.find(".wrapper-module_content");
     const $layerVideoPlay = $section.find(".layer--video-play");
-    const $videoPlayBox = $section.find(".video-play-box");
     const $videoDesc = $layerVideoPlay.find(".desc-content");
-    const $videoTargetBox = $section.find(".preview-image-box");
-    const $layerCoverShare = $section.find(".layer-cover--share");
-
     const $moduleSharePhone = $section.find(".module-share_phone");
-    const $previewImageBox = $moduleSharePhone.find(".preview-image-box");
-    const $originImgBox = $previewImageBox.parent();
 
-    // init-pos
-    function setVideoPos() {
-        const targetBoxSize = $videoTargetBox[0].getBoundingClientRect();
-        const layerCoverShareSize = $layerCoverShare[0].getBoundingClientRect();
-        const targetRadius = String(
-            gsap.getProperty($videoTargetBox[0], "borderRadius")
-        );
-        const targetTop = targetBoxSize.top - layerCoverShareSize.top;
-        const targetLeft = targetBoxSize.left - layerCoverShareSize.left;
+    const videoTargetBox = $section.find(".preview-image-box")[0];
+    const layerCoverShare = $section.find(".layer-cover--share")[0];
 
-        // gsap.set($videoPlayBox, {
-        //     top: targetTop,
-        //     left: targetLeft,
-        //     width: targetBoxSize.width,
-        //     height: targetBoxSize.height,
-        //     borderRadius: targetRadius,
-        //     snap: {
-        //         top: 1,
-        //         left: 1,
-        //         width: 1,
-        //         height: 1,
-        //         borderRadius: 1,
-        //     },
-        // });
-        gsap.set(renderProgress, {
-            t: targetTop,
-            l: targetLeft,
-            w: targetBoxSize.width,
-            h: targetBoxSize.height,
-            r: targetRadius,
-        });
+    // gsap.set($videoPlayBox, {
+    //     top: targetTop,
+    //     left: targetLeft,
+    //     width: targetBoxSize.width,
+    //     height: targetBoxSize.height,
+    // });
+    /* ---------------------------------- */
+    /*      user list animate helper      */
+    /* ---------------------------------- */
+    function userListCount() {
+        const $countBox = $(".count-num .text");
+        let currentNumber = parseInt($countBox.text());
+        const numManage = { num: currentNumber };
+        // tab number handler
+        return (num) => {
+            if (currentNumber == num) return;
+            currentNumber = num;
+            gsap.to(numManage, {
+                num: num,
+                overwrite: true,
+                duration: 1,
+                ease: "power2.inOut",
+                onUpdate() {
+                    const s = String(Math.ceil(numManage.num));
+                    const result = "0".repeat(3 - s.split("").length) + s;
+                    $countBox.text(result);
+                },
+            });
+        };
     }
-
     return {
         init() {
+            const $pinContent = $section.find(".module_content-box");
             const scrollAnim = gsap.timeline({
                 paused: true,
-                defaults: {
-                    ease: "none",
-                },
+                defaults: { ease: "none" },
                 scrollTrigger: {
                     invalidateOnRefresh: true,
                     trigger: $pinContent,
@@ -101,17 +95,16 @@ export default function moduleShare(): {
                     end: "4000px",
                 },
             });
-            setVideoPos();
             scrollAnim.add(this.setUserList().play());
             scrollAnim.add(this.scaleVideo().play());
         },
         setUserList() {
             const userListAnim = gsap.timeline({
                 paused: true,
-                defaults: {
-                    ease: "none",
-                },
+                defaults: { ease: "none" },
             });
+
+            // dom
             const $list = $section.find(".user-list");
 
             // config
@@ -123,14 +116,15 @@ export default function moduleShare(): {
             $list.html(itemHTML.repeat(groupSize));
             const $items = $section.find(".user-item");
 
-            // set size var
+            // cash size
             let space = 0;
             let itemHeight = 0;
             let wrapperHeight = 0;
             let groupHeight = 0;
             let itemSize = 0;
 
-            function calcSize() {
+            // updateSize
+            function updateSize() {
                 space =
                     Number(gsap.getProperty($items[1], "marginBottom")) || 0;
                 itemHeight = $items.height();
@@ -138,68 +132,55 @@ export default function moduleShare(): {
                 wrapperHeight = itemSize * $items.length;
                 groupHeight = wrapperHeight / groupSize;
             }
-            calcSize();
+            updateSize();
+            $(window).on("resize", updateSize);
 
-            const $countBox = $(".count-num .text");
-            let currentNumber = parseInt($countBox.text());
-            const numManage = { num: currentNumber };
-            function updateCount(num) {
-                gsap.to(numManage, {
-                    num: num,
-                    overwrite: true,
-                    duration: 1,
-                    ease: "power2.inOut",
-                    onUpdate() {
-                        const s = String(Math.ceil(numManage.num));
-                        const result = "0".repeat(3 - s.split("").length) + s;
-                        $countBox.text(result);
-                    },
-                });
-            }
+            /* ---------------------------------- */
+            /*        更新 user-list 进程          */
+            /* ---------------------------------- */
+            const updateCount = userListCount();
+            updateItemPos(0);
+            ScrollTrigger.addEventListener("refresh", () => {
+                updateItemPos(process.y);
+            });
+            userListAnim.to(process, {
+                y: () => -itemSize * (groupSize - 1),
+                onUpdate: () => updateItemPos(process.y),
+            });
+
             function updateOpacity() {
                 $items.each((i, dom) => {
                     const movePos = parseFloat(
                         String(gsap.getProperty(dom, "y"))
                     );
 
-                    let percent = gsap.utils.clamp(
+                    let percent = gsap.utils.normalize(
                         0,
-                        1,
-                        gsap.utils.normalize(0, itemSize * 2, Math.abs(movePos))
+                        itemSize * 2,
+                        Math.abs(movePos)
                     );
+                    percent = gsap.utils.clamp(0, 1, percent);
                     percent = Math.abs(percent - 1);
-                    const itemOpacity = percent;
-                    const itemScale = 0.85 + percent * 0.15;
                     if (percent >= 0.9) {
-                        const targetCount = $(dom).data("counter");
-                        if (currentNumber != targetCount) {
-                            currentNumber = targetCount;
-                            updateCount(currentNumber);
-                        }
+                        updateCount($(dom).data("counter"));
                     }
                     gsap.set(dom, {
-                        opacity: itemOpacity,
-                        scale: itemScale,
+                        opacity: percent,
+                        scale: 0.85 + percent * 0.15,
                     });
                 });
             }
-            function setPos(targetPos) {
+            function updateItemPos(targetPos) {
                 gsap.set($items, {
-                    y: (i) => {
-                        return i * (itemHeight + space) + targetPos;
-                    },
+                    y: (i) => i * itemSize + targetPos,
                     overwrite: true,
                     force3D: true,
-                    onUpdate() {
-                        updateOpacity();
-                    },
+                    onUpdate: updateOpacity,
                     modifiers: {
                         y(targetPos) {
                             const movePos = gsap.utils.wrap(
-                                -(groupHeight + itemHeight + space),
-                                wrapperHeight -
-                                    groupHeight -
-                                    (itemHeight + space),
+                                -(groupHeight + itemSize),
+                                wrapperHeight - groupHeight - itemSize,
                                 parseFloat(targetPos)
                             );
                             return `${movePos}px`;
@@ -207,25 +188,7 @@ export default function moduleShare(): {
                     },
                 });
             }
-            const showCount = 3;
-            userListAnim.to(process, {
-                y() {
-                    return -itemSize * (showCount - 1);
-                },
-                onUpdate() {
-                    setPos(process.y);
-                },
-            });
-            ScrollTrigger.addEventListener("refresh", () => {
-                setPos(process.y);
-            });
-            setPos(0);
 
-            // resize handler
-            function refresh() {
-                calcSize();
-            }
-            $(window).on("resize", refresh);
             return userListAnim;
         },
         scaleVideo() {
@@ -241,56 +204,43 @@ export default function moduleShare(): {
             );
 
             // hide other opacity doms
-            scaleVideoAnim.to($opacityDoms, {
-                opacity: 0,
-            });
+            scaleVideoAnim.to($opacityDoms, { opacity: 0 });
 
-            // size
+            // big size
             scaleVideoAnim.addLabel("scaleBigStart");
+
             scaleVideoAnim.fromTo(
-                $previewImageBox,
+                renderProgress,
                 {
-                    width: () => {
-                        return $originImgBox.width();
-                    },
-                    height: () => {
-                        return $originImgBox.height();
-                    },
+                    w: () => getRect(videoTargetBox).width,
+                    h: () => getRect(videoTargetBox).height,
+                    l: () =>
+                        getRect(videoTargetBox).left -
+                        getRect(layerCoverShare).left,
+                    t: () =>
+                        getRect(videoTargetBox).top -
+                        getRect(layerCoverShare).top,
+                    r: () =>
+                        String(
+                            gsap.getProperty(videoTargetBox, "borderRadius")
+                        ),
                 },
                 {
                     ease: "power3.inOut",
                     duration: 0.8,
-                    borderRadius: 0,
-                    width: () => window.innerWidth,
-                    height: () => window.outerHeight - window.navDistance,
-                    x: () => {
-                        return -$originImgBox[0].getBoundingClientRect().left;
+                    borderRadius: "0px",
+                    scale: 1,
+                    w: () => window.innerWidth,
+                    h: () => window.outerHeight - window.navDistance,
+                    l: 0,
+                    t: 0,
+                    onUpdate() {
+                        videoControl.render();
                     },
-                    y: () => {
-                        const imgTop =
-                            $originImgBox[0].getBoundingClientRect().top;
-                        const coverTop =
-                            $layerCoverShare[0].getBoundingClientRect().top;
-                        return coverTop - imgTop;
-                    },
-                    snap: { x: 1, y: 1 },
                 },
                 0
             );
 
-            scaleVideoAnim.to(
-                renderProgress,
-                {
-                    ease: "power3.inOut",
-                    scale: 1,
-                    duration: 0.8,
-                    onUpdate() {
-                        setVideoPos();
-                        videoControl.render();
-                    },
-                },
-                "<"
-            );
             scaleVideoAnim.addLabel("scaleBigEnd");
 
             // play btn
@@ -306,8 +256,8 @@ export default function moduleShare(): {
             );
 
             // text-content
-            scaleVideoAnim.to($layerCoverShare, { opacity: 1 }, "scaleBigEnd");
-            scaleVideoAnim.to($layerCoverShare, { opacity: 1 }, "scaleBigEnd");
+            scaleVideoAnim.to(layerCoverShare, { opacity: 1 }, "scaleBigEnd");
+            scaleVideoAnim.to(layerCoverShare, { opacity: 1 }, "scaleBigEnd");
             scaleVideoAnim.to($videoDesc, { opacity: 1 }, "scaleBigEnd");
             scaleVideoAnim.to(
                 $section.find(".wrapper-pos--center"),
@@ -329,35 +279,27 @@ export default function moduleShare(): {
             );
 
             // dom
-            const $minVideoBox = $(".layer-cover--share .video-box");
+            const minVideoBox = $(".layer-cover--share .video-box")[0];
 
             // min size
-            let minBoxSize;
-            let originBoxSize;
-            function updateSize() {
-                setVideoPos();
-                minBoxSize = $minVideoBox[0].getBoundingClientRect();
-                originBoxSize = $originImgBox[0].getBoundingClientRect();
-            }
-            updateSize();
-            scaleVideoAnim.call(updateSize);
-            $(window).on("resize", updateSize);
-
-            scaleVideoAnim.to($previewImageBox, {
-                borderRadius: () => {
-                    return parseInt($minVideoBox.css("borderRadius"));
+            scaleVideoAnim.to(renderProgress, {
+                r: () => {
+                    return parseInt($(minVideoBox).css("borderRadius"));
                 },
-                x: () => {
-                    return minBoxSize.left - originBoxSize.left;
+                l: () => {
+                    return (
+                        getRect(minVideoBox).left -
+                        getRect(layerCoverShare).left
+                    );
                 },
-                y: () => {
-                    return minBoxSize.top - originBoxSize.top;
+                t: () => {
+                    return (
+                        getRect(minVideoBox).top - getRect(layerCoverShare).top
+                    );
                 },
-                snap: { x: 1, y: 1 },
-                width: () => minBoxSize.width,
-                height: () => minBoxSize.height,
+                w: () => getRect(minVideoBox).width,
+                h: () => getRect(minVideoBox).height,
                 onUpdate() {
-                    setVideoPos();
                     videoControl.render();
                 },
             });
@@ -432,12 +374,8 @@ export default function moduleShare(): {
                 // draw clip box
                 let clipW = dw;
                 let clipH = dh;
-                if (dh < ch) {
-                    clipH *= ch / dh;
-                }
-                if (dw < cw) {
-                    clipW *= cw / dw;
-                }
+                dh < ch && (clipH *= ch / dh);
+                dw < cw && (clipW *= cw / dw);
                 drawRoundRect(ctx, dl, dt, cw, ch, dr || 0);
                 context.clip();
 
@@ -445,12 +383,8 @@ export default function moduleShare(): {
                 let ratio = scale;
                 let dImgL = dl,
                     dImgT = dt;
-                if (dh < ch) {
-                    ratio = (ch / dh) * scale;
-                }
-                if (dw < cw) {
-                    ratio = (cw / dw) * scale;
-                }
+                dh < ch && (ratio = (ch / dh) * scale);
+                dw < cw && (ratio = (cw / dw) * scale);
                 dw *= ratio;
                 dh *= ratio;
                 dImgL -= (dw - clipW) / 2;
