@@ -51,12 +51,6 @@ export default function moduleShare(): {
     const videoTargetBox = $section.find(".preview-image-box")[0];
     const layerCoverShare = $section.find(".layer-cover--share")[0];
 
-    // gsap.set($videoPlayBox, {
-    //     top: targetTop,
-    //     left: targetLeft,
-    //     width: targetBoxSize.width,
-    //     height: targetBoxSize.height,
-    // });
     /* ---------------------------------- */
     /*      user list animate helper      */
     /* ---------------------------------- */
@@ -234,6 +228,12 @@ export default function moduleShare(): {
                     h: () => window.innerHeight,
                     l: 0,
                     t: 0,
+                    snap: {
+                        l: 1,
+                        t: 1,
+                        w: 1,
+                        h: 1,
+                    },
                     onUpdate() {
                         videoControl.render();
                         gsap.set($section.find(".video-btn"), {
@@ -303,6 +303,12 @@ export default function moduleShare(): {
                 },
                 w: () => getRect(minVideoBox).width,
                 h: () => getRect(minVideoBox).height,
+                snap: {
+                    l: 1,
+                    t: 1,
+                    w: 1,
+                    h: 1,
+                },
                 onUpdate() {
                     videoControl.render();
                 },
@@ -359,9 +365,9 @@ export default function moduleShare(): {
                 img: HTMLImageElement,
                 ctx: CanvasRenderingContext2D
             ) {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-
+                const layerCoverShareSize = getRect(layerCoverShare);
+                canvas.width = layerCoverShareSize.width;
+                canvas.height = layerCoverShareSize.height;
                 const {
                     scale,
                     w: cw,
