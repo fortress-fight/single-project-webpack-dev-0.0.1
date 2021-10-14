@@ -88,7 +88,7 @@ const DEV_WEBPACK_PLUGIN = [
         ENV: {
             PROJECT_NAME,
             PUB_PATH: `${PUBLIC_PATH}`,
-            IMG_PATH: `${PUBLIC_PATH}image/`,
+            IMG_PATH: JSON.stringify(`${PUBLIC_PATH}image/`),
         },
     }),
     // 拷贝文件

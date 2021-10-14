@@ -1,5 +1,3 @@
-/* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description:
  * @Author: F-Stone
@@ -191,12 +189,7 @@ export default function moduleShare(): {
     function setMinUserList() {
         // autoplay config
         const groupSize = 3;
-        let targetPos = 0;
-
-        // dragger config
-        let draggerStartPos = 0;
-        let currentPos = 0;
-        let isDragging = false;
+        const targetPos = 0;
 
         // init layout
         const itemHTML = $list.html();
@@ -260,7 +253,7 @@ export default function moduleShare(): {
         }
         $(window).on("resize.loopCase", refresh);
 
-        let scrollAnim = gsap.timeline({
+        const scrollAnim = gsap.timeline({
             paused: true,
             defaults: { ease: "none" },
             scrollTrigger: {
@@ -270,7 +263,7 @@ export default function moduleShare(): {
                 scrub: 0.5,
             },
         });
-        let scrollVal = { x: 0 };
+        const scrollVal = { x: 0 };
         scrollAnim.to(scrollVal, {
             x: -itemOutWidth * 3,
             onUpdate() {
@@ -329,7 +322,7 @@ export default function moduleShare(): {
                     };
                 },
                 "(max-width: 734px)": () => {
-                    let userListControl = setMinUserList();
+                    const userListControl = setMinUserList();
                     const scrollAnim = gsap.timeline({
                         paused: true,
                         defaults: { ease: "none" },
@@ -393,7 +386,7 @@ export default function moduleShare(): {
                 },
                 {
                     ease: "power3.inOut",
-                    duration: 0.8,
+                    duration: 0.5,
                     r: 0,
                     scale: 1,
                     w: () => window.innerWidth,
@@ -505,10 +498,14 @@ export default function moduleShare(): {
             const context = canvas.getContext("2d");
 
             const frameCount = 96;
-            const currentFrame = (index) =>
-                `${ENV.IMG_PATH}video-fps-1/video-fps-0000${index
-                    .toString()
-                    .padStart(3, "0")}.jpg`;
+            const currentFrame = (index) => {
+                return (
+                    ENV.IMG_PATH +
+                    "video-fps-1/video-fps-0000" +
+                    index.toString().padStart(3, "0") +
+                    ".jpg"
+                );
+            };
 
             const imgCount = { index: 0 };
 
@@ -528,7 +525,11 @@ export default function moduleShare(): {
                                 rej(img);
                             };
                         }
-                    }).then()
+                    })
+                        .then()
+                        .catch(() => {
+                            //
+                        })
                 );
             }
 

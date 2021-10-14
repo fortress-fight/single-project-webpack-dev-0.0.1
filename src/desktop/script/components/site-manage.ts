@@ -103,10 +103,10 @@ export default class UemoCardSite extends SiteManage {
         // const oldScrollTop = 0;
         function setNavState($dom, dir) {
             const oldSize = $dom.attr("data-size");
-            if (dir == "up") {
-                oldSize != "normal" && $dom.attr("data-size", "normal");
-            } else {
+            if (dir == "down") {
                 oldSize != "mini" && $dom.attr("data-size", "mini");
+            } else {
+                oldSize != "normal" && $dom.attr("data-size", "normal");
             }
         }
 
