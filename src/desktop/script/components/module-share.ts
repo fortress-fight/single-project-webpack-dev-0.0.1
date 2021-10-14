@@ -9,7 +9,6 @@
  */
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Impetus from "@/desktop/lib/Impetus";
 
 const drawRoundRect = function (ctx, x, y, w, h, r) {
     const min_size = Math.min(w, h);
@@ -252,25 +251,6 @@ export default function moduleShare(): {
 
         setPos(targetPos);
 
-        const draggerImpetus = new Impetus({
-            source: $list[0],
-            start(x) {
-                draggerStartPos = x;
-                if (isDragging) {
-                    targetPos = currentPos;
-                }
-                isDragging = true;
-            },
-            update(x) {
-                currentPos = targetPos + ((x - draggerStartPos) % wrapperWidth);
-                setPos(currentPos);
-            },
-            complete() {
-                isDragging = false;
-                targetPos = currentPos;
-            },
-        });
-
         // resize handler
         function refresh() {
             itemWidth = $items.width();
@@ -280,13 +260,28 @@ export default function moduleShare(): {
         }
         $(window).on("resize.loopCase", refresh);
 
+        let scrollAnim = gsap.timeline({
+            paused: true,
+            defaults: { ease: "none" },
+            scrollTrigger: {
+                invalidateOnRefresh: true,
+                trigger: $section.find(".count-box"),
+                start: "bottom bottom",
+                scrub: 0.5,
+            },
+        });
+        let scrollVal = { x: 0 };
+        scrollAnim.to(scrollVal, {
+            x: -itemOutWidth * 3,
+            onUpdate() {
+                setPos(scrollVal.x);
+            },
+        });
         return {
             destroy: () => {
                 // remove eventListener
                 $(window).off("resize.loopCase");
 
-                // reset pos
-                draggerImpetus.destroy();
                 $items.filter(".state-clone").remove();
                 gsap.set($items, {
                     x: 0,
@@ -328,9 +323,9 @@ export default function moduleShare(): {
                     scrollAnim.add(setUserListControl.anim.play());
                     scrollAnim.add(scaleVideoControl.anim.play());
                     return function () {
+                        initRenderProgress();
                         setUserListControl.destroy();
                         scaleVideoControl.destroy();
-                        initRenderProgress();
                     };
                 },
                 "(max-width: 734px)": () => {
@@ -347,7 +342,7 @@ export default function moduleShare(): {
                                     2
                                 }`;
                             },
-                            scrub: true,
+                            scrub: 0.5,
                             pin: true,
                             end: "1500px",
                         },
@@ -355,9 +350,9 @@ export default function moduleShare(): {
                     const scaleVideoControl = this.scaleVideo();
                     scrollAnim.add(scaleVideoControl.anim.play());
                     return () => {
+                        initRenderProgress();
                         userListControl.destroy();
                         scaleVideoControl.destroy();
-                        initRenderProgress();
                     };
                 },
             });
@@ -464,6 +459,7 @@ export default function moduleShare(): {
 
             // min size
             scaleVideoAnim.to(renderProgress, {
+                delay: 0.1,
                 r: () => {
                     return parseInt($(minVideoBox).css("borderRadius"));
                 },
@@ -508,13 +504,11 @@ export default function moduleShare(): {
             ) as HTMLCanvasElement;
             const context = canvas.getContext("2d");
 
-            const frameCount = 106;
+            const frameCount = 96;
             const currentFrame = (index) =>
-                `${
-                    ENV.IMG_PATH
-                }video-fps/pexels-shvets-production-7547661${index
+                `${ENV.IMG_PATH}video-fps-1/video-fps-0000${index
                     .toString()
-                    .padStart(4, "0")}.jpg`;
+                    .padStart(3, "0")}.jpg`;
 
             const imgCount = { index: 0 };
 
