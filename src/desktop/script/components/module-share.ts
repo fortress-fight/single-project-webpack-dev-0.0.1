@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /*
  * @Description:
@@ -8,6 +9,8 @@
  */
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Impetus from "@/desktop/lib/Impetus";
+
 const drawRoundRect = function (ctx, x, y, w, h, r) {
     const min_size = Math.min(w, h);
     if (r > min_size / 2) r = min_size / 2;
@@ -26,10 +29,6 @@ function getRect(dom: HTMLElement) {
 }
 export default function moduleShare(): {
     init: () => void;
-    setUserList: () => {
-        anim: gsap.core.Timeline;
-        destroy: () => void;
-    };
     scaleVideo: () => {
         anim: gsap.core.Timeline;
         destroy: () => void;
@@ -64,7 +63,11 @@ export default function moduleShare(): {
     /* ---------------------------------- */
     /*      user list animate helper      */
     /* ---------------------------------- */
-    function userListCount() {
+
+    // dom
+    const $list = $section.find(".user-list");
+
+    const updateCount = (function userListCount() {
         const $countBox = $(".count-num .text");
         let currentNumber = parseInt($countBox.text());
         const numManage = { num: currentNumber };
@@ -78,11 +81,219 @@ export default function moduleShare(): {
                 duration: 1,
                 ease: "power2.inOut",
                 onUpdate() {
-                    const s = String(Math.ceil(numManage.num));
-                    const result = "0".repeat(3 - s.split("").length) + s;
-                    $countBox.text(result);
+                    $countBox.text(
+                        String(Math.ceil(numManage.num)).padStart(3, "0")
+                    );
                 },
             });
+        };
+    })();
+
+    function setUserList() {
+        const userListAnim = gsap.timeline({
+            paused: true,
+            defaults: { ease: "none" },
+        });
+
+        // config
+        const process = { y: 0 };
+        const groupSize = 3;
+
+        // init layout
+        const itemHTML = $list.html();
+        $(itemHTML.repeat(groupSize - 1))
+            .addClass("state-clone")
+            .appendTo($list);
+        const $items = $section.find(".user-item");
+
+        // cash size
+        let space = 0;
+        let itemHeight = 0;
+        let wrapperHeight = 0;
+        let groupHeight = 0;
+        let itemSize = 0;
+
+        // updateSize
+        function updateSize() {
+            space = Number(gsap.getProperty($items[1], "marginBottom")) || 0;
+            itemHeight = $items.height();
+            itemSize = itemHeight + space;
+            wrapperHeight = itemSize * $items.length;
+            groupHeight = wrapperHeight / groupSize;
+        }
+        updateSize();
+        $(window).on("resize", updateSize);
+
+        /* ---------------------------------- */
+        /*        更新 user-list 进程          */
+        /* ---------------------------------- */
+        updateItemPos();
+        ScrollTrigger.addEventListener("refresh", updateItemPos);
+        userListAnim.to(process, {
+            y: () => -itemSize * (groupSize - 1),
+            onUpdate: () => updateItemPos(),
+        });
+
+        function updateOpacity() {
+            $items.each((i, dom) => {
+                const movePos = parseFloat(String(gsap.getProperty(dom, "y")));
+
+                let percent = gsap.utils.normalize(
+                    0,
+                    itemSize * 2,
+                    Math.abs(movePos)
+                );
+                percent = gsap.utils.clamp(0, 1, percent);
+                percent = Math.abs(percent - 1);
+                if (percent >= 0.9) {
+                    updateCount($(dom).data("counter"));
+                }
+                gsap.set(dom, {
+                    opacity: percent,
+                    scale: 0.85 + percent * 0.15,
+                });
+                $section.find(".count-num .text").text("000");
+            });
+        }
+        function updateItemPos() {
+            const targetPos = process.y;
+            gsap.set($items, {
+                y: (i) => i * itemSize + targetPos,
+                overwrite: true,
+                force3D: true,
+                onUpdate: updateOpacity,
+                modifiers: {
+                    y(targetPos) {
+                        const movePos = gsap.utils.wrap(
+                            -(groupHeight + itemSize),
+                            wrapperHeight - groupHeight - itemSize,
+                            parseFloat(targetPos)
+                        );
+                        return `${movePos}px`;
+                    },
+                },
+            });
+        }
+
+        return {
+            anim: userListAnim,
+            destroy() {
+                ScrollTrigger.removeEventListener("refresh", updateItemPos);
+                $(window).off("resize", updateSize);
+                $items.filter(".state-clone").remove();
+                gsap.set($items, {
+                    y: 0,
+                    scale: 1,
+                    opacity: 1,
+                });
+            },
+        };
+    }
+    function setMinUserList() {
+        // autoplay config
+        const groupSize = 3;
+        let targetPos = 0;
+
+        // dragger config
+        let draggerStartPos = 0;
+        let currentPos = 0;
+        let isDragging = false;
+
+        // init layout
+        const itemHTML = $list.html();
+        $(itemHTML.repeat(groupSize - 1))
+            .addClass("state-clone")
+            .appendTo($list);
+
+        // get size
+        const $items = $section.find(".user-item");
+        let itemWidth = $items.width();
+        let space = Number(gsap.getProperty($items[0], "marginRight") || "0");
+        let itemOutWidth = itemWidth + space;
+        let wrapperWidth = itemOutWidth * $items.length;
+        const groupWidth = wrapperWidth / groupSize;
+
+        const setPos = (targetPos) => {
+            $items.each((i, dom) => {
+                gsap.set(dom, {
+                    x: i * itemOutWidth + targetPos,
+                    overwrite: true,
+                    force3D: true,
+                    modifiers: {
+                        x: (x) => {
+                            const s = gsap.utils.wrap(
+                                -(groupWidth + itemOutWidth),
+                                wrapperWidth - groupWidth - itemOutWidth,
+                                parseFloat(x)
+                            );
+                            return `${s}px`;
+                        },
+                    },
+                });
+
+                const movePos = parseFloat(String(gsap.getProperty(dom, "x")));
+
+                let percent = gsap.utils.normalize(
+                    0,
+                    itemOutWidth * 2,
+                    Math.abs(movePos)
+                );
+                percent = gsap.utils.clamp(0, 1, percent);
+                percent = Math.abs(percent - 1);
+                if (percent >= 0.9) {
+                    updateCount($(dom).data("counter"));
+                }
+                gsap.set(dom, {
+                    opacity: percent,
+                    scale: 0.6 + percent * 0.4,
+                });
+            });
+        };
+
+        setPos(targetPos);
+
+        const draggerImpetus = new Impetus({
+            source: $list[0],
+            start(x) {
+                draggerStartPos = x;
+                if (isDragging) {
+                    targetPos = currentPos;
+                }
+                isDragging = true;
+            },
+            update(x) {
+                currentPos = targetPos + ((x - draggerStartPos) % wrapperWidth);
+                setPos(currentPos);
+            },
+            complete() {
+                isDragging = false;
+                targetPos = currentPos;
+            },
+        });
+
+        // resize handler
+        function refresh() {
+            itemWidth = $items.width();
+            space = Number(gsap.getProperty($items[0], "marginRight") || "0");
+            itemOutWidth = itemWidth + space;
+            wrapperWidth = itemOutWidth * $items.length;
+        }
+        $(window).on("resize.loopCase", refresh);
+
+        return {
+            destroy: () => {
+                // remove eventListener
+                $(window).off("resize.loopCase");
+
+                // reset pos
+                draggerImpetus.destroy();
+                $items.filter(".state-clone").remove();
+                gsap.set($items, {
+                    x: 0,
+                    scale: 1,
+                    opacity: 1,
+                });
+            },
         };
     }
     return {
@@ -102,7 +313,7 @@ export default function moduleShare(): {
                         },
                     });
                     const scaleVideoControl = this.scaleVideo();
-                    const setUserListControl = this.setUserList();
+                    const setUserListControl = setUserList();
                     scrollAnim.add(setUserListControl.anim.play());
                     scrollAnim.add(scaleVideoControl.anim.play());
                     return function () {
@@ -111,113 +322,13 @@ export default function moduleShare(): {
                         initRenderProgress();
                     };
                 },
-                "(max-width: 734px)": function () {
-                    //
+                "(max-width: 734px)": () => {
+                    let userListControl = setMinUserList();
+                    return () => {
+                        userListControl.destroy();
+                    };
                 },
             });
-        },
-        setUserList() {
-            const userListAnim = gsap.timeline({
-                paused: true,
-                defaults: { ease: "none" },
-            });
-
-            // dom
-            const $list = $section.find(".user-list");
-
-            // config
-            const process = { y: 0 };
-            const groupSize = 3;
-
-            // init layout
-            const itemHTML = $list.html();
-            $list.html(itemHTML.repeat(groupSize));
-            const $items = $section.find(".user-item");
-
-            // cash size
-            let space = 0;
-            let itemHeight = 0;
-            let wrapperHeight = 0;
-            let groupHeight = 0;
-            let itemSize = 0;
-
-            // updateSize
-            function updateSize() {
-                space =
-                    Number(gsap.getProperty($items[1], "marginBottom")) || 0;
-                itemHeight = $items.height();
-                itemSize = itemHeight + space;
-                wrapperHeight = itemSize * $items.length;
-                groupHeight = wrapperHeight / groupSize;
-            }
-            updateSize();
-            $(window).on("resize", updateSize);
-
-            /* ---------------------------------- */
-            /*        更新 user-list 进程          */
-            /* ---------------------------------- */
-            const updateCount = userListCount();
-            updateItemPos();
-            ScrollTrigger.addEventListener("refresh", updateItemPos);
-            userListAnim.to(process, {
-                y: () => -itemSize * (groupSize - 1),
-                onUpdate: () => updateItemPos(),
-            });
-
-            function updateOpacity() {
-                $items.each((i, dom) => {
-                    const movePos = parseFloat(
-                        String(gsap.getProperty(dom, "y"))
-                    );
-
-                    let percent = gsap.utils.normalize(
-                        0,
-                        itemSize * 2,
-                        Math.abs(movePos)
-                    );
-                    percent = gsap.utils.clamp(0, 1, percent);
-                    percent = Math.abs(percent - 1);
-                    if (percent >= 0.9) {
-                        updateCount($(dom).data("counter"));
-                    }
-                    gsap.set(dom, {
-                        opacity: percent,
-                        scale: 0.85 + percent * 0.15,
-                    });
-                });
-            }
-            function updateItemPos() {
-                const targetPos = process.y;
-                gsap.set($items, {
-                    y: (i) => i * itemSize + targetPos,
-                    overwrite: true,
-                    force3D: true,
-                    onUpdate: updateOpacity,
-                    modifiers: {
-                        y(targetPos) {
-                            const movePos = gsap.utils.wrap(
-                                -(groupHeight + itemSize),
-                                wrapperHeight - groupHeight - itemSize,
-                                parseFloat(targetPos)
-                            );
-                            return `${movePos}px`;
-                        },
-                    },
-                });
-            }
-
-            return {
-                anim: userListAnim,
-                destroy() {
-                    ScrollTrigger.removeEventListener("refresh", updateItemPos);
-                    $(window).off("resize", updateSize);
-                    gsap.set($items, {
-                        y: 0,
-                        scale: 1,
-                        opacity: 1,
-                    });
-                },
-            };
         },
         scaleVideo() {
             const scaleVideoAnim = gsap.timeline({

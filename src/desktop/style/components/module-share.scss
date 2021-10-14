@@ -72,6 +72,10 @@
             margin-bottom: 76px;
             
             transform-origin: right;
+            &::after {
+                position: relative;
+                z-index: 10;
+            }
             &:nth-child(1) {
                 position: relative;
 

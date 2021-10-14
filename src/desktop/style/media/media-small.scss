@@ -823,6 +823,8 @@
     .module-share .module-body > .state-pos_left {
         margin-bottom: cw(110);
         padding: 0;
+
+        text-align: center;
     }
     .module-share .module-body .user-list {
         display: inline-flex;
@@ -839,8 +841,10 @@
         flex: 0 0 auto;
 
         width: cw(334);
-        margin-right: 30px;
+        margin-right: 6px;
         margin-bottom: 0;
+
+        transform-origin: center;
 
         will-change: transform;
         &:first-child {
