@@ -152,7 +152,7 @@ export default function moduleShare(): {
                     opacity: percent,
                     scale: 0.85 + percent * 0.15,
                 });
-                $section.find(".count-num .text").text("000");
+                // $section.find(".count-num .text").text("000");
             });
         }
         function updateItemPos() {
@@ -296,6 +296,11 @@ export default function moduleShare(): {
             },
         };
     }
+
+    /* ---------------------------------- */
+    /*             video scale            */
+    /* ---------------------------------- */
+
     return {
         init() {
             const $pinContent = $section.find(".module_content-box");
@@ -307,8 +312,14 @@ export default function moduleShare(): {
                         scrollTrigger: {
                             invalidateOnRefresh: true,
                             trigger: $pinContent,
+                            start: () => {
+                                return `center ${
+                                    (window.outerHeight - window.navDistance) /
+                                    2
+                                }`;
+                            },
                             scrub: true,
-                            pin: true,
+                            pin: $pinContent,
                             end: "4000px",
                         },
                     });
@@ -324,8 +335,29 @@ export default function moduleShare(): {
                 },
                 "(max-width: 734px)": () => {
                     let userListControl = setMinUserList();
+                    const scrollAnim = gsap.timeline({
+                        paused: true,
+                        defaults: { ease: "none" },
+                        scrollTrigger: {
+                            invalidateOnRefresh: true,
+                            trigger: $pinContent,
+                            start: () => {
+                                return `center ${
+                                    (window.outerHeight - window.navDistance) /
+                                    2
+                                }`;
+                            },
+                            scrub: true,
+                            pin: true,
+                            end: "1500px",
+                        },
+                    });
+                    const scaleVideoControl = this.scaleVideo();
+                    scrollAnim.add(scaleVideoControl.anim.play());
                     return () => {
                         userListControl.destroy();
+                        scaleVideoControl.destroy();
+                        initRenderProgress();
                     };
                 },
             });
@@ -370,7 +402,7 @@ export default function moduleShare(): {
                     r: 0,
                     scale: 1,
                     w: () => window.innerWidth,
-                    h: () => window.innerHeight,
+                    h: () => window.outerHeight - window.navDistance,
                     l: 0,
                     t: 0,
                     snap: {

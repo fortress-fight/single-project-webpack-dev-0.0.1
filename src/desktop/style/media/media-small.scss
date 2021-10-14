@@ -910,5 +910,42 @@
     .module-share .module-body > .state-pos_center {
         margin-right: 0;
     }
+    .module-share .layer--video-play .desc-content .title {
+        font-size: cw(72);
+        
+        margin-bottom: cw(26);
+    }
+    .module-share .layer--video-play .desc-content .desc {
+        font-size: cw(22);
+
+        margin-bottom: cw(38);
+    }
+    .module-share .layer--video-play .desc-content .icons-wrapper {
+        font-size: cw(44);
+        
+        width: 82%;
+    }
+    .module-share .layer-cover--share .box-item {
+        width: 100%;
+        
+        border-radius: cw(14);
+        &:nth-last-child(3) ~ * {
+            display: none;
+        }
+    }
+    .module-share .layer-cover--share .share-case {
+        grid-column-gap: cw(26);
+        grid-row-gap: cw(26);
+        grid-template-columns: repeat(4, 34.6666666667vw);
+        grid-template-rows: repeat(4, 1fr);
+    }
+    .module-share .layer-cover--share .desc-content {
+        grid-area: 2 / 2 / 3 / 4;
+    }
+    .module-share .layer-cover--share .video-box {
+        grid-area: 2 / 4 / 3 / 5;
+    }
+
+
 
 }
