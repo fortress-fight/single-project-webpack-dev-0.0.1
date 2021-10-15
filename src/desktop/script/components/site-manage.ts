@@ -16,7 +16,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 export default class UemoCardSite extends SiteManage {
     name = "uemo-card";
     vsScroll = null;
-    readonly preTask = ["initVsScroll"];
+    readonly preTask = ["initVsScroll", "setScrollbarDir"];
     readonly defaultTask = ["initScrollNav"];
     initVsScroll(): void {
         if (!os.isMobile) {
@@ -98,32 +98,40 @@ export default class UemoCardSite extends SiteManage {
             });
         }
     }
+    private setNavState($dom, dir) {
+        const oldSize = $dom.attr("data-size");
+        if (dir == "down") {
+            oldSize != "mini" && $dom.attr("data-size", "mini");
+        } else {
+            oldSize != "normal" && $dom.attr("data-size", "normal");
+        }
+    }
+    setScrollbarDir(): void {
+        this.vsScroll.on("scroll", ({ direction: dir }) => {
+            const $scrollbar = $(".c-scrollbar .c-scrollbar_thumb");
+            const oldDir = $scrollbar.attr("data-state-dir");
+
+            if (oldDir != dir) {
+                $scrollbar.attr("data-state-dir", dir);
+            }
+        });
+    }
     initScrollNav(): void {
         const $navDom = $("#site-head");
-        // const oldScrollTop = 0;
-        function setNavState($dom, dir) {
-            const oldSize = $dom.attr("data-size");
-            if (dir == "down") {
-                oldSize != "mini" && $dom.attr("data-size", "mini");
-            } else {
-                oldSize != "normal" && $dom.attr("data-size", "normal");
-            }
-        }
-
         if (this.vsScroll) {
-            this.vsScroll.on("scroll", (args) => {
-                requestAnimationFrame(() =>
-                    setNavState($navDom, args.direction)
-                );
+            this.vsScroll.on("scroll", ({ direction }) => {
+                requestAnimationFrame(() => {
+                    this.setNavState($navDom, direction);
+                });
             });
         } else {
             let oldScrollTop = window.scrollY;
             $(window).on("scroll", () => {
                 requestAnimationFrame(() => {
                     if (window.scrollY <= 0) {
-                        setNavState($navDom, "up");
+                        this.setNavState($navDom, "up");
                     } else {
-                        setNavState(
+                        this.setNavState(
                             $navDom,
                             window.scrollY > oldScrollTop ? "down" : "up"
                         );

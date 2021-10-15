@@ -224,6 +224,9 @@
         .desc-content {
 
             @include ab-cover;
+            right: -1px;
+            bottom: -1px;
+
             text-align: center;
 
             opacity: 0;

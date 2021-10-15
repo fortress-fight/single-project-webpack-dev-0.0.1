@@ -6,9 +6,12 @@
  * @LastEditors: F-Stone
  */
 .module-contact {
-    overflow: hidden;
 
     // margin-top: -50%;
+
+    position: relative;
+
+    overflow: hidden;
 
     color: rgb(255 255 255);
     background-color: rgb(89 66 210);

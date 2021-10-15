@@ -27,6 +27,12 @@ import moduleShare from "./module-share";
 import lottie from "lottie-web";
 
 export default class IndexPage extends SiteManage {
+    private scrollTriggerOrder = 1000;
+    private getScrollTriggerOrder() {
+        this.scrollTriggerOrder -= 100;
+        return this.scrollTriggerOrder;
+    }
+
     disableTask = ["initScrollNav"];
     otherTask = [
         "propagandaModule",

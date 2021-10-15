@@ -730,6 +730,7 @@
         .module-head {
          
             @include limit-wrapper-small;
+            margin-bottom: 50px;
         }
     }
     .module-case .state-pos_center,
@@ -755,12 +756,12 @@
         margin-bottom: 3vw;
 
         border-radius: 4px;
+        &:last-child {
+            display: none;
+        }
     }
     .module-case .module-item .thumb {
         width: 100%;
-    }
-    .module-case .module-head {
-        margin-bottom: 50px;
     }
     .module-case .module-head .title {
         font-size: 40px;
@@ -780,12 +781,10 @@
         line-height: 1.2;
     }
     .module-case .module-item .title {
-        font-size: 24px;
+        font-size: cw(24);
 
-        margin-bottom: 0;
-    }
-    .module-case .module-item .subtitle {
-        font-size: 12px;
+        margin-bottom: cw(18);
+        padding-left: cw(26);
     }
 
 }

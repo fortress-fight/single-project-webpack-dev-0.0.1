@@ -8,27 +8,30 @@
 export const moduleList = [
     {
         img: "module-case-1.jpg",
-        title: "纸质名片",
-        subtitle: "名片丢失也不怕",
+        title: "户外广告",
     },
     {
         img: "module-case-2.jpg",
-        title: "纸质名片",
-        subtitle: "名片丢失也不怕",
+        title: "企业宣传册",
     },
     {
         img: "module-case-3.jpg",
         title: "纸质名片",
-        subtitle: "名片丢失也不怕",
     },
     {
         img: "module-case-4.jpg",
-        title: "纸质名片",
-        subtitle: "名片丢失也不怕",
+        title: "产品介绍",
     },
     {
         img: "module-case-5.jpg",
-        title: "纸质名片",
-        subtitle: "名片丢失也不怕",
+        title: "企业官网",
+    },
+    {
+        img: "module-case-6.jpg",
+        title: "线下活动",
+    },
+    {
+        img: "module-case-7.jpg",
+        title: "产品信息",
     },
 ];
