@@ -10,11 +10,11 @@ import { gsap } from "gsap";
 
 import SiteManage from "./site-manage";
 
-import { os } from "@/util/os";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import initPropaganda from "./inner-components/module-propaganda";
 import initDesign from "./inner-components/module-design";
 import initShow from "./inner-components/module-show";
+import initContact from "./inner-components/module-contact";
+import initWeiXinCode from "./inner-components/module-weixin-code";
 
 import initDocModuleScroll from "./doc-module-scroll";
 import initCustomerModuleScroll from "./customer-module-scroll";
@@ -38,154 +38,8 @@ export default class IndexPage extends SiteManage {
         "weixinCode",
     ];
     weixinCode(): void {
-        let startDisableOpen;
-        let endDisableOpen;
-        if (!os.isPhone) {
-            const pointerBox = $(".ae-pointer")[0];
-            const pointerAe = lottie.loadAnimation({
-                container: pointerBox,
-                renderer: "svg",
-                autoplay: false,
-                path: $(pointerBox).data("ae-icon"),
-            });
-
-            let weixinBtnAnimate = gsap.to(".btn-open_QR", {
-                paused: true,
-                duration: 0.36,
-                ease: "Power2.easeOut",
-                width: "auto",
-                onReverseComplete() {
-                    pointerAe.pause();
-                },
-            });
-            $(window).on("resize", () => {
-                weixinBtnAnimate.kill();
-                $(".btn-open_QR").css({ width: "" });
-                weixinBtnAnimate = gsap.to(".btn-open_QR", {
-                    paused: true,
-                    duration: 0.36,
-                    ease: "Power2.easeOut",
-                    width: "auto",
-                });
-            });
-            let state = "close";
-            const openWeixinCode = () => {
-                if (startDisableOpen || endDisableOpen) return;
-                if (state == "open") return;
-                pointerAe.play();
-                state = "open";
-                weixinBtnAnimate.play();
-            };
-            const closeWeixinCode = () => {
-                if (state == "close") return;
-                state = "close";
-                weixinBtnAnimate.reverse();
-            };
-            let timeout;
-            const waitTime = 2000;
-            let isFirst = true;
-            if (this.vsScroll) {
-                this.vsScroll.on("scroll", (args) => {
-                    if (isFirst) {
-                        isFirst = false;
-                        return;
-                    }
-                    const scrollY = args.delta.y;
-                    closeWeixinCode();
-                    clearTimeout(timeout);
-                    if (scrollY < 10) {
-                        startDisableOpen = true;
-                    } else {
-                        startDisableOpen = false;
-                    }
-                    timeout = setTimeout(() => {
-                        openWeixinCode();
-                    }, waitTime);
-                });
-            } else {
-                $(window).on("scroll", () => {
-                    const scrollY = window.scrollY;
-                    closeWeixinCode();
-                    clearTimeout(timeout);
-                    if (scrollY < 10) {
-                        startDisableOpen = true;
-                    } else {
-                        startDisableOpen = false;
-                    }
-                    timeout = setTimeout(() => {
-                        openWeixinCode();
-                    }, waitTime);
-                });
-            }
-            openWeixinCode();
-        }
-        gsap.to(".footer_layer--fixed", {
-            opacity: 0,
-            onStart() {
-                endDisableOpen = true;
-            },
-            onReverseComplete() {
-                endDisableOpen = false;
-            },
-            scrollTrigger: {
-                trigger: ".module-contact",
-                scrub: true,
-                start: "top bottom",
-                end: "bottom bottom",
-                pinType: "transform",
-                onUpdate({ progress }) {
-                    gsap.set(".footer_layer--fixed", {
-                        y: -progress * $(".module-contact").height(),
-                    });
-                },
-            },
-        });
-        let disableClick = false;
-        $(".btn-open_QR").on("click", () => {
-            if (disableClick) return;
-            const wrapperWeixinCode = $(`
-                <div class="wrapper-weixin_code flex flex-c-c">
-                    <div class="box-weixin_code">
-                        <img src="${$(".btn-open_QR").attr(
-                            "data-img-src"
-                        )}" alt="" />
-                    </div>
-                </div>
-            `).appendTo("body");
-            requestAnimationFrame(() => {
-                const showWeixinCode = gsap
-                    .timeline({
-                        onStart() {
-                            disableClick = false;
-                        },
-                        onReverseComplete() {
-                            wrapperWeixinCode.remove();
-                        },
-                    })
-                    .to(wrapperWeixinCode, {
-                        duration: 0.36,
-                        backgroundColor: "rgba(0,0,0,0.6)",
-                    })
-                    .fromTo(
-                        wrapperWeixinCode.find(".box-weixin_code"),
-                        {
-                            y: "0vh",
-                            opacity: 0,
-                        },
-                        {
-                            y: "-5vh",
-                            opacity: 1,
-                            duration: 0.26,
-                        }
-                    );
-                wrapperWeixinCode.one("click", (ev) => {
-                    if (ev.target != wrapperWeixinCode[0]) {
-                        return;
-                    }
-                    showWeixinCode.reverse();
-                });
-            });
-        });
+        if (!$(".btn-open_QR")[0]) return;
+        initWeiXinCode(this.vsScroll).init();
     }
     propagandaModule(): void {
         if (!$(".module-propaganda")[0]) return;
@@ -205,56 +59,7 @@ export default class IndexPage extends SiteManage {
     }
     contactModule(): void {
         if (!$(".module-contact").length) return;
-        ScrollTrigger.saveStyles(".module-contact .wrapper-module_body");
-        ScrollTrigger.saveStyles(".module-contact .layer-circle img");
-        function normalScreen() {
-            const animate = gsap.timeline({
-                defaults: {
-                    ease: "none",
-                },
-                scrollTrigger: {
-                    trigger: ".module-contact .wrapper-limit_width--min",
-                    scrub: true,
-                    start: "top bottom",
-                    end: "bottom bottom",
-                    pinSpacing: false,
-                    pin: true,
-                    pinType: "transform",
-                    invalidateOnRefresh: true,
-                },
-            });
-
-            if (!os.isMobile) {
-                animate.fromTo(
-                    ".module-contact .wrapper-module_body",
-                    {
-                        ease: "none",
-                        y: "-70%",
-                    },
-                    { y: "-100%" }
-                );
-                $(".module-contact .layer-circle img").each((i, dom) => {
-                    animate.fromTo(
-                        dom,
-                        {
-                            y: () => {
-                                return $(dom).data("speed") * 4 + "vh";
-                            },
-                            ease: "none",
-                        },
-                        { y: "0vh" },
-                        0
-                    );
-                });
-            } else {
-                animate.set(".module-contact .wrapper-module_body", {
-                    y: "-100%",
-                });
-            }
-        }
-        ScrollTrigger.matchMedia({
-            "(min-width: 735px)": normalScreen,
-        });
+        initContact().init();
     }
     statisticModule(): void {
         if (!$(".module-statistic").length) return;
