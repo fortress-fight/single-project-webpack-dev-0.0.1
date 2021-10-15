@@ -153,38 +153,6 @@ function getMainPhoneEnter(): gsap.core.Timeline {
     );
     return animate;
 }
-function propagandaModuleScroll(): void {
-    const textWrapper = $(".wrapper-propaganda_text");
-    const IntroWrapper = $(".wrapper-propaganda_intro");
-    const secHand = $(".wrapper-propaganda_intro .layer-hand-ahead");
-    const scrollOrder = getScrollOrder();
-    function bigSizeAdapt() {
-        gsap.timeline({
-            defaults: { ease: "none" },
-            scrollTrigger: {
-                refreshPriority: scrollOrder,
-                trigger: ".module-propaganda",
-                start: "top top",
-                end: "bottom top",
-                scrub: true,
-                invalidateOnRefresh: true,
-            },
-        })
-            .to(
-                textWrapper,
-                {
-                    y: () => (window.innerWidth >= 1068 ? "60vh" : "50vh"),
-                    duration: 1,
-                },
-                0
-            )
-            .to(IntroWrapper, { y: "20vh", duration: 1 }, 0)
-            .to(secHand, { x: "0", y: "0", duration: 0.5 }, 0);
-    }
-    ScrollTrigger.matchMedia({
-        all: bigSizeAdapt,
-    });
-}
 export default function initPropaganda(): {
     init: () => void;
 } {
@@ -208,6 +176,38 @@ export default function initPropaganda(): {
                     animate.play();
                 },
             });
+        });
+    }
+    function propagandaModuleScroll(): void {
+        const textWrapper = $(".wrapper-propaganda_text");
+        const IntroWrapper = $(".wrapper-propaganda_intro");
+        const secHand = $(".wrapper-propaganda_intro .layer-hand-ahead");
+        const scrollOrder = getScrollOrder();
+        function bigSizeAdapt() {
+            gsap.timeline({
+                defaults: { ease: "none" },
+                scrollTrigger: {
+                    refreshPriority: scrollOrder,
+                    trigger: ".module-propaganda",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true,
+                    invalidateOnRefresh: true,
+                },
+            })
+                .to(
+                    textWrapper,
+                    {
+                        y: () => (window.innerWidth >= 1068 ? "60vh" : "50vh"),
+                        duration: 1,
+                    },
+                    0
+                )
+                .to(IntroWrapper, { y: "20vh", duration: 1 }, 0)
+                .to(secHand, { x: "0", y: "0", duration: 0.5 }, 0);
+        }
+        ScrollTrigger.matchMedia({
+            all: bigSizeAdapt,
         });
     }
     return {

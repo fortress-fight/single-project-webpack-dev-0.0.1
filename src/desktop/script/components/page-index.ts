@@ -13,22 +13,17 @@ import SiteManage from "./site-manage";
 import { os } from "@/util/os";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import initPropaganda from "./inner-components/module-propaganda";
+import initDesign from "./inner-components/module-design";
+
 import initDocModuleScroll from "./doc-module-scroll";
 import initCustomerModuleScroll from "./customer-module-scroll";
 import initShowModuleScroll from "./show-module-scroll";
-import initDesignModuleScroll from "./design-module-scroll";
 import statisticModuleScroll from "./statistic-module-scroll";
 import moduleCase from "./module-case";
 import moduleShare from "./module-share";
 import lottie from "lottie-web";
 
 export default class IndexPage extends SiteManage {
-    private scrollTriggerOrder = 1000;
-    private getScrollTriggerOrder() {
-        this.scrollTriggerOrder -= 100;
-        return this.scrollTriggerOrder;
-    }
-
     otherTask = [
         "propagandaModule",
         "designModule",
@@ -198,7 +193,8 @@ export default class IndexPage extends SiteManage {
     }
     designModule(): void {
         if (!$(".module-design").length) return;
-        initDesignModuleScroll();
+        // initDesignModuleScroll();
+        initDesign().init();
     }
     showModule(): void {
         if (!$(".module-show").length) return;

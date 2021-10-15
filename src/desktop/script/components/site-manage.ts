@@ -53,9 +53,14 @@ export default class UemoCardSite extends SiteManage {
                 },
                 pinType: "transform",
             });
-            ScrollTrigger.addEventListener("refresh", () =>
-                locoScroll.update()
-            );
+
+            ScrollTrigger.addEventListener("refresh", () => {
+                setTimeout(() => {
+                    requestAnimationFrame(() => {
+                        locoScroll.update();
+                    });
+                }, 200);
+            });
             this.vsScroll = locoScroll;
         } else {
             $("body").css({
