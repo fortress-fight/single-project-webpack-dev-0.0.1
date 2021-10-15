@@ -89,9 +89,10 @@ function getIntroScrollCtrl() {
 const setSection = (() => {
     let oldIndex = -1;
     return (dir, index) => {
+        if (index == oldIndex) return;
         if (dir == 1) {
             if (index <= oldIndex) return;
-        } else if (dir == -1) {
+        } else {
             if (index >= oldIndex) return;
         }
         $(".module-design .footer-index-nav .current").text(
@@ -103,6 +104,7 @@ const setSection = (() => {
 })();
 
 export default function initDesign(): { init: () => void } {
+    const defaultOrder = getScrollOrder();
     const scrollOrder = getScrollOrder();
     const introScrollCtrl = getIntroScrollCtrl();
     function allAdapt() {
@@ -111,7 +113,7 @@ export default function initDesign(): { init: () => void } {
                 ease: "none",
             },
             scrollTrigger: {
-                refreshPriority: getScrollOrder(),
+                refreshPriority: defaultOrder,
                 trigger: ".module-design .module-inner_wrapper",
                 scrub: true,
                 start: "top bottom",
@@ -179,15 +181,6 @@ export default function initDesign(): { init: () => void } {
         scrollAnim: gsap.core.Timeline,
         introScrollAnim: gsap.core.Timeline
     ) {
-        ScrollTrigger.addEventListener("refreshInit", () => {
-            gsap.set(".module-design .divide-inner", {
-                width: introScrollAnim.progress() * 100 + "%",
-            });
-            setSection(
-                scrollAnim.scrollTrigger?.direction,
-                introScrollAnim.currentLabel()
-            );
-        });
         introScrollAnim.eventCallback("onUpdate", () => {
             gsap.set(".module-design .divide-inner", {
                 width: introScrollAnim.progress() * 100 + "%",

@@ -14,10 +14,10 @@ import { os } from "@/util/os";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import initPropaganda from "./inner-components/module-propaganda";
 import initDesign from "./inner-components/module-design";
+import initShow from "./inner-components/module-show";
 
 import initDocModuleScroll from "./doc-module-scroll";
 import initCustomerModuleScroll from "./customer-module-scroll";
-import initShowModuleScroll from "./show-module-scroll";
 import statisticModuleScroll from "./statistic-module-scroll";
 import moduleCase from "./module-case";
 import moduleShare from "./module-share";
@@ -193,12 +193,15 @@ export default class IndexPage extends SiteManage {
     }
     designModule(): void {
         if (!$(".module-design").length) return;
-        // initDesignModuleScroll();
         initDesign().init();
     }
     showModule(): void {
         if (!$(".module-show").length) return;
-        initShowModuleScroll();
+        initShow().init();
+    }
+    docModule(): void {
+        if (!$(".module-doc").length) return;
+        initDocModuleScroll();
     }
     contactModule(): void {
         if (!$(".module-contact").length) return;
@@ -307,10 +310,6 @@ export default class IndexPage extends SiteManage {
                 animate.goToAndPlay(0, 1);
             }
         });
-    }
-    docModule(): void {
-        if (!$(".module-doc").length) return;
-        initDocModuleScroll();
     }
     customerModule(): void {
         if (!$(".module-customer").length) return;
