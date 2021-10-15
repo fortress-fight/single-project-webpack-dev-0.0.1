@@ -1,22 +1,20 @@
 /*
- * @Description:
+ * @Description: 宣传板块的执行函数
  * @Author: F-Stone
- * @Date: 2021-08-11 16:13:52
- * @LastEditTime: 2021-08-11 16:13:53
+ * @Date: 2021-10-15 15:26:45
+ * @LastEditTime: 2021-10-15 15:26:46
  * @LastEditors: F-Stone
  */
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-export function getLineEnter(): gsap.core.Timeline {
+import { getScrollOrder } from "./scroll-trigger-manage";
+function getLineEnter(): gsap.core.Timeline {
     const lineWrapper = $(".box-text_effect");
     const lineOne = $(".effect-line-1");
     const lineTwo = $(".effect-line-2");
     const animate = gsap.timeline({
         paused: true,
-        defaults: {
-            ease: "lineEffect",
-        },
+        defaults: { ease: "lineEffect" },
     });
     animate.fromTo(
         lineWrapper,
@@ -85,7 +83,7 @@ export function getLineEnter(): gsap.core.Timeline {
     );
     return animate;
 }
-export function getLineEnterEnd(): gsap.core.Timeline {
+function getLineEnterEnd(): gsap.core.Timeline {
     const animate = gsap.timeline({
         defaults: {
             ease: "better-elastic",
@@ -138,55 +136,84 @@ export function getLineEnterEnd(): gsap.core.Timeline {
     );
     return animate;
 }
-export function propagandaModuleScroll(): void {
+function getMainPhoneEnter(): gsap.core.Timeline {
+    const animate = gsap.timeline();
+    const mainHand = $(".wrapper-propaganda_intro .inner-wrapper");
+    animate.fromTo(
+        mainHand,
+        {
+            y: "10vh",
+            opacity: 0,
+        },
+        {
+            y: "0vh",
+            opacity: 1,
+            ease: "Power2.easeOut",
+        }
+    );
+    return animate;
+}
+function propagandaModuleScroll(): void {
     const textWrapper = $(".wrapper-propaganda_text");
     const IntroWrapper = $(".wrapper-propaganda_intro");
     const secHand = $(".wrapper-propaganda_intro .layer-hand-ahead");
-
+    const scrollOrder = getScrollOrder();
+    function bigSizeAdapt() {
+        gsap.timeline({
+            defaults: { ease: "none" },
+            scrollTrigger: {
+                refreshPriority: scrollOrder,
+                trigger: ".module-propaganda",
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+                invalidateOnRefresh: true,
+            },
+        })
+            .to(
+                textWrapper,
+                {
+                    y: () => (window.innerWidth >= 1068 ? "60vh" : "50vh"),
+                    duration: 1,
+                },
+                0
+            )
+            .to(IntroWrapper, { y: "20vh", duration: 1 }, 0)
+            .to(secHand, { x: "0", y: "0", duration: 0.5 }, 0);
+    }
     ScrollTrigger.matchMedia({
-        "(min-width: 735px)": function () {
-            gsap.timeline({
-                defaults: {
-                    ease: "none",
-                },
-                scrollTrigger: {
-                    trigger: ".module-propaganda",
-                    start: "top top",
-                    end: "bottom top",
-                    scrub: true,
-                    invalidateOnRefresh: true,
-                },
-            })
-                .to(
-                    textWrapper,
-                    {
-                        y: () => {
-                            return window.innerWidth >= 1068 ? "60vh" : "50vh";
-                        },
-                        duration: 1,
-                    },
-                    0
-                )
-                .to(IntroWrapper, { y: "20vh", duration: 1 }, 0)
-                .to(secHand, { x: "0", y: "0", duration: 0.5 }, 0)
-                .to(secHand, { x: "0", y: "0", duration: 0.5 }, ">");
-        },
-        "(max-width: 734px)": function () {
-            gsap.timeline({
-                defaults: {
-                    ease: "none",
-                },
-                scrollTrigger: {
-                    trigger: ".module-propaganda",
-                    start: "top top",
-                    end: "bottom top",
-                    scrub: true,
-                },
-            })
-                .to(textWrapper, { y: "60vh", duration: 1 }, 0)
-                .to(IntroWrapper, { y: "20vh", duration: 1 }, 0)
-                .to(secHand, { x: "0", y: "0", duration: 0.5 }, 0)
-                .to(secHand, { x: "0", y: "0", duration: 0.5 }, ">");
-        },
+        all: bigSizeAdapt,
     });
+}
+export default function initPropaganda(): {
+    init: () => void;
+} {
+    function enterAnim() {
+        const animate = getLineEnter();
+
+        animate.add(getLineEnterEnd(), ">");
+        animate.add(getMainPhoneEnter(), "-=0.3");
+
+        requestAnimationFrame(() => {
+            gsap.to(".site-head", {
+                opacity: 1,
+                ease: "Power2.easeOut",
+                delay: 0.4,
+                duration: 0.4,
+                stagger: 1,
+                startAt: {
+                    opacity: 0,
+                },
+                onStart() {
+                    animate.play();
+                },
+            });
+        });
+    }
+    return {
+        init: () => {
+            enterAnim();
+            propagandaModuleScroll();
+        },
+    };
 }

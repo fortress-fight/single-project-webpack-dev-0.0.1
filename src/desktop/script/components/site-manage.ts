@@ -87,12 +87,6 @@ export default class UemoCardSite extends SiteManage {
                     if (window.navDistance > distance) {
                         window.navDistance = distance;
                         ScrollTrigger.refresh();
-                        // gsap.set(".target-box-size", {
-                        //     width:
-                        //         ((window.outerHeight - window.navDistance) /
-                        //             100) *
-                        //         560,
-                        // });
                     }
                 });
             });

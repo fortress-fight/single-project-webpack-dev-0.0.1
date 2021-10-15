@@ -26,7 +26,7 @@
         />
     </head>
     <body class="state-prevent_scroll">
-        <% require("./components/header.ejs")({IMG_PATH}) %>
+        <%- require("./components/header.ejs")({IMG_PATH}) %>
         <div
             id="site-page"
             class="site-page"
@@ -35,7 +35,7 @@
             data-scroll-container
         >
             <!-- <div style="height: 1000px; background-color: red"></div> -->
-            <% require("./components/module-propaganda.ejs")({IMG_PATH}) %>
+            <%- require("./components/module-propaganda.ejs")({IMG_PATH}) %>
             <!--  -->
             <% require("./components/module-design.ejs")({IMG_PATH}) %>
             <!--  -->
@@ -52,7 +52,7 @@
             <!--  -->
             <% require("./components/module-customer.ejs")({IMG_PATH}) %>
             <!--  -->
-            <%- require("./components/module-case.ejs")({IMG_PATH}) %>
+            <% require("./components/module-case.ejs")({IMG_PATH}) %>
             <!--  -->
             <% require("./components/module-contact.ejs")({IMG_PATH}) %>
             <!-- <div style="height: 1000px; background-color: yellow"></div> -->
