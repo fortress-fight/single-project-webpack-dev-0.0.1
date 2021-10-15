@@ -106,14 +106,15 @@ export default class UemoCardSite extends SiteManage {
         }
     }
     setScrollbarDir(): void {
-        this.vsScroll.on("scroll", ({ direction: dir }) => {
-            const $scrollbar = $(".c-scrollbar .c-scrollbar_thumb");
-            const oldDir = $scrollbar.attr("data-state-dir");
+        this.vsScroll &&
+            this.vsScroll.on("scroll", ({ direction: dir }) => {
+                const $scrollbar = $(".c-scrollbar .c-scrollbar_thumb");
+                const oldDir = $scrollbar.attr("data-state-dir");
 
-            if (oldDir != dir) {
-                $scrollbar.attr("data-state-dir", dir);
-            }
-        });
+                if (oldDir != dir) {
+                    $scrollbar.attr("data-state-dir", dir);
+                }
+            });
     }
     initScrollNav(): void {
         const $navDom = $("#site-head");
