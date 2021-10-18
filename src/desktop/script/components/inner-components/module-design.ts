@@ -104,6 +104,9 @@ const setSection = (() => {
 })();
 
 export default function initDesign(): { init: () => void } {
+    const $moduleInnerWrapper = $(".module-design .module-inner_wrapper");
+    ScrollTrigger.saveStyles($moduleInnerWrapper);
+
     const defaultOrder = getScrollOrder();
     const scrollOrder = getScrollOrder();
     const introScrollCtrl = getIntroScrollCtrl();
@@ -114,7 +117,7 @@ export default function initDesign(): { init: () => void } {
             },
             scrollTrigger: {
                 refreshPriority: defaultOrder,
-                trigger: ".module-design .module-inner_wrapper",
+                trigger: $moduleInnerWrapper,
                 scrub: true,
                 start: "top bottom",
                 end: "top top",
@@ -130,8 +133,8 @@ export default function initDesign(): { init: () => void } {
         const scrollAnim = gsap.timeline({
             defaults: { ease: "none" },
             scrollTrigger: {
+                trigger: $moduleInnerWrapper,
                 refreshPriority: scrollOrder,
-                trigger: ".module-design .module-inner_wrapper",
                 scrub: true,
                 start: "top top",
                 end: () => Math.min(window.innerWidth * 4, 1920 * 3),
@@ -157,7 +160,7 @@ export default function initDesign(): { init: () => void } {
             defaults: { ease: "none" },
             scrollTrigger: {
                 refreshPriority: scrollOrder,
-                trigger: ".module-design .module-inner_wrapper",
+                trigger: $moduleInnerWrapper,
                 scrub: true,
                 start: "top top",
                 end: 3200,

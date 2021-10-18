@@ -234,6 +234,7 @@ function getInfoCtrl() {
 
 export default function initDoc(): { init: () => void } {
     const allScrollOrder = getScrollOrder();
+    ScrollTrigger.saveStyles(".module-doc .wrapper-limit_width");
 
     function allAdapt() {
         ScrollTrigger.create({
@@ -250,6 +251,7 @@ export default function initDoc(): { init: () => void } {
     function getParallaxCtrl() {
         const $parallaxDom = $(".module-doc .module-body");
         ScrollTrigger.saveStyles($parallaxDom);
+        ScrollTrigger.saveStyles("#placeholder-doc_scroll");
         return {
             init() {
                 gsap.timeline({

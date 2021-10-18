@@ -16,6 +16,8 @@ export default function initShare(): { init: () => void } {
     const $section = $(".module-share");
     const $pinContent = $section.find(".module_content-box");
 
+    ScrollTrigger.saveStyles($pinContent);
+
     const scaleVideoCtrl = getScaleVideoCtrl();
     const { getListAnime, getMinListAnime } = getUserListCtrl();
     return {

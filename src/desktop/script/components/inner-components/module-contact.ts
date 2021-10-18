@@ -16,6 +16,9 @@ export default function initContact(): { init: () => void } {
         init() {
             ScrollTrigger.saveStyles(".module-contact .wrapper-module_body");
             ScrollTrigger.saveStyles(".module-contact .layer-circle img");
+            ScrollTrigger.saveStyles(
+                ".module-contact .wrapper-limit_width--min"
+            );
             function normalScreen() {
                 const animate = gsap.timeline({
                     defaults: {

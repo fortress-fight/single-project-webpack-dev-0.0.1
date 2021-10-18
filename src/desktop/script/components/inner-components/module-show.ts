@@ -284,6 +284,10 @@ export default function initShow(): { init: () => void } {
     const middleBgShowCtrl = getMiddleBgShowCtrl();
     const smallBgShowCtrl = getSmallBgShowCtrl();
 
+    ScrollTrigger.saveStyles($module.find(".module-body .wrapper-zero_area"));
+    ScrollTrigger.saveStyles($module.find(".module-header"));
+    ScrollTrigger.saveStyles($module.find(".wrapper-module_content"));
+
     function genGsapAnim(onRefresh) {
         const scrollAnim = gsap.timeline({
             defaults: {

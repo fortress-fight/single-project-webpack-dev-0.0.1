@@ -25,6 +25,10 @@ export default function initStatistic(): {
     ScrollTrigger.saveStyles($bgCircle);
     ScrollTrigger.saveStyles($itemImgs);
     ScrollTrigger.saveStyles($wrapperLimitWidth);
+    ScrollTrigger.saveStyles($module.find(".box-bg"));
+    ScrollTrigger.saveStyles(".module-statistic .state-pos_right");
+    ScrollTrigger.saveStyles(".module-statistic .module-body");
+    ScrollTrigger.saveStyles(".module-statistic .box-intro_img");
 
     let oldIndex = -1;
     function setSection(dir, index) {

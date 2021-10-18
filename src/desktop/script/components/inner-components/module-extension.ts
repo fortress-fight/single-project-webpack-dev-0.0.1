@@ -21,7 +21,9 @@ export default function initExtension(): {
     const $pinWrapper = $module.find(".wrapper-limit_width--min .pin-wrapper");
     const $list = $(".module-extension .list-extension");
     const $item = $list.find(".item-extension");
+    ScrollTrigger.saveStyles($module);
     ScrollTrigger.saveStyles($list);
+    ScrollTrigger.saveStyles($pinWrapper);
     return {
         init() {
             const mainScrollOrder = getScrollOrder();
