@@ -15,8 +15,8 @@ import initDesign from "./inner-components/module-design";
 import initShow from "./inner-components/module-show";
 import initContact from "./inner-components/module-contact";
 import initWeiXinCode from "./inner-components/module-weixin-code";
+import initDoc from "./inner-components/module-doc";
 
-import initDocModuleScroll from "./doc-module-scroll";
 import initCustomerModuleScroll from "./customer-module-scroll";
 import statisticModuleScroll from "./statistic-module-scroll";
 import moduleCase from "./module-case";
@@ -55,7 +55,7 @@ export default class IndexPage extends SiteManage {
     }
     docModule(): void {
         if (!$(".module-doc").length) return;
-        initDocModuleScroll();
+        initDoc().init();
     }
     contactModule(): void {
         if (!$(".module-contact").length) return;
