@@ -201,7 +201,7 @@ export default function getScaleVideoCtrl(): {
                 },
                 {
                     ease: "power3.inOut",
-                    duration: 0.6,
+                    duration: 1,
                     r: 0,
                     scale: 1,
                     w: () => window.innerWidth,
@@ -240,8 +240,7 @@ export default function getScaleVideoCtrl(): {
             );
 
             // text-content
-            anime.to(layerCoverShare, { opacity: 1 }, "scaleBigEnd");
-            anime.to(layerCoverShare, { opacity: 1 }, "scaleBigEnd");
+            anime.to(layerCoverShare, { opacity: 1 }, "scaleBigEnd+=0.4");
             anime.to($videoDesc, { opacity: 1 }, "scaleBigEnd");
             anime.to(
                 $section.find(".wrapper-pos--center"),

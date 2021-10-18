@@ -19,7 +19,7 @@ export default function initContact(): { init: () => void } {
             ScrollTrigger.saveStyles(
                 ".module-contact .wrapper-limit_width--min"
             );
-            function normalScreen() {
+            function bigAdapt() {
                 const animate = gsap.timeline({
                     defaults: {
                         ease: "none",
@@ -66,7 +66,7 @@ export default function initContact(): { init: () => void } {
                 }
             }
             ScrollTrigger.matchMedia({
-                all: normalScreen,
+                "(min-width: 735px)": bigAdapt,
             });
         },
     };

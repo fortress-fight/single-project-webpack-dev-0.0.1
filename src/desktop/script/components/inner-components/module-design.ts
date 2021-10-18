@@ -80,7 +80,6 @@ function getIntroScrollCtrl() {
                     break;
             }
         });
-        scrollAnim.to({}, { duration: 0.5 });
         return scrollAnim;
     };
 }
@@ -153,6 +152,7 @@ export default function initDesign(): { init: () => void } {
             },
         });
         _bindCardMove(scrollAnim, introScrollAnim);
+        scrollAnim.to({}, { duration: 0.5 });
     }
     function smallAdapt() {
         const introScrollAnim = introScrollCtrl();
@@ -163,7 +163,7 @@ export default function initDesign(): { init: () => void } {
                 trigger: $moduleInnerWrapper,
                 scrub: true,
                 start: "top top",
-                end: 3200,
+                end: 2300,
                 invalidateOnRefresh: true,
                 pin: true,
                 anticipatePin: 1,
@@ -179,6 +179,7 @@ export default function initDesign(): { init: () => void } {
             },
         });
         _bindCardMove(scrollAnim, introScrollAnim);
+        scrollAnim.to({}, { duration: 0.2 });
     }
     function _bindCardMove(
         scrollAnim: gsap.core.Timeline,

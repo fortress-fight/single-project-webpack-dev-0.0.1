@@ -95,14 +95,14 @@ function getBeforeEnterCtrl() {
                 ease: "expo.inOut",
                 onComplete() {
                     gsap.to(".module-doc .layer-cover .user-oper_bar", {
-                        overwrite: "auto",
+                        overwrite: true,
                         opacity: 1,
                         y: "0%",
                     });
                 },
-                // onReverseComplete() {
-                //     gsap.killTweensOf($scaleDom);
-                // },
+                onReverseComplete() {
+                    gsap.killTweensOf($scaleDom);
+                },
             });
             scrollAnim.fromTo(
                 $leftAreaBg,
@@ -110,9 +110,9 @@ function getBeforeEnterCtrl() {
                 {
                     scale: 1,
                     duration: 2,
-                    // onReverseComplete() {
-                    //     gsap.killTweensOf($leftAreaBg);
-                    // },
+                    onReverseComplete() {
+                        gsap.killTweensOf($leftAreaBg);
+                    },
                 },
                 "1.3"
             );
@@ -157,10 +157,7 @@ function getInfoCtrl() {
             gsap.set($moduleItemInfo, { y: distance });
             const scrollAnim = gsap.timeline({
                 paused: true,
-                defaults: {
-                    ease: "none",
-                    overwrite: "auto",
-                },
+                defaults: { ease: "none", overwrite: "auto" },
             });
             const duration = 1;
             $moduleItemInfo.each((i, dom) => {
@@ -318,8 +315,8 @@ export default function initDoc(): { init: () => void } {
                 trigger: ".module-doc .wrapper-limit_width",
                 refreshPriority: mainScrollOrder,
                 scrub: true,
-                start: "top top",
-                end: "+=5000",
+                start: "top top+=20",
+                end: "+=2000",
                 pin: true,
                 invalidateOnRefresh: true,
                 onRefresh() {

@@ -263,7 +263,7 @@ function getSmallBgShowCtrl() {
                     );
                 },
                 y: "5.5vw",
-                duration: 1,
+                duration: 0.6,
                 width: "28vw",
                 ease: "better-elastic",
                 yoyo: true,
@@ -399,10 +399,10 @@ export default function initShow(): { init: () => void } {
             );
         });
         scrollAnim.to({}, { duration: 0.6 });
-        scrollAnim.add(moveInCtrl.genAnim().play());
-        scrollAnim.add(smallBgShowCtrl.genAnim().play());
+        scrollAnim.add(moveInCtrl.genAnim().timeScale(2).play());
+        scrollAnim.add(smallBgShowCtrl.genAnim().timeScale(2).play());
         scrollAnim.add(showInfoAnim.play());
-        scrollAnim.to({}, { duration: 1 });
+        scrollAnim.to({}, { duration: 0.2 });
     }
 
     return {

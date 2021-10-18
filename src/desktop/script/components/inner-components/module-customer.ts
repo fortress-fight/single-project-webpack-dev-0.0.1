@@ -151,7 +151,7 @@ export default function initCustomer(): {
                         },
                         scrub: true,
                         pin: true,
-                        end: () => `+=${$items.length * 1000}`,
+                        end: () => `+=${$items.length * 600}`,
                         anticipatePin: 1,
                         invalidateOnRefresh: true,
                     },

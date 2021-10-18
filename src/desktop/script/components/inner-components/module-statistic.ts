@@ -245,7 +245,7 @@ export default function initStatistic(): {
                                 30
                             }`;
                         },
-                        end: "+=" + 5000,
+                        end: "+=" + 2500,
                         pin: ".module-statistic .module-body",
                         invalidateOnRefresh: true,
                         onRefresh() {
@@ -267,7 +267,7 @@ export default function initStatistic(): {
                 });
                 scrollAnim.add(smallInfoAnime.play());
 
-                scrollAnim.to({}, { duration: 1 });
+                scrollAnim.to({}, { duration: 0.5 });
                 setSmallCircle();
             }
             ScrollTrigger.matchMedia({
