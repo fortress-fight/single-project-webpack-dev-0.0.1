@@ -16,10 +16,11 @@ import initDoc from "./inner-components/module-doc";
 import initShare from "./inner-components/module-share";
 import initExtension from "./inner-components/module-extension";
 import initStatistic from "./inner-components/module-statistic";
+import initCustomer from "./inner-components/module-customer";
 
 import initWeiXinCode from "./inner-components/module-weixin-code";
 
-import initCustomerModuleScroll from "./customer-module-scroll";
+// import initCustomerModuleScroll from "./customer-module-scroll";
 // import statisticModuleScroll from "./statistic-module-scroll";
 import moduleCase from "./module-case";
 
@@ -37,10 +38,6 @@ export default class IndexPage extends SiteManage {
         "contactModule",
         "weixinCode",
     ];
-    weixinCode(): void {
-        if (!$(".btn-open_QR")[0]) return;
-        initWeiXinCode(this.vsScroll).init();
-    }
     propagandaModule(): void {
         if (!$(".module-propaganda")[0]) return;
         initPropaganda().init();
@@ -69,16 +66,20 @@ export default class IndexPage extends SiteManage {
         if (!$(".module-statistic").length) return;
         initStatistic().init();
     }
-    contactModule(): void {
-        if (!$(".module-contact").length) return;
-        initContact().init();
-    }
     customerModule(): void {
         if (!$(".module-customer").length) return;
-        initCustomerModuleScroll();
+        initCustomer().init();
     }
     caseModule(): void {
         if (!$(".module-case").length) return;
         moduleCase().init();
+    }
+    contactModule(): void {
+        if (!$(".module-contact").length) return;
+        initContact().init();
+    }
+    weixinCode(): void {
+        if (!$(".btn-open_QR")[0]) return;
+        initWeiXinCode(this.vsScroll).init();
     }
 }
