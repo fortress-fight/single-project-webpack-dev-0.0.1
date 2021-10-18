@@ -16,11 +16,11 @@ import initShow from "./inner-components/module-show";
 import initContact from "./inner-components/module-contact";
 import initWeiXinCode from "./inner-components/module-weixin-code";
 import initDoc from "./inner-components/module-doc";
+import initShare from "./inner-components/module-share";
 
 import initCustomerModuleScroll from "./customer-module-scroll";
 import statisticModuleScroll from "./statistic-module-scroll";
 import moduleCase from "./module-case";
-import moduleShare from "./module-share";
 import lottie from "lottie-web";
 
 export default class IndexPage extends SiteManage {
@@ -56,6 +56,10 @@ export default class IndexPage extends SiteManage {
     docModule(): void {
         if (!$(".module-doc").length) return;
         initDoc().init();
+    }
+    shareModule(): void {
+        if (!$(".module-share").length) return;
+        initShare().init();
     }
     contactModule(): void {
         if (!$(".module-contact").length) return;
@@ -119,10 +123,6 @@ export default class IndexPage extends SiteManage {
     customerModule(): void {
         if (!$(".module-customer").length) return;
         initCustomerModuleScroll();
-    }
-    shareModule(): void {
-        if (!$(".module-share").length) return;
-        moduleShare().init();
     }
     caseModule(): void {
         if (!$(".module-case").length) return;
