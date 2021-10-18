@@ -6,22 +6,21 @@
  * @LastEditors: F-Stone
  */
 
-import { gsap } from "gsap";
-
 import SiteManage from "./site-manage";
 
 import initPropaganda from "./inner-components/module-propaganda";
 import initDesign from "./inner-components/module-design";
 import initShow from "./inner-components/module-show";
 import initContact from "./inner-components/module-contact";
-import initWeiXinCode from "./inner-components/module-weixin-code";
 import initDoc from "./inner-components/module-doc";
 import initShare from "./inner-components/module-share";
+import initExtension from "./inner-components/module-extension";
+
+import initWeiXinCode from "./inner-components/module-weixin-code";
 
 import initCustomerModuleScroll from "./customer-module-scroll";
 import statisticModuleScroll from "./statistic-module-scroll";
 import moduleCase from "./module-case";
-import lottie from "lottie-web";
 
 export default class IndexPage extends SiteManage {
     otherTask = [
@@ -61,6 +60,10 @@ export default class IndexPage extends SiteManage {
         if (!$(".module-share").length) return;
         initShare().init();
     }
+    extensionModule(): void {
+        if (!$(".module-extension").length) return;
+        initExtension().init();
+    }
     contactModule(): void {
         if (!$(".module-contact").length) return;
         initContact().init();
@@ -68,57 +71,6 @@ export default class IndexPage extends SiteManage {
     statisticModule(): void {
         if (!$(".module-statistic").length) return;
         statisticModuleScroll();
-    }
-    extensionModule(): void {
-        if (!$(".module-extension").length) return;
-        const $module = $(".module-extension");
-        const dom = $(".module-extension .module-body .list-extension")[0];
-        const domParent = $(".module-extension .module-body")[0];
-
-        const scrollAnimate = gsap.timeline({
-            defaults: {
-                overwrite: "auto",
-                ease: "none",
-            },
-            scrollTrigger: {
-                start: () => {
-                    return `center ${
-                        (window.outerHeight - window.navDistance) / 2
-                    }`;
-                },
-                scrub: true,
-                trigger: $module,
-                pin: $module.find(".wrapper-limit_width--min .pin-wrapper"),
-                invalidateOnRefresh: true,
-                anticipatePin: 1,
-                end: () => `+=${dom.offsetWidth}`,
-            },
-        });
-
-        scrollAnimate.to(".module-extension .list-extension", {
-            duration: 1,
-            x: () => {
-                return -(dom.offsetWidth - domParent.offsetWidth);
-            },
-        });
-        scrollAnimate.to({}, { duration: 0.2 });
-        $(".module-extension .item-extension .box-icon").each((i, dom) => {
-            const lottieAnimate = lottie.loadAnimation({
-                container: dom,
-                renderer: "svg",
-                loop: false,
-                autoplay: false,
-                path: $(dom).data("ae-icon"),
-            });
-            $(dom).data("lottieAnimate", lottieAnimate);
-        });
-        $(".module-extension .item-extension").on("pointerenter", (ev) => {
-            const dom = ev.currentTarget;
-            const animate = $(dom).find(".box-icon").data("lottieAnimate");
-            if (animate.isPaused) {
-                animate.goToAndPlay(0, 1);
-            }
-        });
     }
     customerModule(): void {
         if (!$(".module-customer").length) return;
