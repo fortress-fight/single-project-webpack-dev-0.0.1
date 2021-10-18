@@ -39,9 +39,9 @@ export default function initContact(): { init: () => void } {
                         ".module-contact .wrapper-module_body",
                         {
                             ease: "none",
-                            yPercent: "-70%",
+                            yPercent: -70,
                         },
-                        { yPercent: "-100%" }
+                        { yPercent: -100 }
                     );
                     $(".module-contact .layer-circle img").each((i, dom) => {
                         animate.fromTo(
@@ -58,7 +58,7 @@ export default function initContact(): { init: () => void } {
                     });
                 } else {
                     animate.set(".module-contact .wrapper-module_body", {
-                        yPercent: "-100%",
+                        yPercent: -100,
                     });
                 }
             }
