@@ -17,12 +17,11 @@ import initShare from "./inner-components/module-share";
 import initExtension from "./inner-components/module-extension";
 import initStatistic from "./inner-components/module-statistic";
 import initCustomer from "./inner-components/module-customer";
-
+import initCase from "./inner-components/module-case";
 import initWeiXinCode from "./inner-components/module-weixin-code";
 
 // import initCustomerModuleScroll from "./customer-module-scroll";
 // import statisticModuleScroll from "./statistic-module-scroll";
-import moduleCase from "./module-case";
 
 export default class IndexPage extends SiteManage {
     otherTask = [
@@ -72,7 +71,7 @@ export default class IndexPage extends SiteManage {
     }
     caseModule(): void {
         if (!$(".module-case").length) return;
-        moduleCase().init();
+        initCase().init();
     }
     contactModule(): void {
         if (!$(".module-contact").length) return;
