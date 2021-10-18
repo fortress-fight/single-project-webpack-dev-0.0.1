@@ -263,7 +263,7 @@ function getSmallBgShowCtrl() {
                     );
                 },
                 y: "5.5vw",
-                duration: 0.6,
+                duration: 0.8,
                 width: "28vw",
                 ease: "better-elastic",
                 yoyo: true,

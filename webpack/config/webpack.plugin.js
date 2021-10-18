@@ -17,7 +17,7 @@ const {
     NODE_ENV,
     PUBLIC_PATH,
     OUT_PUT_PATH,
-    IS_DEV_MODEL,
+    // IS_DEV_MODEL,
     WORKSPACE_FOLDER,
     DEVICE,
 } = require("./webpack.env");
@@ -61,7 +61,7 @@ const WEBPACK_PLUGIN_BASE = [
 // 加快eslint检查，配合thread-loader+happyPackMode将会为其单独分配一个线程进行处理
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+// const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { DLL_PLUGIN } = require("./webpack.dll");
 const { genHTMLPlugin } = require("./webpack.template");
 
@@ -114,11 +114,11 @@ const DEV_WEBPACK_PLUGIN = [
             },
         ],
     }),
-    new BundleAnalyzerPlugin({
-        analyzerPort: "auto",
-        analyzerMode: IS_DEV_MODEL ? "server" : "static",
-        openAnalyzer: false,
-    }),
+    // new BundleAnalyzerPlugin({
+    //     analyzerPort: "auto",
+    //     analyzerMode: IS_DEV_MODEL ? "server" : "static",
+    //     openAnalyzer: false,
+    // }),
 ];
 
 /* ---------------------------------- */

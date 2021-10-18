@@ -245,7 +245,7 @@ export default function initStatistic(): {
                                 30
                             }`;
                         },
-                        end: "+=" + 2500,
+                        end: "+=" + 1500,
                         pin: ".module-statistic .module-body",
                         invalidateOnRefresh: true,
                         onRefresh() {

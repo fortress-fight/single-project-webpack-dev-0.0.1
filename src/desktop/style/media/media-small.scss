@@ -763,6 +763,9 @@
     .module-case .module-item .thumb {
         width: 100%;
     }
+    .module-case .module-head .desc {
+        display: none;
+    }
     .module-case .module-head .title {
         font-size: 40px;
         font-weight: 900;
@@ -942,7 +945,7 @@
         grid-area: 2 / 2 / 3 / 4;
     }
     .module-share .layer-cover--share .video-box {
-        grid-area: 2 / 4 / 3 / 5;
+        grid-area: 3 / 3 / 4 / 4;
     }
 
 
