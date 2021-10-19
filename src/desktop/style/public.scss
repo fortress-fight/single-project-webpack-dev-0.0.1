@@ -1,0 +1,67 @@
+/*
+ * @Description: 公共样式文件
+ * @Author: F-Stone
+ * @Date: 2021-08-03 13:43:56
+ * @LastEditTime: 2021-08-03 18:21:42
+ * @LastEditors: F-Stone
+ */
+
+/* ---------------------------------- */
+/*                reset               */
+/* ---------------------------------- */
+body {
+    font-family: Arial, '微软雅黑';
+    font-size: 14px;
+    line-height: 1.32;
+
+    overflow: hidden;
+
+    user-select: none;
+
+    color: rgb(0 0 0);
+
+    scroll-behavior: smooth;
+}
+h1,
+h2,
+h3,
+h4,
+p {
+    margin: 0;
+}
+a {
+    display: inline-block;
+
+    text-decoration: none;
+}
+.ic {
+    font-size: inherit;
+}
+*[x-apple-data-detectors],
+  
+.x-gmail-data-detectors,
+    
+.x-gmail-data-detectors *,
+.aBn {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+
+    cursor: default !important;
+    text-decoration: none !important;
+
+    color: inherit !important;
+    border-bottom: 0 !important;
+}
+/* ---------------------------------- */
+/*                size                */
+/* ---------------------------------- */
+.wrapper-limit_width {
+
+    @include limit-wrapper;
+}
+.wrapper-limit_width--min {
+
+    @include limit-wrapper-min;
+}

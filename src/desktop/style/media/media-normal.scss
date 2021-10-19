@@ -1,0 +1,15 @@
+
+@custom-media --normal-viewport (max-width: 1460px);
+
+@custom-media --normal-min-viewport (max-width: 1300px);
+
+
+@media only screen and (--normal-viewport) {
+    // 
+
+}   
+
+@media only screen and (--normal-min-viewport) {
+    // 
+
+}

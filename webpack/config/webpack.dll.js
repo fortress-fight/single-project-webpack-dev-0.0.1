@@ -21,10 +21,14 @@ const AddAssetHtmlPlugin = require("add-asset-html-webpack-plugin");
 /* ---------------------------------- */
 /*               set env              */
 /* ---------------------------------- */
-const { PUBLIC_PATH, WORKSPACE_FOLDER } = require("../config/webpack.env");
+const {
+    PUBLIC_PATH,
+    WORKSPACE_FOLDER,
+    DEVICE,
+} = require("../config/webpack.env");
 
 function collectDLL() {
-    const dir = path.resolve(WORKSPACE_FOLDER, "dll");
+    const dir = path.resolve(WORKSPACE_FOLDER, "dll/" + DEVICE);
     const dirCont = fs.readdirSync(dir);
     return dirCont
         .filter((e) => e.match(/.*\.json$/gi))
@@ -39,12 +43,18 @@ exports.DLL_PLUGIN = [
     ...collectDLL(),
     new AddAssetHtmlPlugin([
         {
-            filepath: path.resolve(WORKSPACE_FOLDER, "dll/script/*.dll.js"),
+            filepath: path.resolve(
+                WORKSPACE_FOLDER,
+                "dll/" + DEVICE + "/script/*.dll.js"
+            ),
             publicPath: PUBLIC_PATH + "script/",
             outputPath: "script/",
         },
         {
-            filepath: path.resolve(WORKSPACE_FOLDER, "dll/css/*.dll.css"),
+            filepath: path.resolve(
+                WORKSPACE_FOLDER,
+                "dll/" + DEVICE + "/css/*.dll.css"
+            ),
             publicPath: PUBLIC_PATH + "css/",
             outputPath: "css/",
             typeOfAsset: "css",
