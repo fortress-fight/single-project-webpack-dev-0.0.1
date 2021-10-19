@@ -12,6 +12,7 @@ const {
     WORKSPACE_FOLDER,
     PUBLIC_PATH,
     OUT_PUT_PATH,
+    DEVICE,
 } = require("./config/webpack.env");
 
 const WEBPACK_RULES = require("./config/webpack.rule");
@@ -28,7 +29,7 @@ module.exports = {
         },
     },
     entry: {
-        app: path.resolve(WORKSPACE_FOLDER, "src/app.ts"),
+        app: path.resolve(WORKSPACE_FOLDER, `src/${DEVICE}/app.ts`),
     },
     output: {
         filename: pathManage.js.fullPath,

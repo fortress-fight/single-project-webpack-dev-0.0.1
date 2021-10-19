@@ -11,8 +11,8 @@ const genTempParam = (config) =>
     Object.assign(
         {
             PROJECT_NAME,
-            PUB_PATH: PUBLIC_PATH,
-            IMG_PATH: PUBLIC_PATH + "imgs/",
+            PUB_PATH: `${PUBLIC_PATH}`,
+            IMG_PATH: `${PUBLIC_PATH}image/`,
             process,
         },
         config
@@ -27,12 +27,12 @@ exports.pages = [
             }),
         },
     },
-    {
-        name: "test",
-        config: {
-            templateParameters: genTempParam({
-                testData: "这是一条测试文字",
-            }),
-        },
-    },
+    // {
+    //     name: "test",
+    //     config: {
+    //         templateParameters: genTempParam({
+    //             testData: "这是一条测试文字",
+    //         }),
+    //     },
+    // },
 ];

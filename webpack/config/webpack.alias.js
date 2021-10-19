@@ -19,5 +19,7 @@ const { WORKSPACE_FOLDER, PROJECT_NAME } = require("../config/webpack.env");
 exports.WEBPACK_ALIAS = {
     $root: WORKSPACE_FOLDER,
     "@": path.resolve(WORKSPACE_FOLDER, "src/"),
+    "@desktop": path.resolve(WORKSPACE_FOLDER, "src/desktop"),
+    "@mobile": path.resolve(WORKSPACE_FOLDER, "src/mobile"),
     PROJECT_NAME,
 };

@@ -1,0 +1,110 @@
+/*
+ * @Description: 获客方式
+ * @Author: F-Stone
+ * @Date: 2021-08-16 10:27:35
+ * @LastEditTime: 2021-08-16 10:27:52
+ * @LastEditors: F-Stone
+ */
+.module-extension {
+    position: relative;
+    z-index: 10;
+
+    background-color: rgb(255 255 255);
+    .module-body {
+        padding-bottom: 157px;
+    }
+    .module-head {
+        margin-bottom: 154px;
+        padding-top: 157px;
+    }
+    .module-title {
+        br {
+            display: none;
+        }
+    }
+    .module-desc {
+        font-size: 16px;
+        line-height: 28px;
+
+        // width: 362px;
+
+        color: rgb(102 102 102);
+    }
+    .list-extension {
+        flex-wrap: nowrap;
+    }
+    .box-icon {
+
+        @include image-placeholder(100px, 100px);
+        &>* {
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .item-extension {
+
+        @include flex(c, c);
+        position: relative;
+
+        flex-direction: column;
+        flex: 0 0 auto;
+
+        width: 426px;
+        height: 361px;
+        margin-right: 40px;
+        padding: 0 50px;
+
+        transition: 0.36s ease;
+        transition-property: background, box-shadow;
+
+        border: 1px solid rgb(241 241 241);
+        border-radius: 14px;
+        background-color: rgb(255 255 255);
+        box-shadow: 0 0 80px 0 rgb(0 0 0 / 0);
+        &>* { width: 100%;}
+        &:last-child {
+            margin-right: 0;
+        }
+        &:hover {
+            background: rgb(255 255 255);
+            box-shadow: 0 40px 80px 0 rgb(0 0 0 / 0.1);
+        }
+    }
+    .item-head {
+
+        @include flex(sb,c); 
+        width: 100%;
+        margin-bottom: 36px;
+        .ic {
+            font-size: 65px;
+            line-height: 65px;
+
+
+            color: rgb(51 51 51);
+        }
+        .box-index {
+            font-family: 'MontDemo-Heavy';
+            font-size: 24px;
+
+            color: rgb(239 239 239);
+        }
+    }
+    .item-title {
+        font-size: 24px;
+        line-height: 40px;
+
+        margin-bottom: 18px;
+
+        color: rgb(0 0 0);
+    }
+    .item-desc {
+        font-size: 16px;
+        line-height: 28px;
+
+        padding-bottom: 20px;
+
+        color: rgb(153 153 153);
+    }
+}

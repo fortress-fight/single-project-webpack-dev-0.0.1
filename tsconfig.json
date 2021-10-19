@@ -23,6 +23,8 @@
         "paths": {
             "*": ["*", "./typings/*"],
             "@/*": ["src/*"],
+            "@desktop/*": ["src/desktop/*"],
+            "@mobile/*": ["src/mobile/*"],
             "$root/*": ["*"],
             "@project/*": ["src/template/base-project/*"]
         },

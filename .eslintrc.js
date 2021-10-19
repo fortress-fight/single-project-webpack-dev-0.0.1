@@ -40,7 +40,11 @@ module.exports = {
                     experimentalObjectRestSpread: true,
                 },
             },
-            extends: ["eslint:recommended", "plugin:prettier/recommended"],
+            extends: [
+                "eslint:recommended",
+                "plugin:import/recommended",
+                "plugin:prettier/recommended",
+            ],
             rules: {
                 "no-debugger":
                     process.env.NODE_ENV === "production" ? "warn" : "off",
@@ -50,6 +54,7 @@ module.exports = {
             files: ["**/*.ts"],
             extends: [
                 "eslint:recommended",
+                "plugin:import/typescript",
                 "plugin:@typescript-eslint/recommended",
                 "prettier/@typescript-eslint",
                 "plugin:prettier/recommended",
@@ -83,5 +88,6 @@ module.exports = {
     globals: {
         $: "readonly",
         jQuery: "readonly",
+        ENV: "readonly",
     },
 };

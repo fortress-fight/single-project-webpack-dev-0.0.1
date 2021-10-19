@@ -14,11 +14,13 @@
  * img { content: normal !important; } 来解决问题
  */
 
+const postcssCustomMedia = require("postcss-custom-media");
 const defaultPlugins = [
     require("postcss-sass-unicode"),
     require("postcss-preset-env")({ stage: 0 }),
     require("postcss-custom-properties"),
     require("postcss-aspect-ratio-mini"),
+    postcssCustomMedia(),
 ];
 if (process.env.NODE_ENV == "production") {
     defaultPlugins.push(
