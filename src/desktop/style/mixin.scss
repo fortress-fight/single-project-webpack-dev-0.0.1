@@ -4,6 +4,24 @@
 
 }
 
+@function c($num1) {
+
+    @return $num1 / 2;
+
+}
+
+@function cw($num1) {
+
+    @return $num1 / 750 * 100vw;
+
+}
+
+@function web-w($num) {
+
+    @return  $num / 242.16 * 510.17 / 681 * 971;
+
+}
+
 /* ---------------------------------- */
 /*           修改默认样式              */
 /* ---------------------------------- */
@@ -203,6 +221,24 @@
 @mixin limit-wrapper {
     width: $max-limit-width;
     max-width: 94vw;
+    margin: 0 auto;
+}
+
+@mixin limit-wrapper-small {
+    width: $max-limit-width;
+    max-width: 84vw;
+    margin: 0 auto;
+}
+
+@mixin limit-wrapper-small-min {
+    width: $max-limit-width;
+    max-width: 73.3333333333333vw;
+    margin: 0 auto;
+}
+
+@mixin limit-wrapper-normal {
+    width: $max-limit-width;
+    max-width: 88vw;
     margin: 0 auto;
 }
 

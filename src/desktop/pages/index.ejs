@@ -10,11 +10,23 @@
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+        />
         <link rel="icon" href="<%= IMG_PATH + 'logo-icon.png' %>" />
-        <title>好看智能名片</title>
+        <title>好看智能名片_品牌营销拓客工具</title>
+        <meta
+            name="description"
+            content="好看智能名片，商务社交新模式，用全新的名片形象，提升企业营销效率，打造访客行为转客户线索的智能销售方式。让竖立品牌形象不费力，营销精准化，拓客智能化。"
+        />
+        <meta
+            name="keywords"
+            content="名片小程序,拓客工具,营销软件,品牌营销,社交获客,智能营销名片,企业推广,获客软件,人工智能名片,云名片"
+        />
     </head>
     <body class="state-prevent_scroll">
+        <%- require("./components/header.ejs")({IMG_PATH}) %>
         <div
             id="site-page"
             class="site-page"
@@ -22,31 +34,28 @@
             date-page-name="index-page"
             data-scroll-container
         >
-            <%- require("./components/header.ejs")({IMG_PATH}) %>
-            <!--  -->
+            <!-- <div style="height: 1000px; background-color: red"></div> -->
             <%- require("./components/module-propaganda.ejs")({IMG_PATH}) %>
             <!--  -->
-            <!-- <div
-                data-scroll-section
-                style="height: 100vh; background: #fff"
-            ></div> -->
             <%- require("./components/module-design.ejs")({IMG_PATH}) %>
             <!--  -->
             <%- require("./components/module-show.ejs")({IMG_PATH}) %>
             <!--  -->
             <%- require("./components/module-doc.ejs")({IMG_PATH}) %>
             <!--  -->
-            <%- require("./components/module-extension.ejs")({IMG_PATH}) %>
+            <%- require("./components/module-share.ejs")({IMG_PATH}) %>
+            <!--  -->
+            <%- require("./components/module-extension.ejs")({IMG_PATH,
+            PUB_PATH}) %>
             <!--  -->
             <%- require("./components/module-statistic.ejs")({IMG_PATH}) %>
             <!--  -->
-            <!-- <div
-                data-scroll-section
-                style="height: 100vh; background: #fff"
-            ></div> -->
             <%- require("./components/module-customer.ejs")({IMG_PATH}) %>
             <!--  -->
+            <%- require("./components/module-case.ejs")({IMG_PATH}) %>
+            <!--  -->
             <%- require("./components/module-contact.ejs")({IMG_PATH}) %>
+            <!-- <div style="height: 1000px; background-color: yellow"></div> -->
         </div>
         <div class="footer_layer--fixed">
             <div class="wrapper-limit_width">
@@ -58,8 +67,22 @@
                         <i class="ic iconfont icon-code"></i>
                     </div>
                     <span class="text">点我体验下吧！</span>
+                    <div
+                        class="ae-pointer"
+                        data-ae-icon="<%= PUB_PATH %>asset/ae-icon/shou.json"
+                    ></div>
                 </div>
             </div>
         </div>
     </body>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src =
+                "https://hm.baidu.com/hm.js?5506622b19fd2e17bf687517ce2274c3";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 </html>

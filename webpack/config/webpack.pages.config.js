@@ -27,12 +27,12 @@ exports.pages = [
             }),
         },
     },
-    {
-        name: "test",
-        config: {
-            templateParameters: genTempParam({
-                testData: "这是一条测试文字",
-            }),
-        },
-    },
+    // {
+    //     name: "test",
+    //     config: {
+    //         templateParameters: genTempParam({
+    //             testData: "这是一条测试文字",
+    //         }),
+    //     },
+    // },
 ];

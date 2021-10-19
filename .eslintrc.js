@@ -88,5 +88,6 @@ module.exports = {
     globals: {
         $: "readonly",
         jQuery: "readonly",
+        ENV: "readonly",
     },
 };

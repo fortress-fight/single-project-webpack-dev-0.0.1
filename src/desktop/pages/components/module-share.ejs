@@ -1,0 +1,154 @@
+<div class="module module-share">
+    <div class="module_content-box flex flex-y-c">
+        <div class="wrapper-module_content flex flex-y-c">
+            <div class="module-header">
+                <div class="module-title">
+                    <span class="text">企业动态</span>
+                </div>
+                <div class="module-desc">
+                    <span class="text">
+                        已公司形式同步到员工（自媒体）的名片动态中，达到企业用户集群效果。
+                    </span>
+                </div>
+            </div>
+            <div class="module-body flex flex-c-c">
+                <div class="state-pos_left">
+                    <div class="user-list">
+                        <div class="user-item" data-counter="268">
+                            <img
+                                src="<%= IMG_PATH %>module-share/module-share-l-1.jpg"
+                                alt=""
+                            />
+                        </div>
+                        <div class="user-item" data-counter="596">
+                            <img
+                                src="<%= IMG_PATH %>module-share/module-share-l-2.jpg"
+                                alt=""
+                            />
+                        </div>
+                        <div class="user-item" data-counter="688">
+                            <img
+                                src="<%= IMG_PATH %>module-share/module-share-l-3.jpg"
+                                alt=""
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="state-pos_center">
+                    <div class="module-share_phone">
+                        <div class="wrapper-phone">
+                            <img
+                                src="<%= IMG_PATH %>module-share/module-share-phone.jpg"
+                                alt=""
+                            />
+                        </div>
+                        <div class="inner-module">
+                            <div class="placeholder-phone_top"></div>
+                            <div class="preview-image">
+                                <div class="preview-image-box">
+                                    <div class="image"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="module-arrow flex flex-y-c">
+                        <div class="line"></div>
+                        <div class="arrow"></div>
+                    </div>
+                </div>
+                <div class="state-pos_right">
+                    <div class="layer--count">
+                        <div class="count-box">
+                            <div class="count-num">
+                                <span class="text">000</span>
+                            </div>
+                            <div class="num-desc">
+                                <span class="text">企业集群曝光（人）</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layer-cover--share flex flex-c-c">
+                <div class="share-case">
+                    <!-- one -->
+                    <% for( let i = 1; i <= 6; i++ ) { %>
+                    <div class="box-item">
+                        <img
+                            src="<%= IMG_PATH %>module-share/module-share-case-<%= i %>.jpg"
+                            alt=""
+                        />
+                    </div>
+                    <% } %>
+                    <!-- two -->
+                    <div class="box-item">
+                        <img
+                            src="<%= IMG_PATH %>module-share/module-share-case-7.jpg"
+                            alt=""
+                        />
+                    </div>
+                    <div class="box-item">
+                        <img
+                            src="<%= IMG_PATH %>module-share/module-share-case-8.jpg"
+                            alt=""
+                        />
+                    </div>
+                    <div class="desc-content">
+                        <img
+                            src="<%= IMG_PATH %>module-share/module-share-case-desc.jpg"
+                            alt=""
+                        />
+                    </div>
+                    <div class="box-item video-box"></div>
+                    <div class="box-item">
+                        <img
+                            src="<%= IMG_PATH %>module-share/module-share-case-9.jpg"
+                            alt=""
+                        />
+                    </div>
+                    <!-- three -->
+                    <% for( let i = 10; i <= 15; i++ ) { %>
+                    <div class="box-item">
+                        <img
+                            src="<%= IMG_PATH %>module-share/module-share-case-<%= i %>.jpg"
+                            alt=""
+                        />
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <div class="layer--video-play">
+                <canvas id="video-play-canvas"></canvas>
+                <div class="desc-content flex flex-c-c">
+                    <div class="wrapper-pos--center">
+                        <div class="title">
+                            <span class="text">丰富的呈现方式</span>
+                        </div>
+                        <div class="desc">
+                            <span class="text"
+                                >动态可以发布视频/多图/文档/地图等</span
+                            >
+                        </div>
+                        <div class="icons-wrapper flex flex-x-sb">
+                            <i class="icon-item icon-haibao2 iconfont"></i>
+                            <i class="icon-item icon-shipin iconfont"></i>
+                            <i class="icon-item icon-haibao2 iconfont"></i>
+                            <i class="icon-item icon-dizhi iconfont"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-play-box">
+                    <i
+                        class="
+                            video-btn
+                            flex flex-c-c
+                            ic
+                            iconfont
+                            icon-zuojiantou
+                        "
+                    ></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

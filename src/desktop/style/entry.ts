@@ -32,12 +32,17 @@ import "./components/module-doc.scss";
 import "./components/module-statistic.scss";
 import "./components/module-extension.scss";
 import "./components/module-customer.scss";
+import "./components/module-share.scss";
+import "./components/module-case.scss";
 import "./components/page-index.scss";
 
 /* ---------------------------------- */
 /*             适配相关样式            */
 /* ---------------------------------- */
-import "./media.scss";
+import "./media/media-big.scss";
+import "./media/media-normal.scss";
+import "./media/media-middle.scss";
+import "./media/media-small.scss";
 
 /* ---------------------------------- */
 /*                其它样式            */
