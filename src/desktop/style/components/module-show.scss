@@ -146,6 +146,7 @@
         &>.wrapper-limit_width {
 
             @include limit-wrapper;
+            padding-top: 1px;
         }
         .group-row {
             width: 100%;
@@ -334,7 +335,7 @@
     }
     .uemo-web {
 
-        @include image-placeholder(971px, 681px);
+        @include image-placeholder(971px, 686px);
         position: relative;
         z-index: 100;
         left: 263px;

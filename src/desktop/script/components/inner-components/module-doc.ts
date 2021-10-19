@@ -220,7 +220,9 @@ function getInfoCtrl() {
     };
 }
 
-export default function initDoc(): { init: () => void } {
+export default function initDoc(vsScroll: { update: () => void }): {
+    init: () => void;
+} {
     const allScrollOrder = getScrollOrder();
     ScrollTrigger.saveStyles(".module-doc .wrapper-limit_width");
 
@@ -230,6 +232,7 @@ export default function initDoc(): { init: () => void } {
             refreshPriority: allScrollOrder,
             start: "top bottom+=10",
             onEnter() {
+                vsScroll.update();
                 setDocCover();
             },
             onRefresh() {

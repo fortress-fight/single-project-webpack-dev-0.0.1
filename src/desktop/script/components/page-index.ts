@@ -5,7 +5,6 @@
  * @LastEditTime: 2021-08-05 11:23:18
  * @LastEditors: F-Stone
  */
-
 import SiteManage from "./site-manage";
 
 import initPropaganda from "./inner-components/module-propaganda";
@@ -19,9 +18,6 @@ import initStatistic from "./inner-components/module-statistic";
 import initCustomer from "./inner-components/module-customer";
 import initCase from "./inner-components/module-case";
 import initWeiXinCode from "./inner-components/module-weixin-code";
-
-// import initCustomerModuleScroll from "./customer-module-scroll";
-// import statisticModuleScroll from "./statistic-module-scroll";
 
 export default class IndexPage extends SiteManage {
     otherTask = [
@@ -51,7 +47,7 @@ export default class IndexPage extends SiteManage {
     }
     docModule(): void {
         if (!$(".module-doc").length) return;
-        initDoc().init();
+        initDoc(this.vsScroll).init();
     }
     shareModule(): void {
         if (!$(".module-share").length) return;

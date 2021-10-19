@@ -66,7 +66,7 @@ function getCanvasVideoCtrl() {
     let currentIndex = -1;
     let lastReadyIndex = -1;
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < frameCount; i++) {
         const img = new Image();
         img.src = currentFrame(i);
         let imgState = "loading";
@@ -129,7 +129,7 @@ function getCanvasVideoCtrl() {
         dw < cw && (clipW *= cw / dw);
         drawRoundRect(ctx, dl, dt, cw, ch, dr || 0);
         context.clip();
-
+        context.fillStyle = "#fff";
         // draw image
         let ratio = scale;
         let dImgL = dl,
