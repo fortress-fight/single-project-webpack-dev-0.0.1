@@ -48,7 +48,6 @@ function getWebScrollAnim() {
 
 // info 的滚动切换行为
 function changeContent(dir, index) {
-    console.log("dir, index:", dir, index);
     const phoneWrapper = $(
         ".module-show .wrapper-main_phone_imgs, .module-show .main-phone-2"
     );

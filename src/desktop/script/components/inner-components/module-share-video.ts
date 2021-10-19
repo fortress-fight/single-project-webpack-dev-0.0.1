@@ -59,35 +59,55 @@ function getCanvasVideoCtrl() {
 
     const imgCount = { index: 0 };
 
-    const imageLoadPromises = [];
-    for (let i = 0; i < frameCount; i++) {
+    const imageLoadMap: Map<
+        number,
+        { img: HTMLImageElement; imgState: string }
+    > = new Map();
+    let currentIndex = -1;
+    let lastReadyIndex = -1;
+
+    for (let i = 0; i < 1; i++) {
         const img = new Image();
         img.src = currentFrame(i);
-        imageLoadPromises.push(
-            new Promise((res, rej) => {
-                if (img.complete) {
-                    res(img);
-                } else {
-                    img.onload = () => {
-                        res(img);
-                    };
-                    img.onerror = () => {
-                        rej(img);
-                    };
+        let imgState = "loading";
+        if (img.complete) {
+            imgState = "complete";
+            imageLoadMap.set(i, {
+                img,
+                imgState,
+            });
+        } else {
+            img.onload = () => {
+                imgState = "complete";
+                imageLoadMap.set(i, {
+                    img,
+                    imgState,
+                });
+                if (currentIndex == i) {
+                    renderImg(i);
                 }
-            })
-                .then()
-                .catch(() => {
-                    //
-                })
-        );
+            };
+            img.onerror = () => {
+                imgState = "error";
+                imageLoadMap.set(i, {
+                    img,
+                    imgState,
+                });
+            };
+        }
     }
 
     renderImg(0);
     function renderImg(index) {
-        imageLoadPromises[index].then((img) => {
-            drawImageScaled(img, context);
-        });
+        const imgInfo = imageLoadMap.get(index);
+        if (imgInfo?.imgState == "complete") {
+            lastReadyIndex = index;
+            drawImageScaled(imgInfo.img, context);
+        } else {
+            const imgInfo = imageLoadMap.get(lastReadyIndex);
+            imgInfo && drawImageScaled(imgInfo.img, context);
+        }
+        currentIndex = index;
     }
     function drawImageScaled(
         img: HTMLImageElement,

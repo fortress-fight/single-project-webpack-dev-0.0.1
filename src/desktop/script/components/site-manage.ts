@@ -7,6 +7,7 @@
  */
 
 import SiteManage from "@desktop/util/site-manage-0.1.0";
+import { gsap } from "gsap";
 import { os } from "@/util/os";
 import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
@@ -54,6 +55,13 @@ export default class UemoCardSite extends SiteManage {
                 pinType: "transform",
             });
 
+            ScrollTrigger.addEventListener("refreshInit", () => {
+                setTimeout(() => {
+                    requestAnimationFrame(() => {
+                        locoScroll.update();
+                    });
+                }, 200);
+            });
             ScrollTrigger.addEventListener("refresh", () => {
                 setTimeout(() => {
                     requestAnimationFrame(() => {
@@ -106,14 +114,20 @@ export default class UemoCardSite extends SiteManage {
         }
     }
     setScrollbarDir(): void {
+        const $scrollbar = $(".c-scrollbar .c-scrollbar_thumb");
+        gsap.set($scrollbar, {
+            backgroundImage:
+                "linear-gradient(180deg, rgba(6, 193, 96, 0)), rgba(6, 193, 96, 1)",
+        });
+        let oldDir = $scrollbar.attr("data-state-dir");
         this.vsScroll &&
             this.vsScroll.on("scroll", ({ direction: dir }) => {
-                const $scrollbar = $(".c-scrollbar .c-scrollbar_thumb");
-                const oldDir = $scrollbar.attr("data-state-dir");
-
-                if (oldDir != dir) {
-                    $scrollbar.attr("data-state-dir", dir);
-                }
+                requestAnimationFrame(() => {
+                    if (oldDir != dir) {
+                        $scrollbar.attr("data-state-dir", dir);
+                        oldDir = dir;
+                    }
+                });
             });
     }
     initScrollNav(): void {
