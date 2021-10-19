@@ -9,9 +9,6 @@ import { gsap } from "gsap";
 
 const mainPhoneAnimateParam = {
     0: {
-        leftAreaBg: {
-            scale: 1,
-        },
         introImg: {
             scale: 1,
             y: "0%",
@@ -30,9 +27,6 @@ const mainPhoneAnimateParam = {
         docShow4: { y: 20, opacity: 0 },
     },
     1: {
-        leftAreaBg: {
-            scale: 1.1,
-        },
         introImg: {
             scale: 0.85,
             y: "7%",
@@ -51,9 +45,6 @@ const mainPhoneAnimateParam = {
         docShow4: { y: 20, opacity: 0 },
     },
     2: {
-        leftAreaBg: {
-            scale: 1,
-        },
         introImg: {
             scale: 1,
             y: "0%",
@@ -72,9 +63,6 @@ const mainPhoneAnimateParam = {
         docShow4: { y: 20, opacity: 0 },
     },
     3: {
-        leftAreaBg: {
-            scale: 1,
-        },
         introImg: {
             scale: 1,
             y: "0%",
@@ -112,20 +100,11 @@ function getForwardAnimate(param) {
         0
     );
     anime.to(
-        ".module-doc_show .left_area-bg",
-        {
-            id: "leftAreaBg",
-            duration: 0.8,
-            ...param.leftAreaBg,
-        },
-        "-=0.45"
-    );
-    anime.to(
         ".module-doc .main-phone-lock",
         {
             ...param.mainPhoneLock,
         },
-        0
+        "-=0.45"
     );
     anime.to(
         ".module-doc .layer-cover .user-oper_bar",
@@ -208,27 +187,11 @@ function getBackAnimate(param) {
         },
         "<"
     );
-    anime.to(
-        ".module-doc_show .left_area-bg",
-        {
-            id: "leftAreaBg",
-            ...param.leftAreaBg,
-            duration: 0.8,
-        },
-        ">-=0.45"
-    );
     return anime;
 }
-export default function tabPhoneAnim(
-    dir: string,
-    index: number,
-    type?: string
-): void {
+export default function tabPhoneAnim(dir: string, index: number): void {
     const anime = gsap.timeline(defaultTimelineParam);
     const currentParam = mainPhoneAnimateParam[index];
-    if (type == "smallScreen") {
-        currentParam.leftAreaBg.scale = 1;
-    }
     if (dir == "1") {
         anime.add(getForwardAnimate(currentParam).play());
     } else {

@@ -38,6 +38,7 @@ function setDocCover() {
     const $scaleDom = $module.find(".intro-img");
     const $phoneHead = $module.find(".main-phone_head");
     gsap.set($scaleDom, {
+        overwrite: true,
         transformOrigin: "center center",
         scale: 1,
         x: 0,
@@ -45,6 +46,7 @@ function setDocCover() {
     });
     const scaleParam = _getScaleParam();
     gsap.set($scaleDom, {
+        overwrite: true,
         transformOrigin: () => {
             const position = $scaleDom[0].getBoundingClientRect();
             const headPosition = $phoneHead[0].getBoundingClientRect();
@@ -73,10 +75,8 @@ function setDocCover() {
 function getBeforeEnterCtrl() {
     const $module = $(".module-doc");
     const $scaleDom = $module.find(".intro-img");
-    const $leftAreaBg = $module.find(".module-doc_show .left_area-bg");
     const $statePosRight = $module.find(".module-body > .state-pos_right");
     ScrollTrigger.saveStyles($scaleDom);
-    ScrollTrigger.saveStyles($leftAreaBg);
     ScrollTrigger.saveStyles($statePosRight);
     return {
         getAnim() {
@@ -86,10 +86,10 @@ function getBeforeEnterCtrl() {
                     overwrite: true,
                 },
             });
-
             scrollAnim.to($scaleDom, {
                 duration: 3,
                 scale: 1,
+                filter: "blur(0px)",
                 x: 0,
                 y: 0,
                 ease: "expo.inOut",
@@ -104,19 +104,10 @@ function getBeforeEnterCtrl() {
                     gsap.killTweensOf($scaleDom);
                 },
             });
-            scrollAnim.fromTo(
-                $leftAreaBg,
-                { scale: 0.5 },
-                {
-                    scale: 1,
-                    duration: 2,
-                    onReverseComplete() {
-                        gsap.killTweensOf($leftAreaBg);
-                    },
-                },
-                "1.3"
-            );
 
+            scrollAnim.call(() => {
+                gsap.killTweensOf($scaleDom);
+            });
             scrollAnim.fromTo(
                 $statePosRight,
                 { y: "100%" },
@@ -136,14 +127,14 @@ function getBeforeEnterCtrl() {
 // 内容的滚动切换行为
 const setSection = (() => {
     let oldIndex = -1;
-    return (dir, index, type?) => {
+    return (dir, index) => {
         if (index == oldIndex) return;
         if (dir == 1) {
             if (index <= oldIndex) return;
         } else {
             if (index >= oldIndex) return;
         }
-        tabPhoneAnim(dir, index, type);
+        tabPhoneAnim(dir, index);
         oldIndex = index;
     };
 })();
@@ -241,6 +232,9 @@ export default function initDoc(): { init: () => void } {
             onEnter() {
                 setDocCover();
             },
+            onRefresh() {
+                setDocCover();
+            },
         });
     }
 
@@ -274,7 +268,6 @@ export default function initDoc(): { init: () => void } {
     const parallaxCtrl = getParallaxCtrl();
 
     function bigAdapt() {
-        setDocCover();
         const infoScrollAnim = infoCtrl.getAnim();
         const scrollAnim = gsap.timeline({
             defaults: { ease: "none", overwrite: true },
@@ -295,7 +288,7 @@ export default function initDoc(): { init: () => void } {
                 },
             },
         });
-        scrollAnim.add(beforeEnterCtrl.getAnim().play());
+        scrollAnim.add(beforeEnterCtrl.getAnim().play(), "<");
         infoScrollAnim.eventCallback("onUpdate", () => {
             setSection(
                 scrollAnim.scrollTrigger?.direction,
@@ -304,10 +297,26 @@ export default function initDoc(): { init: () => void } {
         });
         scrollAnim.add(infoScrollAnim.play(), ">-=1");
         scrollAnim.to({}, { duration: 1 });
+
+        const $leftAreaBg = $(".module-doc .module-doc_show .left_area-bg");
+        ScrollTrigger.saveStyles($leftAreaBg);
+        scrollAnim.fromTo(
+            $leftAreaBg,
+            { scale: 0.5 },
+            {
+                scale: () => {
+                    return (window.innerWidth * 0.9) / $leftAreaBg.width();
+                },
+                duration: scrollAnim.totalDuration(),
+                onReverseComplete() {
+                    gsap.killTweensOf($leftAreaBg);
+                },
+            },
+            "1.3"
+        );
         parallaxCtrl.init();
     }
     function smallAdapt() {
-        setDocCover();
         const infoScrollAnim = infoCtrl.getAnim("15px");
         const scrollAnim = gsap.timeline({
             defaults: { ease: "none", overwrite: true },
@@ -322,8 +331,7 @@ export default function initDoc(): { init: () => void } {
                 onRefresh() {
                     setSection(
                         scrollAnim.scrollTrigger?.direction,
-                        infoScrollAnim.currentLabel(),
-                        "smallScreen"
+                        infoScrollAnim.currentLabel()
                     );
                 },
             },
@@ -333,12 +341,28 @@ export default function initDoc(): { init: () => void } {
         infoScrollAnim.eventCallback("onUpdate", () => {
             setSection(
                 scrollAnim.scrollTrigger?.direction,
-                infoScrollAnim.currentLabel(),
-                "smallScreen"
+                infoScrollAnim.currentLabel()
             );
         });
         scrollAnim.add(infoScrollAnim.play(), ">-=1");
         scrollAnim.to({}, { duration: 1 });
+
+        const $leftAreaBg = $(".module-doc .module-doc_show .left_area-bg");
+        ScrollTrigger.saveStyles($leftAreaBg);
+        scrollAnim.fromTo(
+            $leftAreaBg,
+            { scale: 0.5 },
+            {
+                scale: () => {
+                    return (window.outerHeight * 1) / $leftAreaBg.height();
+                },
+                duration: scrollAnim.totalDuration(),
+                onReverseComplete() {
+                    gsap.killTweensOf($leftAreaBg);
+                },
+            },
+            "1.3"
+        );
     }
 
     return {
