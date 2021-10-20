@@ -232,7 +232,7 @@ export default function initDoc(vsScroll: { update: () => void }): {
             refreshPriority: allScrollOrder,
             start: "top bottom+=10",
             onEnter() {
-                vsScroll.update();
+                vsScroll?.update();
                 setDocCover();
             },
             onRefresh() {
