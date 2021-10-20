@@ -32,6 +32,7 @@ export default class IndexPage extends SiteManage {
         "caseModule",
         "contactModule",
         "weixinCode",
+        "videoPlayObserver",
     ];
     propagandaModule(): void {
         if (!$(".module-propaganda")[0]) return;
@@ -76,5 +77,42 @@ export default class IndexPage extends SiteManage {
     weixinCode(): void {
         if (!$(".btn-open_QR")[0]) return;
         initWeiXinCode(this.vsScroll).init();
+    }
+    videoPlayObserver(): void {
+        const $videoModules = $(
+            ".module-design, .module-show, .module-propaganda"
+        );
+        if (window.IntersectionObserver) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        const $videos = $(entry.target).find(
+                            "video"
+                        ) as JQuery<HTMLVideoElement>;
+
+                        if (entry.intersectionRatio > 0) {
+                            $videos.each((i, dom) => {
+                                dom.play();
+                            });
+                        } else {
+                            $videos.each((i, dom) => {
+                                dom.pause();
+                            });
+                        }
+                    });
+                },
+                { threshold: [0, 1] }
+            );
+            $videoModules.each((i, dom) => {
+                observer.observe(dom);
+            });
+        } else {
+            const $videos = $videoModules.find(
+                "video"
+            ) as JQuery<HTMLVideoElement>;
+            $videos.each((i, dom) => {
+                dom.play();
+            });
+        }
     }
 }

@@ -17,7 +17,8 @@ function getCardAnimateParam(cardIndex) {
                 cardX: "0",
                 designBg: "#182919",
                 cardBg: "#0e120b",
-                cardShadow: "0px 17px 33px 0px rgb(31, 54, 29, 0.68) ",
+                cardBgVideoOp: 0,
+                // cardShadow: "0px 17px 33px 0px rgb(31, 54, 29, 0.68) ",
             };
             break;
         case 1:
@@ -27,7 +28,8 @@ function getCardAnimateParam(cardIndex) {
                 cardX: "-100%",
                 designBg: "#202167",
                 cardBg: "#2f4461",
-                cardShadow: "0px 17px 33px 0px rgba(20, 33, 93, 0.68)",
+                cardBgVideoOp: 0,
+                // cardShadow: "0px 17px 33px 0px rgba(20, 33, 93, 0.68)",
             };
             break;
 
@@ -38,7 +40,8 @@ function getCardAnimateParam(cardIndex) {
                 cardX: "-200%",
                 designBg: "#33a47b",
                 cardBg: "#d9e3e7",
-                cardShadow: "0px 17px 33px 0px rgba(15, 160, 109, 0.68)",
+                cardBgVideoOp: 1,
+                // cardShadow: "0px 17px 33px 0px rgba(15, 160, 109, 0.68)",
             };
             break;
 
@@ -50,6 +53,7 @@ function getCardAnimateParam(cardIndex) {
 function getCardOtherAnimate() {
     let otherAnimate = gsap.timeline();
     const phoneFooterImgs = $(".phone-footer img");
+    const cardBgVideo = $(".module-design .card-bg video");
     return function (param, cardIndex) {
         let oldIndex = $(".phone-footer img.state-active").index();
         oldIndex = oldIndex == -1 ? 0 : oldIndex;
@@ -69,6 +73,13 @@ function getCardOtherAnimate() {
                 0
             );
 
+        otherAnimate.to(
+            cardBgVideo,
+            {
+                opacity: cardIndex == 2 ? 1 : 0,
+            },
+            0
+        );
         if (
             (newIndex == 2 && oldIndex != 2) ||
             (oldIndex == 2 && newIndex != 2)
@@ -147,13 +158,13 @@ function getCardAnimate(cardIndex) {
         },
         0
     );
-    cardAnimate.to(
-        ".module-design .img-wrapper",
-        {
-            boxShadow: param.cardShadow,
-        },
-        0
-    );
+    // cardAnimate.to(
+    //     ".module-design .img-wrapper",
+    //     {
+    //         boxShadow: param.cardShadow,
+    //     },
+    //     0
+    // );
     cardAnimate.to(
         ".module-design .list-card--right .item-card",
         {
