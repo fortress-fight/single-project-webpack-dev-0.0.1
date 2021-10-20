@@ -244,7 +244,6 @@ export default function getScaleVideoCtrl(): {
                 },
                 0
             );
-
             anime.addLabel("scaleBigEnd", "-=0.4");
 
             // play btn

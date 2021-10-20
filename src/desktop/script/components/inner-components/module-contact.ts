@@ -66,7 +66,7 @@ export default function initContact(): { init: () => void } {
                 }
             }
             ScrollTrigger.matchMedia({
-                "(min-width: 735px)": bigAdapt,
+                "(min-width: 1068px)": bigAdapt,
             });
         },
     };

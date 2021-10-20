@@ -35,18 +35,7 @@
                     </div>
                     <div class="box-container flex flex-c-c">
                         <div class="layer--scale">
-                            <div
-                                class="flex flex-x-c"
-                                style="
-                                    position: absolute;
-                                    top: 0;
-                                    left: 0;
-                                    right: 0;
-                                    overflow: hidden;
-                                    bottom: 0;
-                                    border-radius: inherit;
-                                "
-                            >
+                            <div class="shape-box flex flex-x-c">
                                 <div class="layer--bg"></div>
                                 <div class="wrapper-first_area flex flex-c-c">
                                     <div class="wrapper-limit_width">
@@ -116,63 +105,9 @@
                                                     flex flex-c-c flex-d-c
                                                 "
                                             >
-                                                <div
-                                                    class="
-                                                        item-intro
-                                                        intro-phone
-                                                    "
-                                                >
-                                                    <div class="main-phone">
-                                                        <div
-                                                            class="
-                                                                wrapper-main_phone_imgs
-                                                            "
-                                                        >
-                                                            <img
-                                                                class="
-                                                                    main-phone-1
-                                                                "
-                                                                src="<%= IMG_PATH %>module-show-3-2.png"
-                                                                alt=""
-                                                            />
-                                                            <div
-                                                                class="
-                                                                    main-phone-card
-                                                                "
-                                                            >
-                                                                <div
-                                                                    class="
-                                                                        box-m_web
-                                                                    "
-                                                                >
-                                                                    <img
-                                                                        src="<%= IMG_PATH %>m-web-brower.png"
-                                                                        alt=""
-                                                                    />
-                                                                    <img
-                                                                        id="mweb-site-body"
-                                                                        src="<%= IMG_PATH %>m-uemo-web.jpg"
-                                                                        alt=""
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div
-                                                        class="
-                                                            main-phone-back-card
-                                                        "
-                                                    >
-                                                        <div
-                                                            class="btn-shadow"
-                                                        ></div>
-                                                        <img
-                                                            src="<%= IMG_PATH %>back-card.png"
-                                                            alt=""
-                                                        />
-                                                    </div>
-                                                </div>
+                                                <%-
+                                                require("./inner-components/module-show-intro-phone.ejs")({IMG_PATH})
+                                                %>
                                             </div>
                                             <div
                                                 class="

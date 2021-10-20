@@ -170,6 +170,9 @@
 
         align-items: flex-start;
     }
+    .module-show .wrapper-first_area .group-col:nth-child(3) .main-phone-1 .img-wrapper {
+        box-shadow: rgb(15 160 109 / 68%) 0 6px 18px 0;
+    }
     .module-show .module-body .item-intro {
         // margin-bottom: 1.7vw;
         margin-bottom: 18px;
@@ -570,7 +573,7 @@
         grid-area: 2 / 2 / 3 / 4;
     }
     .module-share .layer-cover--share .video-box {
-        grid-area: 2 / 4 / 3 / 5;
+        grid-area: 3 / 3 / 4 / 4;
     }
     .module-share .module-body > .state-pos_left {
         padding-left: 20px;

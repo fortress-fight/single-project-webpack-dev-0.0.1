@@ -110,8 +110,8 @@ function getBeforeEnterCtrl() {
             });
             scrollAnim.fromTo(
                 $statePosRight,
-                { y: "100%" },
-                { y: 0, duration: 2, ease: "none" },
+                { yPercent: () => (window.innerWidth > 1068 ? 0 : 100) },
+                { yPercent: 0, duration: 2, ease: "none" },
                 "<"
             );
 
@@ -220,7 +220,7 @@ function getInfoCtrl() {
     };
 }
 
-export default function initDoc(vsScroll: { update: () => void }): {
+export default function initDoc(vsScroll?: { update: () => void }): {
     init: () => void;
 } {
     const allScrollOrder = getScrollOrder();
@@ -299,7 +299,7 @@ export default function initDoc(vsScroll: { update: () => void }): {
             );
         });
         scrollAnim.add(infoScrollAnim.play(), ">-=1");
-        scrollAnim.to({}, { duration: 1 });
+        scrollAnim.to({}, { duration: 0.5 });
 
         const $leftAreaBg = $(".module-doc .module-doc_show .left_area-bg");
         ScrollTrigger.saveStyles($leftAreaBg);
@@ -308,7 +308,11 @@ export default function initDoc(vsScroll: { update: () => void }): {
             { scale: 0.5 },
             {
                 scale: () => {
-                    return (window.innerWidth * 0.9) / $leftAreaBg.width();
+                    if (window.innerWidth > 1068) {
+                        return (window.innerWidth * 0.9) / $leftAreaBg.width();
+                    } else {
+                        return (window.outerHeight * 1) / $leftAreaBg.height();
+                    }
                 },
                 duration: scrollAnim.totalDuration(),
                 onReverseComplete() {
